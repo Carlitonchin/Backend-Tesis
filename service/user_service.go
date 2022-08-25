@@ -23,3 +23,7 @@ func NewUserService(c *USConfing) model.UserService {
 func (s *UserService) GetById(ctx context.Context, id uint) (*model.User, error) {
 	return s.UserRepository.FindById(ctx, id)
 }
+
+func (s *UserService) SignUp(ctx context.Context, user *model.User) error {
+	return nil //not implemented yet
+}
