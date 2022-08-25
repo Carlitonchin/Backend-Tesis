@@ -39,6 +39,16 @@ func bindData(ctx *gin.Context, req interface{}) bool {
 
 			return false
 		}
+
+		message := "Error de servidor"
+		type_error := apperrors.Internal
+		err := apperrors.NewError(type_error, message)
+
+		ctx.JSON(err.Status(), gin.H{
+			"error": err,
+		})
+
+		return false
 	}
 
 	return true
