@@ -16,4 +16,6 @@ func main() {
 			"Hello": "World",
 		})
 	})
+
+	router.Run("localhost:8888")
 }
