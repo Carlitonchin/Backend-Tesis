@@ -1,9 +1,11 @@
 package model
 
+import "context"
+
 type UserService interface {
-	GetById(id int) (*User, error)
+	GetById(ctx context.Context, id int) (*User, error)
 }
 
 type UserRepository interface {
-	FindById(id int) (*User, error)
+	FindById(ctx context.Context, id int) (*User, error)
 }
