@@ -6,7 +6,7 @@ import (
 	"github.com/go-playground/validator/v10"
 )
 
-type InvalidArgument struct {
+type invalidArgument struct {
 	Field string `json:"field"`
 	Value string `json:"value"`
 	Tag   string `json:"tag"`
@@ -15,11 +15,11 @@ type InvalidArgument struct {
 
 func bindData(ctx *gin.Context, req interface{}) bool {
 	if err := ctx.ShouldBind(req); err != nil {
-		var invalidArgs []InvalidArgument
+		var invalidArgs []invalidArgument
 
 		if errs, ok := err.(validator.ValidationErrors); ok {
 			for _, err := range errs {
-				invalidArgs = append(invalidArgs, InvalidArgument{
+				invalidArgs = append(invalidArgs, invalidArgument{
 					Field: err.Field(),
 					Value: err.Value().(string),
 					Tag:   err.Tag(),
