@@ -3,17 +3,23 @@ package handler
 import (
 	"net/http"
 
+	"github.com/Carlitonchin/Backend-Tesis/model"
 	"github.com/gin-gonic/gin"
 )
 
-type Handler struct{}
+type Handler struct {
+	UserService model.UserService
+}
 
 type Config struct {
-	R *gin.Engine
+	R           *gin.Engine
+	UserService model.UserService
 }
 
 func NewHandler(c *Config) {
-	h := &Handler{}
+	h := &Handler{
+		UserService: c.UserService,
+	}
 
 	g := c.R.Group("api/account")
 
