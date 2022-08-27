@@ -25,5 +25,11 @@ func (s *UserService) GetById(ctx context.Context, id uint) (*model.User, error)
 }
 
 func (s *UserService) SignUp(ctx context.Context, user *model.User) error {
-	return nil //not implemented yet
+	err := s.UserRepository.Create(ctx, user)
+
+	if err != nil {
+		return err
+	}
+
+	return nil
 }
