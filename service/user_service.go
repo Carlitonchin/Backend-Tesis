@@ -25,11 +25,16 @@ func (s *UserService) GetById(ctx context.Context, id uint) (*model.User, error)
 }
 
 func (s *UserService) SignUp(ctx context.Context, user *model.User) error {
-	err := s.UserRepository.Create(ctx, user)
+
+	hashed_pass, err := hashPass(user.Password)
 
 	if err != nil {
 		return err
 	}
 
-	return nil
+	user.Password = hashed_pass
+
+	err = s.UserRepository.Create(ctx, user)
+
+	return err
 }
