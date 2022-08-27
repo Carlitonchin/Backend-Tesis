@@ -1,6 +1,8 @@
 package handler
 
 import (
+	"net/http"
+
 	"github.com/Carlitonchin/Backend-Tesis/model"
 	"github.com/Carlitonchin/Backend-Tesis/model/apperrors"
 	"github.com/gin-gonic/gin"
@@ -36,4 +38,18 @@ func (s *Handler) SignUp(ctx *gin.Context) {
 
 		return
 	}
+
+	token, err := s.TokenService.GetNewPairFromUser(ctx, u, "")
+
+	if err != nil {
+		ctx.JSON(apperrors.Status(err), gin.H{
+			"error": err,
+		})
+
+		return
+	}
+
+	ctx.JSON(http.StatusCreated, gin.H{
+		"tokens": token,
+	})
 }
