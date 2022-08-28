@@ -2,11 +2,11 @@ package service
 
 import (
 	"crypto/rsa"
+	"math/rand"
 	"time"
 
 	"github.com/Carlitonchin/Backend-Tesis/model"
 	"github.com/dgrijalva/jwt-go"
-	"github.com/google/uuid"
 )
 
 //-------------------- ID TOKEN ------------------------------
@@ -16,7 +16,7 @@ type IDTokenClaims struct {
 	jwt.StandardClaims
 }
 
-func generateIDToken(user *model.User, key rsa.PrivateKey) (string, error) {
+func generateIDToken(user *model.User, key *rsa.PrivateKey) (string, error) {
 	now := time.Now().Unix()
 	expired_time := now + 15*60 // 15 minutes
 
@@ -45,26 +45,22 @@ type RefreshToken struct {
 }
 
 type RefreshTokenClaims struct {
-	UID uuid.UUID `json:"uid"`
+	ID uint
 	jwt.StandardClaims
 }
 
-func generateRefreshToken(uid uuid.UUID, key string) (*RefreshToken, error) {
+func generateRefreshToken(user_id uint, key string) (*RefreshToken, error) {
 	currentTime := time.Now()
 	tokenExp := currentTime.AddDate(0, 0, 3)
 
-	tokenId, err := uuid.NewRandom()
-
-	if err != nil {
-		return nil, err
-	}
+	tokenId := uint(rand.Uint64())
 
 	claims := &RefreshTokenClaims{
-		UID: tokenId,
+		ID: user_id,
 		StandardClaims: jwt.StandardClaims{
 			IssuedAt:  currentTime.Unix(),
 			ExpiresAt: tokenExp.Unix(),
-			Id:        tokenId.String(),
+			Id:        string(tokenId),
 		},
 	}
 
@@ -76,7 +72,7 @@ func generateRefreshToken(uid uuid.UUID, key string) (*RefreshToken, error) {
 	}
 
 	return &RefreshToken{
-		ID:        tokenId.String(),
+		ID:        string(tokenId),
 		SS:        ss,
 		ExipresIn: tokenExp.Sub(currentTime),
 	}, nil
