@@ -30,8 +30,24 @@ func NewTokenService(c *TSConfig) model.TokenService {
 func (s *TokenService) GetNewPairFromUser(
 	ctx context.Context,
 	user *model.User,
-	prevTokenId string) (model.TokenPair, error) {
+	prevTokenId string) (*model.TokenPair, error) {
 
 	//function body starts here
-	panic("Not implemented yet")
+	id_token, err := generateIDToken(user, s.PrivateKey)
+	if err != nil {
+		return nil, err
+	}
+
+	refresh_token, err := generateRefreshToken(user.ID, s.RefreshSecret)
+
+	if err != nil {
+		return nil, err
+	}
+
+	//TODO: store refresh token
+
+	return &model.TokenPair{
+		IDToken:      id_token,
+		RefreshToken: refresh_token.SS,
+	}, nil
 }
