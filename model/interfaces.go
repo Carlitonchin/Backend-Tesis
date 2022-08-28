@@ -13,5 +13,5 @@ type UserRepository interface {
 }
 
 type TokenService interface {
-	GetNewPairFromUser(ctx context.Context, user *User, prevTokenId string) (TokenPair, error)
+	GetNewPairFromUser(ctx context.Context, user *User, prevTokenId string) (*TokenPair, error)
 }
