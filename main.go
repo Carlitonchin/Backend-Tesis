@@ -7,11 +7,18 @@ import (
 	"github.com/Carlitonchin/Backend-Tesis/repository"
 	"github.com/Carlitonchin/Backend-Tesis/service"
 	"github.com/gin-gonic/gin"
+	"github.com/joho/godotenv"
 )
 
 func main() {
 	log.Println("starting server ...")
 	router := gin.Default()
+
+	err := godotenv.Load(".env")
+
+	if err != nil {
+		log.Fatal(err)
+	}
 	db, err := repository.Connect()
 
 	if err != nil {
