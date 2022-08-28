@@ -10,11 +10,11 @@ type UserService struct {
 	UserRepository model.UserRepository
 }
 
-type USConfing struct {
+type USConfig struct {
 	UserRepository model.UserRepository
 }
 
-func NewUserService(c *USConfing) model.UserService {
+func NewUserService(c *USConfig) model.UserService {
 	return &UserService{
 		UserRepository: c.UserRepository,
 	}
