@@ -3,6 +3,7 @@ package service
 import (
 	"crypto/rsa"
 	"math/rand"
+	"strconv"
 	"time"
 
 	"github.com/Carlitonchin/Backend-Tesis/model"
@@ -60,7 +61,7 @@ func generateRefreshToken(user_id uint, key string) (*RefreshToken, error) {
 		StandardClaims: jwt.StandardClaims{
 			IssuedAt:  currentTime.Unix(),
 			ExpiresAt: tokenExp.Unix(),
-			Id:        string(tokenId),
+			Id:        strconv.FormatUint(uint64(tokenId), 10),
 		},
 	}
 
@@ -72,7 +73,7 @@ func generateRefreshToken(user_id uint, key string) (*RefreshToken, error) {
 	}
 
 	return &RefreshToken{
-		ID:        string(tokenId),
+		ID:        strconv.FormatUint(uint64(tokenId), 10),
 		SS:        ss,
 		ExipresIn: tokenExp.Sub(currentTime),
 	}, nil
