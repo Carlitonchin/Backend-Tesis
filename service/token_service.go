@@ -7,7 +7,7 @@ import (
 	"github.com/Carlitonchin/Backend-Tesis/model"
 )
 
-type TokenService struct {
+type tokenService struct {
 	PrivateKey    *rsa.PrivateKey
 	PublicKey     *rsa.PublicKey
 	RefreshSecret string
@@ -20,14 +20,14 @@ type TSConfig struct {
 }
 
 func NewTokenService(c *TSConfig) model.TokenService {
-	return &TokenService{
+	return &tokenService{
 		PrivateKey:    c.PrivateKey,
 		PublicKey:     c.PublicKey,
 		RefreshSecret: c.RefreshSecret,
 	}
 }
 
-func (s *TokenService) GetNewPairFromUser(
+func (s *tokenService) GetNewPairFromUser(
 	ctx context.Context,
 	user *model.User,
 	prevTokenId string) (*model.TokenPair, error) {
