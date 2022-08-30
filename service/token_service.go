@@ -8,22 +8,25 @@ import (
 )
 
 type tokenService struct {
-	PrivateKey    *rsa.PrivateKey
-	PublicKey     *rsa.PublicKey
-	RefreshSecret string
+	TokenRepository *model.TokenRepository
+	PrivateKey      *rsa.PrivateKey
+	PublicKey       *rsa.PublicKey
+	RefreshSecret   string
 }
 
 type TSConfig struct {
-	PrivateKey    *rsa.PrivateKey
-	PublicKey     *rsa.PublicKey
-	RefreshSecret string
+	TokenRepository *model.TokenRepository
+	PrivateKey      *rsa.PrivateKey
+	PublicKey       *rsa.PublicKey
+	RefreshSecret   string
 }
 
 func NewTokenService(c *TSConfig) model.TokenService {
 	return &tokenService{
-		PrivateKey:    c.PrivateKey,
-		PublicKey:     c.PublicKey,
-		RefreshSecret: c.RefreshSecret,
+		PrivateKey:      c.PrivateKey,
+		PublicKey:       c.PublicKey,
+		RefreshSecret:   c.RefreshSecret,
+		TokenRepository: c.TokenRepository,
 	}
 }
 

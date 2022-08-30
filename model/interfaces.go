@@ -1,6 +1,9 @@
 package model
 
-import "context"
+import (
+	"context"
+	"time"
+)
 
 type UserService interface {
 	GetById(ctx context.Context, id uint) (*User, error)
@@ -14,4 +17,9 @@ type UserRepository interface {
 
 type TokenService interface {
 	GetNewPairFromUser(ctx context.Context, user *User, prevTokenId string) (*TokenPair, error)
+}
+
+type TokenRepository interface {
+	SetNewRefreshToken(ctx context.Context, userId string, tokenId string, expiresIn time.Duration) error
+	DeleteRefreshToken(ctx context.Context, userId string, prevTokenId string) error
 }
