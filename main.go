@@ -15,13 +15,13 @@ func main() {
 		log.Fatal(err)
 	}
 
-	db, err := init_db()
+	data_source, err := init_db()
 
 	if err != nil {
 		log.Fatalf("Error when connecting with db, error:%v", err)
 	}
 
-	router, err := inject(db)
+	router, err := inject(data_source.DB)
 
 	if err != nil {
 		log.Fatal(err)

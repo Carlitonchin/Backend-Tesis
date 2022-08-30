@@ -1,15 +1,23 @@
 package main
 
 import (
+	"context"
 	"fmt"
+	"log"
 	"os"
 
 	"github.com/Carlitonchin/Backend-Tesis/model"
+	"github.com/go-redis/redis/v8"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
 
-func init_db() (*gorm.DB, error) {
+type dataSource struct {
+	DB          *gorm.DB
+	RedisClient *redis.Client
+}
+
+func init_db() (*dataSource, error) {
 	db_host := os.Getenv("DB_HOST")
 	db_port := os.Getenv("DB_PORT")
 	db_user := os.Getenv("DB_USER")
@@ -23,5 +31,23 @@ func init_db() (*gorm.DB, error) {
 		db.AutoMigrate(&model.User{})
 	}
 
-	return db, err
+	redis_host := os.Getenv("REDIS_HOST")
+	redis_port := os.Getenv("REDIS_PORT")
+
+	rdb := redis.NewClient(&redis.Options{
+		Addr:     fmt.Sprintf("%s:%s", redis_host, redis_port),
+		Password: "",
+		DB:       0,
+	})
+
+	_, err = rdb.Ping(context.Background()).Result()
+
+	if err != nil {
+		log.Fatalf("Failed connection to redis database, error: %v", err)
+	}
+
+	return &dataSource{
+		DB:          db,
+		RedisClient: rdb,
+	}, err
 }
