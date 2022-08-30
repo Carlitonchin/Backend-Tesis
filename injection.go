@@ -11,13 +11,13 @@ import (
 	"github.com/Carlitonchin/Backend-Tesis/service"
 	"github.com/dgrijalva/jwt-go"
 	"github.com/gin-gonic/gin"
-	"gorm.io/gorm"
 )
 
-func inject(db *gorm.DB) (*gin.Engine, error) {
+func inject(data_source *dataSource) (*gin.Engine, error) {
 
 	router := gin.Default()
-	user_repo := repository.NewUserRepository(db)
+	user_repo := repository.NewUserRepository(data_source.DB)
+	token_repo := repository.NewTokenRepository(data_source.RedisClient)
 	us_config := &service.USConfig{UserRepository: user_repo}
 
 	user_serv := service.NewUserService(us_config)
@@ -66,6 +66,7 @@ func inject(db *gorm.DB) (*gin.Engine, error) {
 		RefreshSecret:        refresh_secret,
 		IDExpirationSec:      id_exp,
 		RefreshExpirationSec: refresh_exp,
+		TokenRepository:      token_repo,
 	}
 
 	token_service := service.NewTokenService(tsc)

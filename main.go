@@ -21,7 +21,7 @@ func main() {
 		log.Fatalf("Error when connecting with db, error:%v", err)
 	}
 
-	router, err := inject(data_source.DB)
+	router, err := inject(data_source)
 
 	if err != nil {
 		log.Fatal(err)
