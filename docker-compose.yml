@@ -19,7 +19,7 @@ services:
   postgres-account:
     image: "postgres:alpine"
     environment:
-      - POSTGRES_PASSWORD=password
+      - POSTGRES_PASSWORD=pass
     ports:
       - "5432:5432"
     #   Set a volume for data and initial sql script
