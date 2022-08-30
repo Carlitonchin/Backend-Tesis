@@ -12,7 +12,7 @@ type signup_req struct {
 	Email    string `json:"email" binding:"required,email"`
 	Pass     string `json:"pass" binding:"required,gte=6,lte=30"`
 	UserName string `json:"name" binding:"required"`
-	Worker   bool   `json:"worker" binding:"required"`
+	Worker   string `json:"worker" binding:"required"`
 }
 
 func (s *Handler) SignUp(ctx *gin.Context) {
@@ -26,7 +26,7 @@ func (s *Handler) SignUp(ctx *gin.Context) {
 		Email:    req.Email,
 		Password: req.Pass,
 		Name:     req.UserName,
-		Worker:   req.Worker,
+		Worker:   req.Worker != "0",
 	}
 
 	err := s.UserService.SignUp(ctx, u)
