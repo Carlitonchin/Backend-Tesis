@@ -6,7 +6,7 @@ import (
 	"github.com/Carlitonchin/Backend-Tesis/model"
 )
 
-type UserService struct {
+type userService struct {
 	UserRepository model.UserRepository
 }
 
@@ -15,16 +15,16 @@ type USConfig struct {
 }
 
 func NewUserService(c *USConfig) model.UserService {
-	return &UserService{
+	return &userService{
 		UserRepository: c.UserRepository,
 	}
 }
 
-func (s *UserService) GetById(ctx context.Context, id uint) (*model.User, error) {
+func (s *userService) GetById(ctx context.Context, id uint) (*model.User, error) {
 	return s.UserRepository.FindById(ctx, id)
 }
 
-func (s *UserService) SignUp(ctx context.Context, user *model.User) error {
+func (s *userService) SignUp(ctx context.Context, user *model.User) error {
 
 	hashed_pass, err := hashPass(user.Password)
 
