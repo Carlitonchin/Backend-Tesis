@@ -27,5 +27,5 @@ func main() {
 		log.Fatal(err)
 	}
 
-	router.Run("localhost:8888")
+	router.Run(":8080")
 }
