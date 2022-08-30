@@ -28,7 +28,7 @@ func (s *Handler) Me(ctx *gin.Context) {
 	// user exists in context
 	user_id := user.(*model.User).ID
 
-	u, err := s.UserService.GetById(ctx, user_id)
+	u, err := s.UserService.GetById(ctx.Request.Context(), user_id)
 
 	if err != nil {
 		message := fmt.Sprintf("No fue posible encontrar al usuario con id=%v", user_id)

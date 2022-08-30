@@ -29,7 +29,7 @@ func (s *Handler) SignUp(ctx *gin.Context) {
 		Worker:   req.Worker != "0",
 	}
 
-	err := s.UserService.SignUp(ctx, u)
+	err := s.UserService.SignUp(ctx.Request.Context(), u)
 
 	if err != nil {
 		ctx.JSON(apperrors.Status(err), gin.H{
@@ -39,7 +39,7 @@ func (s *Handler) SignUp(ctx *gin.Context) {
 		return
 	}
 
-	token, err := s.TokenService.GetNewPairFromUser(ctx, u, "")
+	token, err := s.TokenService.GetNewPairFromUser(ctx.Request.Context(), u, "")
 
 	if err != nil {
 		ctx.JSON(apperrors.Status(err), gin.H{
