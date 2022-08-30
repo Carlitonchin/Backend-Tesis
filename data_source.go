@@ -29,6 +29,8 @@ func init_db() (*dataSource, error) {
 
 	if err == nil {
 		db.AutoMigrate(&model.User{})
+	} else {
+		log.Fatalf("Failed connection to postgres database, error: %v", err)
 	}
 
 	redis_host := os.Getenv("REDIS_HOST")
