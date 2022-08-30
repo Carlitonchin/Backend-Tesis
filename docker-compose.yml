@@ -48,7 +48,7 @@ services:
     environment:
       - ENV=dev
     volumes:
-      - ./account:/go/src/app
+      - .:/go/src/app
     # have to use $$ (double-dollar) so docker doesn't try to substitute a variable
     depends_on:
       - postgres-account
