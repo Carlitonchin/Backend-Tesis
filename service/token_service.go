@@ -8,14 +8,14 @@ import (
 )
 
 type tokenService struct {
-	TokenRepository *model.TokenRepository
+	TokenRepository model.TokenRepository
 	PrivateKey      *rsa.PrivateKey
 	PublicKey       *rsa.PublicKey
 	RefreshSecret   string
 }
 
 type TSConfig struct {
-	TokenRepository *model.TokenRepository
+	TokenRepository model.TokenRepository
 	PrivateKey      *rsa.PrivateKey
 	PublicKey       *rsa.PublicKey
 	RefreshSecret   string
