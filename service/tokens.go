@@ -17,9 +17,9 @@ type IDTokenClaims struct {
 	jwt.StandardClaims
 }
 
-func generateIDToken(user *model.User, key *rsa.PrivateKey) (string, error) {
+func generateIDToken(user *model.User, key *rsa.PrivateKey, expiredIn int64) (string, error) {
 	now := time.Now().Unix()
-	expired_time := now + 15*60 // 15 minutes
+	expired_time := now + expiredIn
 
 	claims := &IDTokenClaims{
 		User: user,
@@ -50,9 +50,9 @@ type RefreshTokenClaims struct {
 	jwt.StandardClaims
 }
 
-func generateRefreshToken(user_id uint, key string) (*RefreshToken, error) {
+func generateRefreshToken(user_id uint, key string, expiresIn int64) (*RefreshToken, error) {
 	currentTime := time.Now()
-	tokenExp := currentTime.AddDate(0, 0, 3)
+	tokenExp := currentTime.Add(time.Duration(expiresIn) * time.Second)
 
 	tokenId := uint(rand.Uint64())
 
