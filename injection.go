@@ -4,6 +4,7 @@ import (
 	"io/ioutil"
 	"log"
 	"os"
+	"strconv"
 
 	"github.com/Carlitonchin/Backend-Tesis/handler"
 	"github.com/Carlitonchin/Backend-Tesis/repository"
@@ -47,10 +48,24 @@ func inject(db *gorm.DB) (*gin.Engine, error) {
 		log.Fatalf("Error when parsing public key, error: %v", err)
 	}
 
+	id_exp, err := strconv.ParseInt(os.Getenv("ID_TOKEN_EXP"), 0, 64)
+
+	if err != nil {
+		log.Fatalf("error when readinga and parsing id_token_exp, error: %v", err)
+	}
+
+	refresh_exp, err := strconv.ParseInt(os.Getenv("REFRESH_TOKEN_EXP"), 0, 64)
+
+	if err != nil {
+		log.Fatalf("error when readinga and parsing refresh_exp, error: %v", err)
+	}
+
 	tsc := &service.TSConfig{
-		PrivateKey:    priv_key,
-		PublicKey:     pub_key,
-		RefreshSecret: refresh_secret,
+		PrivateKey:           priv_key,
+		PublicKey:            pub_key,
+		RefreshSecret:        refresh_secret,
+		IDExpirationSec:      id_exp,
+		RefreshExpirationSec: refresh_exp,
 	}
 
 	token_service := service.NewTokenService(tsc)
