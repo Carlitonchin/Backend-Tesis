@@ -27,6 +27,8 @@ func NewHandler(c *Config) {
 	g := c.R.Group("api/account")
 
 	g.GET("/", h.Index)
+	g.POST("/signup", h.SignUp)
+	g.GET("/me", h.Me)
 }
 
 func (s *Handler) Index(ctx *gin.Context) {
