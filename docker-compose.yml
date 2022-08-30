@@ -36,10 +36,10 @@ services:
       - "redisdata:/data"
   account:
     build:
-      context: ./account
+      context: .
       target: builder
     image: account
-    env_file: ./account/.env.dev
+    env_file: ./.env
     expose:
       - "8080"
     labels:
@@ -53,7 +53,7 @@ services:
     depends_on:
       - postgres-account
       - redis-account
-    command: reflex -r "\.go$$" -s -- sh -c "go run ./"
+    command: ["go", "run", "."]
 volumes:
   pgdata_account:
   redisdata:
