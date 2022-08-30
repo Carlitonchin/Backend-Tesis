@@ -3,38 +3,29 @@ package main
 import (
 	"log"
 
-	"github.com/Carlitonchin/Backend-Tesis/handler"
-	"github.com/Carlitonchin/Backend-Tesis/repository"
-	"github.com/Carlitonchin/Backend-Tesis/service"
-	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
 )
 
 func main() {
 	log.Println("starting server ...")
-	router := gin.Default()
 
 	err := godotenv.Load(".env")
 
 	if err != nil {
 		log.Fatal(err)
 	}
-	db, err := repository.Connect()
+
+	db, err := init_db()
 
 	if err != nil {
 		log.Fatalf("Error when connecting with db, error:%v", err)
 	}
 
-	user_repo := repository.NewUserRepository(db)
-	us_config := &service.USConfig{UserRepository: user_repo}
+	router, err := inject(db)
 
-	user_serv := service.NewUserService(us_config)
-
-	c := handler.Config{
-		R:           router,
-		UserService: user_serv,
+	if err != nil {
+		log.Fatal(err)
 	}
 
-	handler.NewHandler(&c)
 	router.Run("localhost:8888")
 }
