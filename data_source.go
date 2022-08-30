@@ -9,7 +9,7 @@ import (
 	"gorm.io/gorm"
 )
 
-func Connect() (*gorm.DB, error) {
+func init_db() (*gorm.DB, error) {
 	db_host := os.Getenv("DB_HOST")
 	db_port := os.Getenv("DB_PORT")
 	db_user := os.Getenv("DB_USER")
