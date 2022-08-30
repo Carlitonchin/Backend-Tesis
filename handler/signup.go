@@ -9,7 +9,7 @@ import (
 )
 
 type signup_req struct {
-	Email    string `json:"email" binding:"required, email"`
+	Email    string `json:"email" binding:"required,email"`
 	Pass     string `json:"pass" binding:"required,gte=6,lte=30"`
 	UserName string `json:"name" binding:"required"`
 	Worker   bool   `json:"worker" binding:"required"`
