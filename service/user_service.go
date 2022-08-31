@@ -4,6 +4,7 @@ import (
 	"context"
 
 	"github.com/Carlitonchin/Backend-Tesis/model"
+	"github.com/Carlitonchin/Backend-Tesis/model/apperrors"
 )
 
 type userService struct {
@@ -41,6 +42,35 @@ func (s *userService) SignUp(ctx context.Context, user *model.User) error {
 
 func (s *userService) SignIn(ctx context.Context, user *model.User) error {
 	u, err := s.UserRepository.FindByEmail(ctx, user.Email)
+
+	if err != nil {
+		type_error := apperrors.Authorization
+		message := "email no encontrado"
+
+		e := apperrors.NewError(type_error, message)
+		return e
+	}
+
+	match, err := comparePass(user.Password, u.Password)
+
+	if err != nil {
+		type_error := apperrors.Internal
+		message := "Fallo inesperado mientras se verificaba la contraseña"
+
+		e := apperrors.NewError(type_error, message)
+		return e
+	}
+
+	if !match {
+		type_error := apperrors.Authorization
+		message := "Contraseña invalida"
+
+		e := apperrors.NewError(type_error, message)
+		return e
+	}
+
 	user = u
-	return err
+
+	return nil
+
 }
