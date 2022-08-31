@@ -4,7 +4,9 @@ import (
 	"net/http"
 	"time"
 
+	"github.com/Carlitonchin/Backend-Tesis/handler/middleware"
 	"github.com/Carlitonchin/Backend-Tesis/model"
+	"github.com/Carlitonchin/Backend-Tesis/model/apperrors"
 	"github.com/gin-gonic/gin"
 )
 
@@ -25,7 +27,8 @@ func NewHandler(c *Config) {
 		UserService:  c.UserService,
 		TokenService: c.TokenService,
 	}
-
+	timeouterror := apperrors.NewError(apperrors.TimeOut, "El request demoró mucho en procesarse")
+	c.R.Use(middleware.Timeout(c.TimeOut, timeouterror))
 	g := c.R.Group("api/account")
 
 	g.GET("/", h.Index)
@@ -34,6 +37,7 @@ func NewHandler(c *Config) {
 }
 
 func (s *Handler) Index(ctx *gin.Context) {
+	time.Sleep(10 * time.Second)
 	ctx.JSON(http.StatusOK, gin.H{
 		"hello": "world",
 	})
