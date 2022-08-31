@@ -40,5 +40,7 @@ func (s *userService) SignUp(ctx context.Context, user *model.User) error {
 }
 
 func (s *userService) SignIn(ctx context.Context, user *model.User) error {
-	panic("Not implemented")
+	u, err := s.UserRepository.FindByEmail(ctx, user.Email)
+	user = u
+	return err
 }
