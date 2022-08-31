@@ -50,7 +50,7 @@ func Timeout(timeout time.Duration, errTimeout *apperrors.Error) gin.HandlerFunc
 		case <-panicChan:
 			// if we cannot recover from panic,
 			// send internal server error
-			e := apperrors.NewError(apperrors.Internal, "error interno")
+			e := apperrors.NewError(apperrors.Internal, "error interno middleware timeout")
 			tw.ResponseWriter.WriteHeader(e.Status())
 			eResp, _ := json.Marshal(gin.H{
 				"error": e,
