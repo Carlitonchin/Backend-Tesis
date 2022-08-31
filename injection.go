@@ -5,6 +5,7 @@ import (
 	"log"
 	"os"
 	"strconv"
+	"time"
 
 	"github.com/Carlitonchin/Backend-Tesis/handler"
 	"github.com/Carlitonchin/Backend-Tesis/repository"
@@ -60,6 +61,12 @@ func inject(data_source *dataSource) (*gin.Engine, error) {
 		log.Fatalf("error when readinga and parsing refresh_exp, error: %v", err)
 	}
 
+	handlerTimeout, err := strconv.ParseInt(os.Getenv("HANDLER_TIMEOUT"), 0, 64)
+
+	if err != nil {
+		log.Fatalf("Error when reading and parsing handlerTimeout, error:%v", err)
+	}
+
 	tsc := &service.TSConfig{
 		PrivateKey:           priv_key,
 		PublicKey:            pub_key,
@@ -75,6 +82,7 @@ func inject(data_source *dataSource) (*gin.Engine, error) {
 		R:            router,
 		UserService:  user_serv,
 		TokenService: token_service,
+		TimeOut:      time.Duration(time.Duration(handlerTimeout) * time.Second),
 	}
 
 	handler.NewHandler(&c)
