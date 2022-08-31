@@ -2,6 +2,7 @@ package service
 
 import (
 	"crypto/rsa"
+	"fmt"
 	"math/rand"
 	"strconv"
 	"time"
@@ -77,4 +78,28 @@ func generateRefreshToken(user_id uint, key string, expiresIn int64) (*RefreshTo
 		SS:        ss,
 		ExipresIn: tokenExp.Sub(currentTime),
 	}, nil
+}
+
+func validateIdToken(tokenString string, key *rsa.PublicKey) (*IDTokenClaims, error) {
+	claims := &IDTokenClaims{}
+
+	token, err := jwt.ParseWithClaims(tokenString, claims, func(token *jwt.Token) (interface{}, error) {
+		return key, nil
+	})
+
+	if err != nil {
+		return nil, err
+	}
+
+	if !token.Valid {
+		return nil, fmt.Errorf("Token invalido")
+	}
+
+	claims, ok := token.Claims.(*IDTokenClaims)
+
+	if !ok {
+		return nil, fmt.Errorf("No se pudo parsear los claims")
+	}
+
+	return claims, nil
 }
