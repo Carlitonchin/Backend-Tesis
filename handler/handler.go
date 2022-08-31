@@ -2,6 +2,7 @@ package handler
 
 import (
 	"net/http"
+	"time"
 
 	"github.com/Carlitonchin/Backend-Tesis/model"
 	"github.com/gin-gonic/gin"
@@ -16,6 +17,7 @@ type Config struct {
 	R            *gin.Engine
 	UserService  model.UserService
 	TokenService model.TokenService
+	TimeOut      time.Duration
 }
 
 func NewHandler(c *Config) {
