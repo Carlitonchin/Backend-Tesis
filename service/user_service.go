@@ -69,7 +69,7 @@ func (s *userService) SignIn(ctx context.Context, user *model.User) error {
 		return e
 	}
 
-	user = u
+	*user = *u
 
 	return nil
 
