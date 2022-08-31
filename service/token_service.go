@@ -6,6 +6,7 @@ import (
 	"strconv"
 
 	"github.com/Carlitonchin/Backend-Tesis/model"
+	"github.com/Carlitonchin/Backend-Tesis/model/apperrors"
 )
 
 type tokenService struct {
@@ -72,4 +73,18 @@ func (s *tokenService) GetNewPairFromUser(
 		IDToken:      id_token,
 		RefreshToken: refresh_token.SS,
 	}, nil
+}
+
+func (s *tokenService) ValidateIdToken(tokenString string) (*model.User, error) {
+	claims, err := validateIdToken(tokenString, s.PublicKey)
+
+	if err != nil {
+		type_error := apperrors.Authorization
+		message := "Token invalido"
+
+		e := apperrors.NewError(type_error, message)
+		return nil, e
+	}
+
+	return claims.User, nil
 }
