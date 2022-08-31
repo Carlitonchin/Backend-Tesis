@@ -9,7 +9,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func (s *Handler) Me(ctx *gin.Context) {
+func (s *Handler) me(ctx *gin.Context) {
 	user, exists := ctx.Get("user")
 
 	if !exists {

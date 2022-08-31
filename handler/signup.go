@@ -15,7 +15,7 @@ type signup_req struct {
 	Worker   string `json:"worker" binding:"required"`
 }
 
-func (s *Handler) SignUp(ctx *gin.Context) {
+func (s *Handler) signUp(ctx *gin.Context) {
 	var req signup_req
 
 	if ok := bindData(ctx, &req); !ok {

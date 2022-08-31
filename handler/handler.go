@@ -31,12 +31,12 @@ func NewHandler(c *Config) {
 	c.R.Use(middleware.Timeout(c.TimeOut, timeouterror))
 	g := c.R.Group("api/account")
 
-	g.GET("/", h.Index)
-	g.POST("/signup", h.SignUp)
-	g.GET("/me", h.Me)
+	g.GET("/", h.index)
+	g.POST("/signup", h.signUp)
+	g.GET("/me", h.me)
 }
 
-func (s *Handler) Index(ctx *gin.Context) {
+func (s *Handler) index(ctx *gin.Context) {
 	time.Sleep(10 * time.Second)
 	ctx.JSON(http.StatusOK, gin.H{
 		"hello": "world",
