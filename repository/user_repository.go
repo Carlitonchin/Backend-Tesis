@@ -30,3 +30,10 @@ func (s *userRepository) FindById(ctx context.Context, id uint) (*model.User, er
 
 	return &user, result.Error
 }
+
+func (s *userRepository) FindByEmail(ctx context.Context, email string) (*model.User, error) {
+	var user model.User
+	tx := s.DB.Where("email = ?", email).First(&user)
+
+	return &user, tx.Error
+}

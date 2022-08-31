@@ -1,6 +1,7 @@
 package handler
 
 import (
+	"log"
 	"net/http"
 
 	"github.com/Carlitonchin/Backend-Tesis/model"
@@ -28,6 +29,7 @@ func (h *Handler) signin(ctx *gin.Context) {
 	err := h.UserService.SignIn(ctx.Request.Context(), u)
 
 	if err != nil {
+		log.Println("signin fail")
 		ctx.JSON(apperrors.Status(err), gin.H{
 			"error": err,
 		})
@@ -39,6 +41,7 @@ func (h *Handler) signin(ctx *gin.Context) {
 	tokens, err := h.TokenService.GetNewPairFromUser(ctx.Request.Context(), u, "")
 
 	if err != nil {
+		log.Println("Token generation fail")
 		ctx.JSON(apperrors.Status(err), gin.H{
 			"error": err,
 		})
