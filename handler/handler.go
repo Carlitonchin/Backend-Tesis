@@ -34,6 +34,7 @@ func NewHandler(c *Config) {
 	g.GET("/", h.index)
 	g.POST("/signup", h.signUp)
 	g.GET("/me", h.me)
+	g.POST("/signin", h.signin)
 }
 
 func (s *Handler) index(ctx *gin.Context) {
