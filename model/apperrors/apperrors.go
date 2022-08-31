@@ -8,12 +8,13 @@ import (
 type Type string
 
 const (
-	Authorization   Type = "Autorización"
-	BadRequest      Type = "Request Incorrecto"
-	Conflict        Type = "Conflicto"
-	Internal        Type = "Interno"
-	NotFound        Type = "No encontrado"
-	PayloadTooLarge Type = "Archivo demasiado grande"
+	Authorization    Type = "Autorización"
+	BadRequest       Type = "Request Incorrecto"
+	Conflict         Type = "Conflicto"
+	Internal         Type = "Interno"
+	NotFound         Type = "No encontrado"
+	PayloadTooLarge  Type = "Archivo demasiado grande"
+	ServiceUnaviable Type = "Servicio inhabilitado"
 )
 
 type Error struct {
@@ -39,6 +40,8 @@ func (s *Error) Status() int {
 		return http.StatusNotFound
 	case PayloadTooLarge:
 		return http.StatusRequestEntityTooLarge
+	case ServiceUnaviable:
+		return http.StatusServiceUnavailable
 	default:
 		return http.StatusInternalServerError
 	}
