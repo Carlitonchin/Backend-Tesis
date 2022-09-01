@@ -13,12 +13,14 @@ import (
 type Handler struct {
 	UserService  model.UserService
 	TokenService model.TokenService
+	RoleService  model.RoleService
 }
 
 type Config struct {
 	R            *gin.Engine
 	UserService  model.UserService
 	TokenService model.TokenService
+	RoleService  model.RoleService
 	TimeOut      time.Duration
 }
 
@@ -26,6 +28,7 @@ func NewHandler(c *Config) {
 	h := &Handler{
 		UserService:  c.UserService,
 		TokenService: c.TokenService,
+		RoleService:  c.RoleService,
 	}
 	timeouterror := apperrors.NewError(apperrors.TimeOut, "El request demoró mucho en procesarse")
 	c.R.Use(middleware.Timeout(c.TimeOut, timeouterror))
