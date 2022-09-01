@@ -26,7 +26,7 @@ func seed(db *gorm.DB) {
 		erra := db.Create(&model.Role{Name: "Administrador"}).Error
 		errc := db.Create(&model.Role{Name: "Clasificador"}).Error
 
-		errf := db.First(&role).Error
+		errf := db.First(&role, "name = ?", "Administrador").Error
 
 		erru := db.Create(&model.User{
 			Email:    "admin@admin.com",
