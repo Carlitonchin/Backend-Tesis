@@ -10,4 +10,5 @@ type User struct {
 	Worker   bool   `json:"worker" gorm:"not null"`
 	Level    int    `json:"level"`
 	RoleID   uint   `json:"role"`
+	Role     *Role  `json:"-" gorm:"-"`
 }
