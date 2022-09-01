@@ -8,12 +8,18 @@ import (
 )
 
 type userRepository struct {
-	DB *gorm.DB
+	DB             *gorm.DB
+	roleRepository *roleRepository
 }
 
 func NewUserRepository(db *gorm.DB) model.UserRepository {
-	return &userRepository{
+	rp := &roleRepository{
 		DB: db,
+	}
+
+	return &userRepository{
+		DB:             db,
+		roleRepository: rp,
 	}
 }
 
@@ -35,5 +41,19 @@ func (s *userRepository) FindByEmail(ctx context.Context, email string) (*model.
 	var user model.User
 	tx := s.DB.Where("email = ?", email).First(&user)
 
-	return &user, tx.Error
+	if tx.Error != nil {
+		return nil, tx.Error
+	}
+
+	role, err := s.roleRepository.GetRoleById(ctx, user.RoleID)
+
+	if err != nil {
+		return nil, err
+	}
+
+	user.Role = &model.Role{
+		Name: role.Name,
+	}
+
+	return &user, nil
 }
