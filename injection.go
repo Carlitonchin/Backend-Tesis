@@ -77,12 +77,15 @@ func inject(data_source *dataSource) (*gin.Engine, error) {
 	}
 
 	token_service := service.NewTokenService(tsc)
+	role_repo := repository.NewRoleRepository(data_source.DB)
+	role_service := service.NewRoleService(role_repo)
 
 	c := handler.Config{
 		R:            router,
 		UserService:  user_serv,
 		TokenService: token_service,
 		TimeOut:      time.Duration(time.Duration(handlerTimeout) * time.Second),
+		RoleService:  role_service,
 	}
 
 	handler.NewHandler(&c)
