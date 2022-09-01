@@ -8,6 +8,6 @@ type User struct {
 	Name     string `json:"name" gorm:"unique;not null"`
 	Password string `json:"-" gorm:"not null"`
 	Level    int    `json:"level"`
-	RoleID   uint   `json:"role"`
-	Role     *Role  `json:"-" gorm:"-"`
+	RoleID   uint   `json:"role_id"`
+	Role     *Role  `json:"role" gorm:"-"`
 }
