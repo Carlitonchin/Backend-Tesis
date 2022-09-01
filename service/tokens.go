@@ -103,3 +103,27 @@ func validateIdToken(tokenString string, key *rsa.PublicKey) (*idTokenClaims, er
 
 	return claims, nil
 }
+
+func validateRefreshToken(refresh_token string, key string) (*refreshTokenClaims, error) {
+	claims := &refreshTokenClaims{}
+
+	token, err := jwt.ParseWithClaims(refresh_token, claims, func(token *jwt.Token) (interface{}, error) {
+		return []byte(key), nil
+	})
+
+	if err != nil {
+		return nil, err
+	}
+
+	if !token.Valid {
+		return nil, fmt.Errorf("Token inválido")
+	}
+
+	claims, ok := token.Claims.(*refreshTokenClaims)
+
+	if !ok {
+		fmt.Errorf("No se pudo parsear las claims del token")
+	}
+
+	return claims, nil
+}
