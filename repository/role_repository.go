@@ -24,3 +24,11 @@ func (s *roleRepository) GetRoles(ctx context.Context) ([]model.Role, error) {
 
 	return roles, err
 }
+
+func (s *roleRepository) GetRoleByName(ctx context.Context, role_name string) (*model.Role, error) {
+	var role model.Role
+
+	err := s.DB.First(&role, "name = ?", role_name).Error
+
+	return &role, err
+}
