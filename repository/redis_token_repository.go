@@ -6,6 +6,7 @@ import (
 	"time"
 
 	"github.com/Carlitonchin/Backend-Tesis/model"
+	"github.com/Carlitonchin/Backend-Tesis/model/apperrors"
 	"github.com/go-redis/redis/v8"
 )
 
@@ -32,7 +33,17 @@ func (s *redisTokenRepository) DeleteRefreshToken(ctx context.Context,
 	userId string, prevTokenId string) error {
 
 	key := fmt.Sprintf("%s:%s", userId, prevTokenId)
-	err := s.RedisClient.Del(ctx, key).Err()
+	result := s.RedisClient.Del(ctx, key)
 
-	return err
+	if result.Err() != nil {
+		return result.Err()
+	}
+
+	if result.Val() < 1 {
+		type_error := apperrors.Authorization
+		message := "Invalid Token"
+		return apperrors.NewError(type_error, message)
+	}
+
+	return nil
 }
