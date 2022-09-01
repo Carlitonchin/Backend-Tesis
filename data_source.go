@@ -28,6 +28,7 @@ func init_db() (*dataSource, error) {
 	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
 
 	if err == nil {
+		db.AutoMigrate(&model.Role{})
 		db.AutoMigrate(&model.User{})
 	} else {
 		log.Fatalf("Failed connection to postgres database, error: %v", err)
