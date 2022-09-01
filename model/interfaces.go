@@ -29,3 +29,7 @@ type TokenRepository interface {
 	DeleteRefreshToken(ctx context.Context, userId string, prevTokenId string) error
 	DeleteUserRefreshTokens(ctx context.Context, userId string) error
 }
+
+type RoleService interface {
+	GetRoles(ctx context.Context) ([]Role, error)
+}
