@@ -21,6 +21,7 @@ type TokenService interface {
 	GetNewPairFromUser(ctx context.Context, user *User, prevTokenId string) (*TokenPair, error)
 	ValidateIdToken(tokenString string) (*User, error)
 	ValidateRefreshToken(refresh_token string) (*RefreshToken, error)
+	SignOut(ctx context.Context, user_id uint) error
 }
 
 type TokenRepository interface {
