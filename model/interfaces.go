@@ -20,6 +20,7 @@ type UserRepository interface {
 type TokenService interface {
 	GetNewPairFromUser(ctx context.Context, user *User, prevTokenId string) (*TokenPair, error)
 	ValidateIdToken(tokenString string) (*User, error)
+	ValidateRefreshTocken(refresh_token string) (string, error)
 }
 
 type TokenRepository interface {
