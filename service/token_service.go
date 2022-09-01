@@ -65,7 +65,7 @@ func (s *tokenService) GetNewPairFromUser(
 		return nil, err
 	}
 
-	err = s.TokenRepository.SetNewRefreshToken(ctx, userId_str, id_token, refresh_token.ExipresIn)
+	err = s.TokenRepository.SetNewRefreshToken(ctx, userId_str, refresh_token.SS, refresh_token.ExipresIn)
 
 	if err != nil {
 		return nil, err
