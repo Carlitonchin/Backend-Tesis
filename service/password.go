@@ -18,7 +18,7 @@ func scrypt_options() (int, int, int, int) {
 	return N, r, p, key_length
 }
 
-func hashPass(pass string) (string, error) {
+func HashPass(pass string) (string, error) {
 	salt := make([]byte, 32)
 	_, err := rand.Read(salt)
 

@@ -27,7 +27,7 @@ func (s *userService) GetById(ctx context.Context, id uint) (*model.User, error)
 
 func (s *userService) SignUp(ctx context.Context, user *model.User) error {
 
-	hashed_pass, err := hashPass(user.Password)
+	hashed_pass, err := HashPass(user.Password)
 
 	if err != nil {
 		return err
