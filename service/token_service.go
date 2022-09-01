@@ -70,8 +70,12 @@ func (s *tokenService) GetNewPairFromUser(
 	}
 
 	return &model.TokenPair{
-		IDToken:      id_token,
-		RefreshToken: refresh_token.SS,
+		IDToken: model.IDToken{SS: id_token},
+		RefreshToken: model.RefreshToken{
+			ID:  refresh_token.ID,
+			UID: user.ID,
+			SS:  refresh_token.SS,
+		},
 	}, nil
 }
 
