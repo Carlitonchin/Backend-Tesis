@@ -46,7 +46,7 @@ type refreshToken struct {
 	ExipresIn time.Duration
 }
 
-type RefreshTokenClaims struct {
+type refreshTokenClaims struct {
 	ID uint
 	jwt.StandardClaims
 }
@@ -57,7 +57,7 @@ func generateRefreshToken(user_id uint, key string, expiresIn int64) (*refreshTo
 
 	tokenId := uint(rand.Uint64())
 
-	claims := &RefreshTokenClaims{
+	claims := &refreshTokenClaims{
 		ID: user_id,
 		StandardClaims: jwt.StandardClaims{
 			IssuedAt:  currentTime.Unix(),
