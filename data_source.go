@@ -24,8 +24,9 @@ func seed(db *gorm.DB) {
 	err := db.First(&role).Error
 
 	if err != nil {
-		erra := db.Create(&model.Role{Name: "Administrador"}).Error
-		errc := db.Create(&model.Role{Name: "Clasificador"}).Error
+		erra := db.Create(&model.Role{Name: os.Getenv("ROLE_ADMIN")}).Error
+		errc := db.Create(&model.Role{Name: os.Getenv("ROLE_DEFAULT_WORKER")}).Error
+		erre := db.Create(&model.Role{Name: os.Getenv("ROLE_DEFAULT_STUDENT")}).Error
 
 		errf := db.First(&role, "name = ?", "Administrador").Error
 
@@ -38,7 +39,7 @@ func seed(db *gorm.DB) {
 			RoleID:   role.ID,
 		}).Error
 
-		if erra != nil || errc != nil || erru != nil || errf != nil || errp != nil {
+		if erra != nil || errc != nil || erru != nil || errf != nil || errp != nil || erre != nil {
 			log.Fatal("Error seeding databbase")
 		}
 	}
