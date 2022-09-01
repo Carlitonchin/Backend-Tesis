@@ -1,7 +1,9 @@
 package handler
 
 import (
+	"fmt"
 	"net/http"
+	"os"
 
 	"github.com/Carlitonchin/Backend-Tesis/model"
 	"github.com/Carlitonchin/Backend-Tesis/model/apperrors"
@@ -28,7 +30,30 @@ func (s *Handler) signUp(ctx *gin.Context) {
 		Name:     req.UserName,
 	}
 
-	err := s.UserService.SignUp(ctx.Request.Context(), u)
+	default_role_name := os.Getenv("ROLE_DEFAULT_WORKER")
+
+	if req.Worker == "0" {
+		default_role_name = os.Getenv("ROLE_DEFAULT_STUDENT")
+	}
+
+	role, err := s.RoleService.GetRoleByName(ctx.Request.Context(), default_role_name)
+
+	if err != nil {
+		type_error := apperrors.Internal
+		message := fmt.Sprintf("Error buscando el rol %s en la base de datos", default_role_name)
+
+		e := apperrors.NewError(type_error, message)
+
+		ctx.JSON(e.Status(), gin.H{
+			"error": e,
+		})
+
+		return
+	}
+
+	u.RoleID = role.ID
+
+	err = s.UserService.SignUp(ctx.Request.Context(), u)
 
 	if err != nil {
 		ctx.JSON(apperrors.Status(err), gin.H{
