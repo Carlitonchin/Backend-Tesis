@@ -33,8 +33,10 @@ type TokenRepository interface {
 
 type RoleService interface {
 	GetRoles(ctx context.Context) ([]Role, error)
+	GetRoleByName(ctx context.Context, role_name string) (*Role, error)
 }
 
 type RoleRepository interface {
 	GetRoles(ctx context.Context) ([]Role, error)
+	GetRoleByName(ctx context.Context, role_name string) (*Role, error)
 }
