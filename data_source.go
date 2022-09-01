@@ -35,7 +35,6 @@ func seed(db *gorm.DB) {
 			Email:    "admin@admin.com",
 			Name:     "admin",
 			Password: hashed_pass,
-			Worker:   true,
 			RoleID:   role.ID,
 		}).Error
 

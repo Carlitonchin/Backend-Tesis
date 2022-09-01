@@ -26,7 +26,6 @@ func (s *Handler) signUp(ctx *gin.Context) {
 		Email:    req.Email,
 		Password: req.Pass,
 		Name:     req.UserName,
-		Worker:   req.Worker != "0",
 	}
 
 	err := s.UserService.SignUp(ctx.Request.Context(), u)
