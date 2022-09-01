@@ -44,6 +44,16 @@ func (s *tokenService) GetNewPairFromUser(
 	prevTokenId string) (*model.TokenPair, error) {
 
 	//function body starts here
+
+	userId_str := strconv.FormatUint(uint64(user.ID), 10)
+	if prevTokenId != "" {
+		err := s.TokenRepository.DeleteRefreshToken(ctx, userId_str, prevTokenId)
+
+		if err != nil {
+			return nil, err
+		}
+	}
+
 	id_token, err := generateIDToken(user, s.PrivateKey, s.IDExipirationSec)
 	if err != nil {
 		return nil, err
@@ -54,19 +64,11 @@ func (s *tokenService) GetNewPairFromUser(
 	if err != nil {
 		return nil, err
 	}
-	userId_str := strconv.FormatUint(uint64(user.ID), 10)
+
 	err = s.TokenRepository.SetNewRefreshToken(ctx, userId_str, id_token, refresh_token.ExipresIn)
 
 	if err != nil {
 		return nil, err
-	}
-
-	if prevTokenId != "" {
-		err = s.TokenRepository.DeleteRefreshToken(ctx, userId_str, prevTokenId)
-
-		if err != nil {
-			return nil, err
-		}
 	}
 
 	return &model.TokenPair{
