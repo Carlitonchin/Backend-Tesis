@@ -92,3 +92,21 @@ func (s *tokenService) ValidateIdToken(tokenString string) (*model.User, error) 
 
 	return claims.User, nil
 }
+
+func (s *tokenService) ValidateRefreshToken(refresh_token string) (*model.RefreshToken, error) {
+	claims, err := validateRefreshToken(refresh_token, s.RefreshSecret)
+
+	if err != nil {
+		type_error := apperrors.Authorization
+		message := "Token invalido"
+
+		e := apperrors.NewError(type_error, message)
+		return nil, e
+	}
+
+	return &model.RefreshToken{
+		ID:  claims.Id,
+		UID: claims.ID,
+		SS:  refresh_token,
+	}, nil
+}
