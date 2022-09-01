@@ -15,6 +15,7 @@ import (
 
 type idTokenClaims struct {
 	User *model.User `json:"user"`
+	Role *model.Role `json:"role"`
 	jwt.StandardClaims
 }
 
