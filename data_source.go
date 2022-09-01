@@ -17,6 +17,31 @@ type dataSource struct {
 	RedisClient *redis.Client
 }
 
+func seed(db *gorm.DB) {
+	var role *model.Role
+
+	err := db.First(&role).Error
+
+	if err != nil {
+		erra := db.Create(&model.Role{Name: "Administrador"}).Error
+		errc := db.Create(&model.Role{Name: "Clasificador"}).Error
+
+		errf := db.First(&role).Error
+
+		erru := db.Create(&model.User{
+			Email:    "admin@admin.com",
+			Name:     "admin",
+			Password: "administrador",
+			Worker:   true,
+			RoleID:   role.ID,
+		}).Error
+
+		if erra != nil || errc != nil || erru != nil || errf != nil {
+			log.Fatal("Error seeding databbase")
+		}
+	}
+}
+
 func init_db() (*dataSource, error) {
 	db_host := os.Getenv("DB_HOST")
 	db_port := os.Getenv("DB_PORT")
@@ -30,6 +55,7 @@ func init_db() (*dataSource, error) {
 	if err == nil {
 		db.AutoMigrate(&model.Role{})
 		db.AutoMigrate(&model.User{})
+		seed(db)
 	} else {
 		log.Fatalf("Failed connection to postgres database, error: %v", err)
 	}
