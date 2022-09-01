@@ -47,3 +47,30 @@ func (s *redisTokenRepository) DeleteRefreshToken(ctx context.Context,
 
 	return nil
 }
+
+func (s *redisTokenRepository) DeleteUserRefreshTokens(ctx context.Context, userId string) error {
+	pattern := fmt.Sprintf("%s*", userId)
+
+	iter := s.RedisClient.Scan(ctx, 0, pattern, 5).Iterator()
+
+	fail := false
+
+	for iter.Next(ctx) {
+		if err := s.RedisClient.Del(ctx, iter.Val()).Err(); err != nil {
+			fail = true
+		}
+	}
+
+	if err := iter.Err(); err != nil {
+		fail = true
+	}
+
+	if fail {
+		type_error := apperrors.Internal
+		message := "Error interno al cerrar sesion del usuario"
+
+		return apperrors.NewError(type_error, message)
+	}
+
+	return nil
+}
