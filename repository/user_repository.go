@@ -33,6 +33,16 @@ func (s *userRepository) FindById(ctx context.Context, id uint) (*model.User, er
 		return nil, err
 	}
 
+	role, err := s.GetRoleById(ctx, user.RoleID)
+
+	if err != nil {
+		return nil, err
+	}
+
+	user.Role = &model.Role{
+		Name: role.Name,
+	}
+
 	return &user, nil
 }
 
@@ -40,6 +50,10 @@ func (s *userRepository) GetRoleById(ctx context.Context, id uint) (*model.Role,
 	var role *model.Role
 
 	err := s.DB.First(&role, id).Error
+
+	if err != nil {
+		return nil, err
+	}
 
 	return role, err
 }
