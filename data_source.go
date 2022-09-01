@@ -7,6 +7,7 @@ import (
 	"os"
 
 	"github.com/Carlitonchin/Backend-Tesis/model"
+	"github.com/Carlitonchin/Backend-Tesis/service"
 	"github.com/go-redis/redis/v8"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
@@ -28,15 +29,17 @@ func seed(db *gorm.DB) {
 
 		errf := db.First(&role, "name = ?", "Administrador").Error
 
+		hashed_pass, errp := service.HashPass("administrador")
+
 		erru := db.Create(&model.User{
 			Email:    "admin@admin.com",
 			Name:     "admin",
-			Password: "administrador",
+			Password: hashed_pass,
 			Worker:   true,
 			RoleID:   role.ID,
 		}).Error
 
-		if erra != nil || errc != nil || erru != nil || errf != nil {
+		if erra != nil || errc != nil || erru != nil || errf != nil || errp != nil {
 			log.Fatal("Error seeding databbase")
 		}
 	}
