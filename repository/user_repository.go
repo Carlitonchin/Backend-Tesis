@@ -8,18 +8,13 @@ import (
 )
 
 type userRepository struct {
-	DB             *gorm.DB
-	roleRepository *roleRepository
+	DB *gorm.DB
 }
 
 func NewUserRepository(db *gorm.DB) model.UserRepository {
-	rp := &roleRepository{
-		DB: db,
-	}
 
 	return &userRepository{
-		DB:             db,
-		roleRepository: rp,
+		DB: db,
 	}
 }
 
@@ -32,9 +27,21 @@ func (s *userRepository) Create(ctx context.Context, user *model.User) error {
 func (s *userRepository) FindById(ctx context.Context, id uint) (*model.User, error) {
 	var user model.User
 
-	result := s.DB.First(&user, id)
+	err := s.DB.First(&user, id).Error
 
-	return &user, result.Error
+	if err != nil {
+		return nil, err
+	}
+
+	return &user, nil
+}
+
+func (s *userRepository) GetRoleById(ctx context.Context, id uint) (*model.Role, error) {
+	var role *model.Role
+
+	err := s.DB.First(&role, id).Error
+
+	return role, err
 }
 
 func (s *userRepository) FindByEmail(ctx context.Context, email string) (*model.User, error) {
@@ -45,7 +52,7 @@ func (s *userRepository) FindByEmail(ctx context.Context, email string) (*model.
 		return nil, tx.Error
 	}
 
-	role, err := s.roleRepository.GetRoleById(ctx, user.RoleID)
+	role, err := s.GetRoleById(ctx, user.RoleID)
 
 	if err != nil {
 		return nil, err

@@ -15,6 +15,7 @@ type UserRepository interface {
 	FindById(ctx context.Context, id uint) (*User, error)
 	Create(ctx context.Context, user *User) error
 	FindByEmail(ctx context.Context, email string) (*User, error)
+	GetRoleById(ctx context.Context, id uint) (*Role, error)
 }
 
 type TokenService interface {
@@ -32,8 +33,4 @@ type TokenRepository interface {
 
 type RoleService interface {
 	GetRoles(ctx context.Context) ([]Role, error)
-}
-
-type RoleRepository interface {
-	GetRoleById(ctx context.Context, id uint) (*Role, error)
 }
