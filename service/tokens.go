@@ -122,7 +122,7 @@ func validateRefreshToken(refresh_token string, key string) (*refreshTokenClaims
 	claims, ok := token.Claims.(*refreshTokenClaims)
 
 	if !ok {
-		fmt.Errorf("No se pudo parsear las claims del token")
+		return nil, fmt.Errorf("No se pudo parsear las claims del token")
 	}
 
 	return claims, nil
