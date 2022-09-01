@@ -35,6 +35,7 @@ func NewHandler(c *Config) {
 	g.POST("/signup", h.signUp)
 	g.GET("/me", middleware.AuthUser(h.TokenService), h.me)
 	g.POST("/signin", h.signin)
+	g.POST("/signout", middleware.AuthUser(h.TokenService), h.signout)
 	g.POST("/tokens", h.tokens)
 }
 
