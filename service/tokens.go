@@ -13,7 +13,7 @@ import (
 
 //-------------------- ID TOKEN ------------------------------
 
-type IDTokenClaims struct {
+type idTokenClaims struct {
 	User *model.User `json:"user"`
 	jwt.StandardClaims
 }
@@ -22,7 +22,7 @@ func generateIDToken(user *model.User, key *rsa.PrivateKey, expiredIn int64) (st
 	now := time.Now().Unix()
 	expired_time := now + expiredIn
 
-	claims := &IDTokenClaims{
+	claims := &idTokenClaims{
 		User: user,
 		StandardClaims: jwt.StandardClaims{
 			IssuedAt:  now,
@@ -40,7 +40,7 @@ func generateIDToken(user *model.User, key *rsa.PrivateKey, expiredIn int64) (st
 //-------------------END IDTOKEN ----------------------
 
 // --------------- Refresh token --------------------------
-type RefreshToken struct {
+type refreshToken struct {
 	ID        string
 	SS        string
 	ExipresIn time.Duration
@@ -51,7 +51,7 @@ type RefreshTokenClaims struct {
 	jwt.StandardClaims
 }
 
-func generateRefreshToken(user_id uint, key string, expiresIn int64) (*RefreshToken, error) {
+func generateRefreshToken(user_id uint, key string, expiresIn int64) (*refreshToken, error) {
 	currentTime := time.Now()
 	tokenExp := currentTime.Add(time.Duration(expiresIn) * time.Second)
 
@@ -73,15 +73,15 @@ func generateRefreshToken(user_id uint, key string, expiresIn int64) (*RefreshTo
 		return nil, err
 	}
 
-	return &RefreshToken{
+	return &refreshToken{
 		ID:        strconv.FormatUint(uint64(tokenId), 10),
 		SS:        ss,
 		ExipresIn: tokenExp.Sub(currentTime),
 	}, nil
 }
 
-func validateIdToken(tokenString string, key *rsa.PublicKey) (*IDTokenClaims, error) {
-	claims := &IDTokenClaims{}
+func validateIdToken(tokenString string, key *rsa.PublicKey) (*idTokenClaims, error) {
+	claims := &idTokenClaims{}
 
 	token, err := jwt.ParseWithClaims(tokenString, claims, func(token *jwt.Token) (interface{}, error) {
 		return key, nil
@@ -95,7 +95,7 @@ func validateIdToken(tokenString string, key *rsa.PublicKey) (*IDTokenClaims, er
 		return nil, fmt.Errorf("Token invalido")
 	}
 
-	claims, ok := token.Claims.(*IDTokenClaims)
+	claims, ok := token.Claims.(*idTokenClaims)
 
 	if !ok {
 		return nil, fmt.Errorf("No se pudo parsear los claims")
