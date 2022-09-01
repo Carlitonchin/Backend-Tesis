@@ -112,3 +112,7 @@ func (s *tokenService) ValidateRefreshToken(refresh_token string) (*model.Refres
 		SS:  refresh_token,
 	}, nil
 }
+
+func (s *tokenService) SignOut(ctx context.Context, user_id uint) error {
+	return s.TokenRepository.DeleteUserRefreshTokens(ctx, strconv.FormatUint(uint64(user_id), 10))
+}
