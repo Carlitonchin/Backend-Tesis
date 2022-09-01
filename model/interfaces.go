@@ -27,4 +27,5 @@ type TokenService interface {
 type TokenRepository interface {
 	SetNewRefreshToken(ctx context.Context, userId string, tokenId string, expiresIn time.Duration) error
 	DeleteRefreshToken(ctx context.Context, userId string, prevTokenId string) error
+	DeleteUserRefreshTokens(ctx context.Context, userId string) error
 }
