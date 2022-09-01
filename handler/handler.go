@@ -40,6 +40,7 @@ func NewHandler(c *Config) {
 	g.POST("/signin", h.signin)
 	g.POST("/signout", middleware.AuthUser(h.TokenService), h.signout)
 	g.POST("/tokens", h.tokens)
+	g.GET("/roles", h.getAllRoles)
 }
 
 func (s *Handler) index(ctx *gin.Context) {
