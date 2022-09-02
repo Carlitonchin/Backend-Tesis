@@ -2,8 +2,10 @@ package repository
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/Carlitonchin/Backend-Tesis/model"
+	"github.com/Carlitonchin/Backend-Tesis/model/apperrors"
 	"gorm.io/gorm"
 )
 
@@ -108,4 +110,18 @@ func (s *userRepository) GetAllUsers(ctx context.Context) ([]model.User, error) 
 	}
 
 	return users, err
+}
+
+func (s *userRepository) AddRoleToUser(ctx context.Context, user_id uint, role_id uint) error {
+	err := s.DB.First(&model.Role{}, role_id).Error
+
+	if err != nil {
+		type_error := apperrors.Conflict
+		message := fmt.Sprintf("El rol con identificador '%v' no existe", role_id)
+
+		e := apperrors.NewError(type_error, message)
+		return e
+	}
+
+	return s.DB.Model(&model.User{}).Where("id = ?", user_id).Update("role_id", role_id).Error
 }
