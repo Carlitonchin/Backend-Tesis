@@ -74,3 +74,7 @@ func (s *userService) SignIn(ctx context.Context, user *model.User) error {
 	return nil
 
 }
+
+func (s *userService) GetAllUsers(ctx context.Context) ([]model.User, error) {
+	return s.UserRepository.GetAllUsers(ctx)
+}
