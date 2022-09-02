@@ -10,6 +10,7 @@ type UserService interface {
 	SignUp(ctx context.Context, user *User) error
 	SignIn(ctx context.Context, user *User) error
 	GetAllUsers(ctx context.Context) ([]User, error)
+	AddRoleToUser(ctx context.Context, user_id uint, role_id uint) error
 }
 
 type UserRepository interface {
@@ -18,6 +19,7 @@ type UserRepository interface {
 	FindByEmail(ctx context.Context, email string) (*User, error)
 	GetRoleById(ctx context.Context, id uint) (*Role, error)
 	GetAllUsers(ctx context.Context) ([]User, error)
+	AddRoleToUser(ctx context.Context, user_id uint, role_id uint) error
 }
 
 type TokenService interface {
