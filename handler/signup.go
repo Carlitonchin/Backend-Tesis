@@ -52,6 +52,9 @@ func (s *Handler) signUp(ctx *gin.Context) {
 	}
 
 	u.RoleID = role.ID
+	u.Role = &model.Role{
+		Name: role.Name,
+	}
 
 	err = s.UserService.SignUp(ctx.Request.Context(), u)
 
