@@ -33,14 +33,14 @@ func NewHandler(c *Config) {
 	timeouterror := apperrors.NewError(apperrors.TimeOut, "El request demoró mucho en procesarse")
 	c.R.Use(middleware.Timeout(c.TimeOut, timeouterror))
 	g := c.R.Group("api/account")
-
 	g.GET("/", h.index)
 	g.POST("/signup", h.signUp)
 	g.GET("/me", middleware.AuthUser(h.TokenService), h.me)
 	g.POST("/signin", h.signin)
 	g.POST("/signout", middleware.AuthUser(h.TokenService), h.signout)
 	g.POST("/tokens", h.tokens)
-	g.GET("/roles", h.getAllRoles)
+
+	g.GET("/roles", middleware.AuthUser(h.TokenService), middleware.OnlyAdmin(), h.getAllRoles)
 }
 
 func (s *Handler) index(ctx *gin.Context) {
