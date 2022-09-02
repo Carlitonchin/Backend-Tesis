@@ -15,10 +15,6 @@ func GetUser(ctx *gin.Context) (*model.User, error) {
 
 		err := apperrors.NewError(type_error, message)
 
-		ctx.JSON(err.Status(), gin.H{
-			"error": err,
-		})
-
 		return nil, err
 	}
 

@@ -12,6 +12,9 @@ func OnlyAdmin() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		user, err := util.GetUser(ctx)
 		if err != nil {
+			ctx.JSON(apperrors.Status(err), gin.H{
+				"error": err,
+			})
 			ctx.Abort()
 			return
 		}
