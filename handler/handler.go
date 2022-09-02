@@ -1,7 +1,6 @@
 package handler
 
 import (
-	"net/http"
 	"time"
 
 	"github.com/Carlitonchin/Backend-Tesis/handler/middleware"
@@ -32,20 +31,15 @@ func NewHandler(c *Config) {
 	}
 	timeouterror := apperrors.NewError(apperrors.TimeOut, "El request demoró mucho en procesarse")
 	c.R.Use(middleware.Timeout(c.TimeOut, timeouterror))
-	g := c.R.Group("api/account")
-	g.GET("/", h.index)
-	g.POST("/signup", h.signUp)
-	g.GET("/me", middleware.AuthUser(h.TokenService), h.me)
-	g.POST("/signin", h.signin)
-	g.POST("/signout", middleware.AuthUser(h.TokenService), h.signout)
-	g.POST("/tokens", h.tokens)
+	account := c.R.Group("api/account")
 
-	g.GET("/roles", middleware.AuthUser(h.TokenService), middleware.OnlyAdmin(), h.getAllRoles)
-}
+	account.POST("/signup", h.signUp)
+	account.GET("/me", middleware.AuthUser(h.TokenService), h.me)
+	account.POST("/signin", h.signin)
+	account.POST("/signout", middleware.AuthUser(h.TokenService), h.signout)
+	account.POST("/tokens", h.tokens)
 
-func (s *Handler) index(ctx *gin.Context) {
-	time.Sleep(10 * time.Second)
-	ctx.JSON(http.StatusOK, gin.H{
-		"hello": "world",
-	})
+	signedIn := c.R.Group("api")
+
+	signedIn.GET("/roles", middleware.AuthUser(h.TokenService), middleware.OnlyAdmin(), h.getAllRoles)
 }
