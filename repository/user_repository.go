@@ -82,7 +82,30 @@ func (s *userRepository) FindByEmail(ctx context.Context, email string) (*model.
 func (s *userRepository) GetAllUsers(ctx context.Context) ([]model.User, error) {
 	var users []model.User
 
-	err := s.DB.Find(&users).Error
+	rows, err := s.DB.Table("users").Select("users.id, users.name, users.email, users.role_id, roles.name").Joins("left join roles on users.role_id = roles.id").Rows()
+	for rows.Next() {
+		var user_id uint
+		var user_name string
+		var user_email string
+
+		var role_id uint
+		var role_name string
+
+		rows.Scan(&user_id, &user_name, &user_email, &role_id, &role_name)
+		role := &model.Role{
+			Name: role_name,
+		}
+		role.ID = role_id
+
+		u := model.User{
+			Email:  user_email,
+			Name:   user_name,
+			RoleID: role_id,
+			Role:   role,
+		}
+		u.ID = user_id
+		users = append(users, u)
+	}
 
 	return users, err
 }
