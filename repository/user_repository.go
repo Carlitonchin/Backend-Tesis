@@ -78,3 +78,11 @@ func (s *userRepository) FindByEmail(ctx context.Context, email string) (*model.
 
 	return &user, nil
 }
+
+func (s *userRepository) GetAllUsers(ctx context.Context) ([]model.User, error) {
+	var users []model.User
+
+	err := s.DB.Find(&users).Error
+
+	return users, err
+}
