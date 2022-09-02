@@ -43,4 +43,5 @@ func NewHandler(c *Config) {
 	signedIn.Use(middleware.AuthUser(h.TokenService))
 
 	signedIn.GET("/roles", middleware.OnlyAdmin(), h.getAllRoles)
+	signedIn.GET("/users", middleware.OnlyAdmin(), h.getAllRoles)
 }
