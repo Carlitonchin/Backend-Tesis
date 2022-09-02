@@ -40,6 +40,7 @@ func NewHandler(c *Config) {
 	account.POST("/tokens", h.tokens)
 
 	signedIn := c.R.Group("api")
+	signedIn.Use(middleware.AuthUser(h.TokenService))
 
-	signedIn.GET("/roles", middleware.AuthUser(h.TokenService), middleware.OnlyAdmin(), h.getAllRoles)
+	signedIn.GET("/roles", middleware.OnlyAdmin(), h.getAllRoles)
 }
