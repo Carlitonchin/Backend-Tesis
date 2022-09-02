@@ -78,3 +78,10 @@ func (s *userService) SignIn(ctx context.Context, user *model.User) error {
 func (s *userService) GetAllUsers(ctx context.Context) ([]model.User, error) {
 	return s.UserRepository.GetAllUsers(ctx)
 }
+
+func (s *userService) AddRoleToUser(ctx context.Context, user_id uint, role_id uint) error {
+
+	err := s.UserRepository.AddRoleToUser(ctx, user_id, role_id)
+
+	return err
+}
