@@ -123,5 +123,15 @@ func (s *userRepository) AddRoleToUser(ctx context.Context, user_id uint, role_i
 		return e
 	}
 
-	return s.DB.Model(&model.User{}).Where("id = ?", user_id).Update("role_id", role_id).Error
+	err = s.DB.Model(&model.User{}).Where("id = ?", user_id).Update("role_id", role_id).Error
+
+	if err != nil {
+		type_error := apperrors.Conflict
+		message := fmt.Sprintf("El usuario con identificador '%v' no existe", user_id)
+
+		e := apperrors.NewError(type_error, message)
+		return e
+	}
+
+	return nil
 }
