@@ -4,5 +4,5 @@ import "gorm.io/gorm"
 
 type Status struct {
 	gorm.Model
-	Description string `json:"description" gorm:"required"`
+	Description string `json:"description" gorm:"unique;not null"`
 }
