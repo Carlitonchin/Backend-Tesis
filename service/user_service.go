@@ -85,3 +85,10 @@ func (s *userService) AddRoleToUser(ctx context.Context, user_id uint, role_id u
 
 	return err
 }
+
+func (s *userService) AddQuestion(
+	ctx context.Context, user *model.User, question *model.Question) (
+	*model.Question, error) {
+
+	return s.UserRepository.CreateQuestion(ctx, user, question)
+}
