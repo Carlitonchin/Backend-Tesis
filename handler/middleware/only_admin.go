@@ -3,14 +3,14 @@ package middleware
 import (
 	"os"
 
-	"github.com/Carlitonchin/Backend-Tesis/handler/util"
+	"github.com/Carlitonchin/Backend-Tesis/handler/handler_utils"
 	"github.com/Carlitonchin/Backend-Tesis/model/apperrors"
 	"github.com/gin-gonic/gin"
 )
 
 func OnlyAdmin() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
-		user, err := util.GetUser(ctx)
+		user, err := handler_utils.GetUser(ctx)
 		if err != nil {
 			ctx.JSON(apperrors.Status(err), gin.H{
 				"error": err,

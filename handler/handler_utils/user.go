@@ -1,4 +1,4 @@
-package util
+package handler_utils
 
 import (
 	"github.com/Carlitonchin/Backend-Tesis/model"
