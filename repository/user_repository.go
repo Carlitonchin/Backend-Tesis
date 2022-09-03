@@ -135,3 +135,19 @@ func (s *userRepository) AddRoleToUser(ctx context.Context, user_id uint, role_i
 
 	return nil
 }
+
+func (s *userRepository) CreateQuestion(
+	ctx context.Context, question *model.Question) (
+	*model.Question, error) {
+
+	err := s.DB.Create(question).Error
+
+	if err != nil {
+		type_error := apperrors.Internal
+		message := "Ocurrio un error mientras se insertaba la pregunta en la base de datos"
+
+		e := apperrors.NewError(type_error, message)
+		return nil, e
+	}
+	return question, nil
+}
