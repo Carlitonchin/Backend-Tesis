@@ -87,8 +87,8 @@ func (s *userService) AddRoleToUser(ctx context.Context, user_id uint, role_id u
 }
 
 func (s *userService) AddQuestion(
-	ctx context.Context, user *model.User, question *model.Question) (
+	ctx context.Context, question *model.Question) (
 	*model.Question, error) {
 
-	return s.UserRepository.CreateQuestion(ctx, user, question)
+	return s.UserRepository.CreateQuestion(ctx, question)
 }
