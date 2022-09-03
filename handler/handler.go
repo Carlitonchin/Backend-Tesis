@@ -45,4 +45,5 @@ func NewHandler(c *Config) {
 	signedIn.GET("/roles", middleware.OnlyAdmin(), h.getAllRoles)
 	signedIn.GET("/users", middleware.OnlyAdmin(), h.getAllUsers)
 	signedIn.PUT("/users/update-role", middleware.OnlyAdmin(), h.updateUserRole)
+	signedIn.POST("/add-question", h.addQuestion)
 }
