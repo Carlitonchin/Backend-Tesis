@@ -20,3 +20,9 @@ func GetUser(ctx *gin.Context) (*model.User, error) {
 
 	return user.(*model.User), nil
 }
+
+func SendErrorResponse(ctx *gin.Context, err error) {
+	ctx.JSON(apperrors.Status(err), gin.H{
+		"errror": err,
+	})
+}
