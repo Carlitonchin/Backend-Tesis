@@ -19,6 +19,7 @@ func seed(db *gorm.DB) {
 		seedRoles(db)
 		seedUsers(db)
 		seedStatus(db)
+		seedQuestions(db)
 	}
 }
 
@@ -91,6 +92,10 @@ func seedStatus(db *gorm.DB) {
 	if atLeastOneError(err1, err2, err3, err4, err5, err6) {
 		log.Fatal("Error seeding status")
 	}
+}
+
+func seedQuestions(db *gorm.DB) {
+	db.AutoMigrate(&model.Question{})
 }
 
 func atLeastOneError(errors ...error) bool {
