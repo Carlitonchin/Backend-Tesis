@@ -11,7 +11,7 @@ type UserService interface {
 	SignIn(ctx context.Context, user *User) error
 	GetAllUsers(ctx context.Context) ([]User, error)
 	AddRoleToUser(ctx context.Context, user_id uint, role_id uint) error
-	AddQuestion(ctx context.Context, user *User, question *Question) (*Question, error)
+	AddQuestion(ctx context.Context, question *Question) (*Question, error)
 }
 
 type UserRepository interface {
@@ -21,7 +21,7 @@ type UserRepository interface {
 	GetRoleById(ctx context.Context, id uint) (*Role, error)
 	GetAllUsers(ctx context.Context) ([]User, error)
 	AddRoleToUser(ctx context.Context, user_id uint, role_id uint) error
-	CreateQuestion(ctx context.Context, user *User, question *Question) (*Question, error)
+	CreateQuestion(ctx context.Context, question *Question) (*Question, error)
 }
 
 type TokenService interface {
