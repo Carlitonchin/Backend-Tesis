@@ -92,3 +92,7 @@ func (s *userService) AddQuestion(
 
 	return s.UserRepository.CreateQuestion(ctx, question)
 }
+
+func (s *userService) UpdateUserArea(ctx context.Context, user_id uint, area_id uint) error {
+	return s.UserRepository.UpdateUserArea(ctx, user_id, area_id)
+}
