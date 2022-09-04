@@ -153,7 +153,7 @@ func (s *userRepository) CreateQuestion(
 }
 
 func (s *userRepository) UpdateUserArea(ctx context.Context, user_id uint, area_id uint) error {
-	err := s.DB.Model(&model.User{}).Where("id = ?", user_id).Update("role_id", area_id).Error
+	err := s.DB.Model(&model.User{}).Where("id = ?", user_id).Update("area_id", area_id).Error
 
 	if err != nil {
 		type_error := apperrors.Conflict
