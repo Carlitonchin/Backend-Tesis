@@ -80,12 +80,16 @@ func inject(data_source *dataSource) (*gin.Engine, error) {
 	role_repo := repository.NewRoleRepository(data_source.DB)
 	role_service := service.NewRoleService(role_repo)
 
+	area_repo := repository.NewAreaRepository(data_source.DB)
+	area_serv := service.NewAreaService(area_repo)
+
 	c := handler.Config{
 		R:            router,
 		UserService:  user_serv,
 		TokenService: token_service,
 		TimeOut:      time.Duration(time.Duration(handlerTimeout) * time.Second),
 		RoleService:  role_service,
+		AreaService:  area_serv,
 	}
 
 	handler.NewHandler(&c)

@@ -13,6 +13,7 @@ type Handler struct {
 	UserService  model.UserService
 	TokenService model.TokenService
 	RoleService  model.RoleService
+	AreaService  model.AreaService
 }
 
 type Config struct {
@@ -20,6 +21,7 @@ type Config struct {
 	UserService  model.UserService
 	TokenService model.TokenService
 	RoleService  model.RoleService
+	AreaService  model.AreaService
 	TimeOut      time.Duration
 }
 
@@ -28,6 +30,7 @@ func NewHandler(c *Config) {
 		UserService:  c.UserService,
 		TokenService: c.TokenService,
 		RoleService:  c.RoleService,
+		AreaService:  c.AreaService,
 	}
 	timeouterror := apperrors.NewError(apperrors.TimeOut, "El request demoró mucho en procesarse")
 	c.R.Use(middleware.Timeout(c.TimeOut, timeouterror))
@@ -45,5 +48,6 @@ func NewHandler(c *Config) {
 	signedIn.GET("/roles", middleware.OnlyRoles([]string{"ROLE_ADMIN"}), h.getAllRoles)
 	signedIn.GET("/users", middleware.OnlyRoles([]string{"ROLE_ADMIN"}), h.getAllUsers)
 	signedIn.PUT("/users/update-role", middleware.OnlyRoles([]string{"ROLE_ADMIN"}), h.updateUserRole)
-	signedIn.POST("/add-question", middleware.OnlyRoles([]string{"ROLE_DEFAULT_STUDENT"}), h.addQuestion)
+	signedIn.POST("/questions/add", middleware.OnlyRoles([]string{"ROLE_DEFAULT_STUDENT"}), h.addQuestion)
+	signedIn.POST("areas/add", middleware.OnlyRoles([]string{"ROLE_ADMIN"}), nil)
 }
