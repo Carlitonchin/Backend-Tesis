@@ -9,5 +9,7 @@ type User struct {
 	Password  string     `json:"-" gorm:"not null"`
 	RoleID    uint       `json:"role_id"`
 	Role      *Role      `json:"role" gorm:"-"`
+	AreaID    uint       `json:"area_id"`
+	Area      *Area      `json:"area" gorm:"-"`
 	Questions []Question `json:"-" gorm:"foreignKey:UserRefer"`
 }
