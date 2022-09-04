@@ -151,3 +151,15 @@ func (s *userRepository) CreateQuestion(
 	}
 	return question, nil
 }
+
+func (s *userRepository) UpdateUserArea(ctx context.Context, user_id uint, area_id uint) error {
+	err := s.DB.Model(&model.User{}).Where("id = ?", user_id).Update("role_id", area_id).Error
+
+	if err != nil {
+		type_error := apperrors.Conflict
+		message := fmt.Sprintf("No se pudo encontrar el usuario con id %v o el area con id %v", user_id, area_id)
+		err = apperrors.NewError(type_error, message)
+	}
+
+	return err
+}
