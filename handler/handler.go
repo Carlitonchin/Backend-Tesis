@@ -10,27 +10,30 @@ import (
 )
 
 type Handler struct {
-	UserService  model.UserService
-	TokenService model.TokenService
-	RoleService  model.RoleService
-	AreaService  model.AreaService
+	UserService     model.UserService
+	TokenService    model.TokenService
+	RoleService     model.RoleService
+	AreaService     model.AreaService
+	QuestionService model.QuestionService
 }
 
 type Config struct {
-	R            *gin.Engine
-	UserService  model.UserService
-	TokenService model.TokenService
-	RoleService  model.RoleService
-	AreaService  model.AreaService
-	TimeOut      time.Duration
+	R               *gin.Engine
+	UserService     model.UserService
+	TokenService    model.TokenService
+	RoleService     model.RoleService
+	AreaService     model.AreaService
+	TimeOut         time.Duration
+	QuestionService model.QuestionService
 }
 
 func NewHandler(c *Config) {
 	h := &Handler{
-		UserService:  c.UserService,
-		TokenService: c.TokenService,
-		RoleService:  c.RoleService,
-		AreaService:  c.AreaService,
+		UserService:     c.UserService,
+		TokenService:    c.TokenService,
+		RoleService:     c.RoleService,
+		AreaService:     c.AreaService,
+		QuestionService: c.QuestionService,
 	}
 	timeouterror := apperrors.NewError(apperrors.TimeOut, "El request demoró mucho en procesarse")
 	c.R.Use(middleware.Timeout(c.TimeOut, timeouterror))
