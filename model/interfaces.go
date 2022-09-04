@@ -12,6 +12,7 @@ type UserService interface {
 	GetAllUsers(ctx context.Context) ([]User, error)
 	AddRoleToUser(ctx context.Context, user_id uint, role_id uint) error
 	AddQuestion(ctx context.Context, question *Question) (*Question, error)
+	UpdateUserRole(ctx context.Context, user_id uint, area_id uint) error
 }
 
 type UserRepository interface {
@@ -21,6 +22,7 @@ type UserRepository interface {
 	GetAllUsers(ctx context.Context) ([]User, error)
 	AddRoleToUser(ctx context.Context, user_id uint, role_id uint) error
 	CreateQuestion(ctx context.Context, question *Question) (*Question, error)
+	UpdateUserArea(ctx context.Context, user_id uint, area_id uint) error
 }
 
 type TokenService interface {
