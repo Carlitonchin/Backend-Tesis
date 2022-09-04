@@ -12,7 +12,7 @@ type areaReq struct {
 	Name string `json:"name" binding:"required"`
 }
 
-func (h *Handler) AddArea(ctx *gin.Context) {
+func (h *Handler) addArea(ctx *gin.Context) {
 	var req areaReq
 	if ok := bindData(ctx, &req); !ok {
 		return
