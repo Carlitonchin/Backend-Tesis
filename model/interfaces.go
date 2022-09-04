@@ -46,3 +46,11 @@ type RoleRepository interface {
 	GetRoles(ctx context.Context) ([]Role, error)
 	GetRoleByName(ctx context.Context, role_name string) (*Role, error)
 }
+
+type AreaService interface {
+	AddArea(ctx context.Context, area *Area) (*Area, error)
+}
+
+type AreaRepository interface {
+	CreateArea(ctx context.Context, area *Area) (*Area, error)
+}
