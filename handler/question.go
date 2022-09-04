@@ -40,7 +40,7 @@ func (h *Handler) addQuestion(ctx *gin.Context) {
 		StatusId:  status_id,
 	}
 
-	question, err = h.UserService.AddQuestion(ctx.Request.Context(), question)
+	question, err = h.QuestionService.AddQuestion(ctx.Request.Context(), question)
 
 	if err != nil {
 		handler_utils.SendErrorResponse(ctx, err)

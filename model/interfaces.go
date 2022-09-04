@@ -11,7 +11,6 @@ type UserService interface {
 	SignIn(ctx context.Context, user *User) error
 	GetAllUsers(ctx context.Context) ([]User, error)
 	AddRoleToUser(ctx context.Context, user_id uint, role_id uint) error
-	AddQuestion(ctx context.Context, question *Question) (*Question, error)
 	UpdateUserArea(ctx context.Context, user_id uint, area_id uint) error
 }
 
@@ -21,7 +20,6 @@ type UserRepository interface {
 	FindByEmail(ctx context.Context, email string) (*User, error)
 	GetAllUsers(ctx context.Context) ([]User, error)
 	AddRoleToUser(ctx context.Context, user_id uint, role_id uint) error
-	CreateQuestion(ctx context.Context, question *Question) (*Question, error)
 	UpdateUserArea(ctx context.Context, user_id uint, area_id uint) error
 }
 

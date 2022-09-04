@@ -86,13 +86,6 @@ func (s *userService) AddRoleToUser(ctx context.Context, user_id uint, role_id u
 	return err
 }
 
-func (s *userService) AddQuestion(
-	ctx context.Context, question *model.Question) (
-	*model.Question, error) {
-
-	return s.UserRepository.CreateQuestion(ctx, question)
-}
-
 func (s *userService) UpdateUserArea(ctx context.Context, user_id uint, area_id uint) error {
 	return s.UserRepository.UpdateUserArea(ctx, user_id, area_id)
 }
