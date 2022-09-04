@@ -17,10 +17,10 @@ func seed(db *gorm.DB) {
 
 	if err != nil {
 		seedRoles(db)
+		seedAreas(db)
 		seedUsers(db)
 		seedStatus(db)
 		seedQuestions(db)
-		seedAreas(db)
 	}
 }
 
