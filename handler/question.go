@@ -5,7 +5,6 @@ import (
 
 	"github.com/Carlitonchin/Backend-Tesis/handler/handler_utils"
 	"github.com/Carlitonchin/Backend-Tesis/model"
-	"github.com/Carlitonchin/Backend-Tesis/some_utils"
 	"github.com/gin-gonic/gin"
 )
 
@@ -26,18 +25,9 @@ func (h *Handler) addQuestion(ctx *gin.Context) {
 		return
 	}
 
-	status_id, err := some_utils.GetUintEnv("STATUS_SEND_CODE")
-
-	if err != nil {
-		handler_utils.SendErrorResponse(ctx, err)
-
-		return
-	}
-
 	question := &model.Question{
 		Text:      req.Text,
 		UserRefer: user.ID,
-		StatusId:  status_id,
 	}
 
 	question, err = h.QuestionService.AddQuestion(ctx.Request.Context(), question)
