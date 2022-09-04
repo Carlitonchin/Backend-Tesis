@@ -35,7 +35,7 @@ func (s *userRepository) FindById(ctx context.Context, id uint) (*model.User, er
 		return nil, err
 	}
 
-	role, err := s.GetRoleById(ctx, user.RoleID)
+	role, err := s.getRoleById(ctx, user.RoleID)
 
 	if err != nil {
 		return nil, err
@@ -48,7 +48,7 @@ func (s *userRepository) FindById(ctx context.Context, id uint) (*model.User, er
 	return &user, nil
 }
 
-func (s *userRepository) GetRoleById(ctx context.Context, id uint) (*model.Role, error) {
+func (s *userRepository) getRoleById(ctx context.Context, id uint) (*model.Role, error) {
 	var role *model.Role
 
 	err := s.DB.First(&role, id).Error
@@ -68,7 +68,7 @@ func (s *userRepository) FindByEmail(ctx context.Context, email string) (*model.
 		return nil, tx.Error
 	}
 
-	role, err := s.GetRoleById(ctx, user.RoleID)
+	role, err := s.getRoleById(ctx, user.RoleID)
 
 	if err != nil {
 		return nil, err
