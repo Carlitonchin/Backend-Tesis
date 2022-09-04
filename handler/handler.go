@@ -42,8 +42,8 @@ func NewHandler(c *Config) {
 	signedIn := c.R.Group("api")
 	signedIn.Use(middleware.AuthUser(h.TokenService))
 
-	signedIn.GET("/roles", middleware.OnlyAdmin(), h.getAllRoles)
-	signedIn.GET("/users", middleware.OnlyAdmin(), h.getAllUsers)
-	signedIn.PUT("/users/update-role", middleware.OnlyAdmin(), h.updateUserRole)
-	signedIn.POST("/add-question", middleware.OnlyStudent(), h.addQuestion)
+	signedIn.GET("/roles", middleware.OnlyRoles([]string{"ROLE_ADMIN"}), h.getAllRoles)
+	signedIn.GET("/users", middleware.OnlyRoles([]string{"ROLE_ADMIN"}), h.getAllUsers)
+	signedIn.PUT("/users/update-role", middleware.OnlyRoles([]string{"ROLE_ADMIN"}), h.updateUserRole)
+	signedIn.POST("/add-question", middleware.OnlyRoles([]string{"ROLE_DEFAULT_STUDENT"}), h.addQuestion)
 }
