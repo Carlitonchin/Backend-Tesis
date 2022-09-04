@@ -8,4 +8,5 @@ type Question struct {
 	UserRefer uint    `json:"user_id"`
 	StatusId  uint    `json:"status_id"`
 	Status    *Status `json:"status" gorm:"-"`
+	AreaID    *uint   `json:"area_id"`
 }
