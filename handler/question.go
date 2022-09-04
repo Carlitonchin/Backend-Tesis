@@ -51,3 +51,25 @@ func (h *Handler) addQuestion(ctx *gin.Context) {
 		"question": question.ID,
 	})
 }
+
+type clasifyReq struct {
+	QuestionId uint `json:"question_id" binding:"required"`
+	AreaId     uint `json:"area_id" binding:"required"`
+}
+
+func (h *Handler) clasifyQuestion(ctx *gin.Context) {
+	var req clasifyReq
+
+	if ok := bindData(ctx, &req); !ok {
+		return
+	}
+
+	err := h.AreaService.Clasify(ctx.Request.Context(), req.QuestionId, req.AreaId)
+
+	if err != nil {
+		handler_utils.SendErrorResponse(ctx, err)
+		return
+	}
+
+	ctx.JSON(http.StatusNoContent, gin.H{})
+}
