@@ -18,7 +18,6 @@ type UserRepository interface {
 	FindById(ctx context.Context, id uint) (*User, error)
 	Create(ctx context.Context, user *User) error
 	FindByEmail(ctx context.Context, email string) (*User, error)
-	GetRoleById(ctx context.Context, id uint) (*Role, error)
 	GetAllUsers(ctx context.Context) ([]User, error)
 	AddRoleToUser(ctx context.Context, user_id uint, role_id uint) error
 	CreateQuestion(ctx context.Context, question *Question) (*Question, error)
