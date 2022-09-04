@@ -57,3 +57,11 @@ type AreaRepository interface {
 	CreateArea(ctx context.Context, area *Area) (*Area, error)
 	Clasify(ctx context.Context, question_id uint, area_id uint) error
 }
+
+type QuestionService interface {
+	AddQuestion(ctx context.Context, question *Question) (*Question, error)
+}
+
+type QuestionRepository interface {
+	CreateQuestion(ctx context.Context, question *Question) (*Question, error)
+}
