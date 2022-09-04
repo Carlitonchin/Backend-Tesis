@@ -31,8 +31,10 @@ func seedRoles(db *gorm.DB) {
 	erra := db.Create(&model.Role{Name: os.Getenv("ROLE_ADMIN")}).Error
 	errc := db.Create(&model.Role{Name: os.Getenv("ROLE_DEFAULT_WORKER")}).Error
 	erre := db.Create(&model.Role{Name: os.Getenv("ROLE_DEFAULT_STUDENT")}).Error
+	errs1 := db.Create(&model.Role{Name: os.Getenv("ROLE_SPECIALIST_LEVEL1")}).Error
+	errs2 := db.Create(&model.Role{Name: os.Getenv("ROLE_SPECIALIST_LEVEL2")}).Error
 
-	if atLeastOneError(erra, errc, erre) {
+	if atLeastOneError(erra, errc, erre, errs1, errs2) {
 		log.Fatal("Error at seed data for roles")
 	}
 }
