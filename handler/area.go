@@ -33,3 +33,25 @@ func (h *Handler) addArea(ctx *gin.Context) {
 		"area": area.ID,
 	})
 }
+
+type updateAreaReq struct {
+	UserId uint `json:"user_id" binding:"required"`
+	AreaId uint `json:"area_id" binding:"required"`
+}
+
+func (h *Handler) updateUserArea(ctx *gin.Context) {
+	var req updateAreaReq
+
+	if ok := bindData(ctx, &req); !ok {
+		return
+	}
+
+	err := h.UserService.UpdateUserArea(ctx.Request.Context(), req.UserId, req.AreaId)
+
+	if err != nil {
+		handler_utils.SendErrorResponse(ctx, err)
+		return
+	}
+
+	ctx.JSON(http.StatusNoContent, gin.H{})
+}
