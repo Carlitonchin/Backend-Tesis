@@ -50,8 +50,10 @@ type RoleRepository interface {
 
 type AreaService interface {
 	AddArea(ctx context.Context, area *Area) (*Area, error)
+	Clasify(ctx context.Context, question_id uint, area_id uint) error
 }
 
 type AreaRepository interface {
 	CreateArea(ctx context.Context, area *Area) (*Area, error)
+	Clasify(ctx context.Context, question_id uint, area_id uint) error
 }
