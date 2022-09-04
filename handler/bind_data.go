@@ -19,12 +19,13 @@ func bindData(ctx *gin.Context, req interface{}) bool {
 
 		if errs, ok := err.(validator.ValidationErrors); ok {
 			for _, err := range errs {
+
 				invalidArgs = append(invalidArgs, invalidArgument{
 					Field: err.Field(),
-					Value: err.Value().(string),
 					Tag:   err.Tag(),
 					Param: err.Param(),
 				})
+
 			}
 
 			message := "Request invalido, mirar 'invalidArgs'"
