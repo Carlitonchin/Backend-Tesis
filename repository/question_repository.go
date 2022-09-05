@@ -61,7 +61,7 @@ func (s *questionRepository) GetById(ctx context.Context, question_id uint) (*mo
 
 	if err != nil {
 		type_error := apperrors.Conflict
-		message := fmt.Sprintf("No exite el rol con id = '%v'", question_id)
+		message := fmt.Sprintf("No exite pregunta con id = '%v'", question_id)
 		err = apperrors.NewError(type_error, message)
 	}
 
