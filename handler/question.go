@@ -63,3 +63,30 @@ func (h *Handler) clasifyQuestion(ctx *gin.Context) {
 
 	ctx.JSON(http.StatusNoContent, gin.H{})
 }
+
+type takeQuestionReq struct {
+	Question_id uint `json:"question_id" binding:"required"`
+}
+
+func (h *Handler) takeQuestion(ctx *gin.Context) {
+	var req takeQuestionReq
+	if ok := bindData(ctx, &req); !ok {
+		return
+	}
+
+	user, err := handler_utils.GetUser(ctx)
+
+	if err != nil {
+		handler_utils.SendErrorResponse(ctx, err)
+		return
+	}
+
+	err = h.QuestionService.TakeQuestion(ctx.Request.Context(), user.ID, req.Question_id)
+
+	if err != nil {
+		handler_utils.SendErrorResponse(ctx, err)
+		return
+	}
+
+	ctx.JSON(http.StatusNoContent, gin.H{})
+}
