@@ -93,3 +93,20 @@ func (s *questionService) TakeQuestion(ctx context.Context, user *model.User, qu
 
 	return s.repo.TakeQuestion(ctx, user.ID, question_id)
 }
+
+func (s *questionService) ResponseQuestion(ctx context.Context, user *model.User, question_id uint, response string) error {
+	question, err := s.repo.GetById(ctx, question_id)
+
+	if err != nil {
+		return err
+	}
+
+	if *question.UserResponsible != user.ID {
+		type_error := apperrors.Conflict
+		message := fmt.Sprintf("El usuario con id = '%v' no es el responsable de la pregunta con id = '%v'", user.ID, question_id)
+		err = apperrors.NewError(type_error, message)
+		return err
+	}
+
+	return s.repo.ResponseQuestion(ctx, question_id, response)
+}
