@@ -12,7 +12,6 @@ type UserService interface {
 	GetAllUsers(ctx context.Context) ([]User, error)
 	AddRoleToUser(ctx context.Context, user_id uint, role_id uint) error
 	UpdateUserArea(ctx context.Context, user_id uint, area_id uint) error
-	TakeQuestion(ctx context.Context, question_id uint) error
 }
 
 type UserRepository interface {
@@ -22,7 +21,6 @@ type UserRepository interface {
 	GetAllUsers(ctx context.Context) ([]User, error)
 	AddRoleToUser(ctx context.Context, user_id uint, role_id uint) error
 	UpdateUserArea(ctx context.Context, user_id uint, area_id uint) error
-	TakeQuestion(ctx context.Context, question_id uint) error
 }
 
 type TokenService interface {
@@ -59,10 +57,12 @@ type AreaRepository interface {
 type QuestionService interface {
 	AddQuestion(ctx context.Context, question *Question) (*Question, error)
 	Clasify(ctx context.Context, question_id uint, area_id uint) error
+	TakeQuestion(ctx context.Context, question_id uint) error
 }
 
 type QuestionRepository interface {
 	CreateQuestion(ctx context.Context, question *Question) (*Question, error)
 	Clasify(ctx context.Context, question_id uint, area_id uint) error
 	GetById(ctx context.Context, question_id uint) (*Question, error)
+	TakeQuestion(ctx context.Context, question_id uint) error
 }
