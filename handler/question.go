@@ -8,12 +8,12 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-type questionReq struct {
+type addQuestionReq struct {
 	Text string `json:"text" binding:"required"`
 }
 
 func (h *Handler) addQuestion(ctx *gin.Context) {
-	var req questionReq
+	var req addQuestionReq
 	if ok := bindData(ctx, &req); !ok {
 		return
 	}
@@ -64,12 +64,12 @@ func (h *Handler) clasifyQuestion(ctx *gin.Context) {
 	ctx.JSON(http.StatusNoContent, gin.H{})
 }
 
-type takeQuestionReq struct {
+type questionReq struct {
 	Question_id uint `json:"question_id" binding:"required"`
 }
 
 func (h *Handler) takeQuestion(ctx *gin.Context) {
-	var req takeQuestionReq
+	var req questionReq
 	if ok := bindData(ctx, &req); !ok {
 		return
 	}
@@ -116,4 +116,8 @@ func (h *Handler) responseQuestion(ctx *gin.Context) {
 	}
 
 	ctx.JSON(http.StatusNoContent, gin.H{})
+}
+
+func (h *Handler) UpLevel(ctx *gin.Context) {
+	var req questionReq
 }
