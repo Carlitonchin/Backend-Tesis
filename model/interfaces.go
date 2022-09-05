@@ -58,6 +58,7 @@ type QuestionService interface {
 	AddQuestion(ctx context.Context, question *Question) (*Question, error)
 	Clasify(ctx context.Context, question_id uint, area_id uint) error
 	TakeQuestion(ctx context.Context, user *User, question_id uint) error
+	ResponseQuestion(ctx context.Context, user *User, question_id uint, response string) error
 }
 
 type QuestionRepository interface {
@@ -65,4 +66,5 @@ type QuestionRepository interface {
 	Clasify(ctx context.Context, question_id uint, area_id uint) error
 	GetById(ctx context.Context, question_id uint) (*Question, error)
 	TakeQuestion(ctx context.Context, user_id uint, question_id uint) error
+	ResponseQuestion(ctx context.Context, question_id uint, response string) error
 }
