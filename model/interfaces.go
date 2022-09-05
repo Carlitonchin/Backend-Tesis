@@ -57,7 +57,7 @@ type AreaRepository interface {
 type QuestionService interface {
 	AddQuestion(ctx context.Context, question *Question) (*Question, error)
 	Clasify(ctx context.Context, question_id uint, area_id uint) error
-	TakeQuestion(ctx context.Context, user_id uint, question_id uint) error
+	TakeQuestion(ctx context.Context, user *User, question_id uint) error
 }
 
 type QuestionRepository interface {

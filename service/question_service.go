@@ -58,7 +58,7 @@ func (s *questionService) Clasify(ctx context.Context, question_id uint, area_id
 	return s.repo.Clasify(ctx, question_id, area_id)
 }
 
-func (s *questionService) TakeQuestion(ctx context.Context, user_id uint, question_id uint) error {
+func (s *questionService) TakeQuestion(ctx context.Context, user *model.User, question_id uint) error {
 	status_clasified_id, err := some_utils.GetUintEnv("STATUS_CLASIFIED1_CODE")
 
 	if err != nil {
@@ -77,5 +77,12 @@ func (s *questionService) TakeQuestion(ctx context.Context, user_id uint, questi
 		return err
 	}
 
-	return s.repo.TakeQuestion(ctx, user_id, question_id)
+	if question.UserResponsible != nil {
+		type_error := apperrors.Conflict
+		message := fmt.Sprintf("La pregunta con id = '%v' ya fue tomada por alguien", question_id)
+		err = apperrors.NewError(type_error, message)
+		return err
+	}
+
+	return s.repo.TakeQuestion(ctx, user.ID, question_id)
 }
