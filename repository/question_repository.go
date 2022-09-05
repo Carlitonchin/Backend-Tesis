@@ -102,3 +102,23 @@ func (s *questionRepository) ResponseQuestion(ctx context.Context, question_id u
 	return err
 
 }
+
+func (s *questionRepository) UpLevel(ctx context.Context, question_id uint) error {
+	clasify2_code, err := some_utils.GetUintEnv("STATUS_CLASIFIED2")
+	if err != nil {
+		return err
+	}
+
+	err = s.DB.Model(&model.Question{}).Where("id = ?", question_id).Updates(
+		map[string]interface{}{"user_responsible": nil, "status_id": clasify2_code}).Error
+
+	if err != nil {
+		type_error := apperrors.Internal
+		message := fmt.Sprintf(
+			"Ocurrio un error inesperado mientras se respondia la pregunta con id = '%v'", question_id)
+
+		err = apperrors.NewError(type_error, message)
+	}
+
+	return err
+}
