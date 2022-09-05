@@ -124,4 +124,6 @@ func (s *questionService) UpLevel(ctx context.Context, user *model.User, questio
 		err = apperrors.NewError(type_error, message)
 		return err
 	}
+
+	return s.repo.UpLevel(ctx, question_id)
 }
