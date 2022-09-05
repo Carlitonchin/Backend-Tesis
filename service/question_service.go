@@ -84,7 +84,7 @@ func (s *questionService) TakeQuestion(ctx context.Context, user *model.User, qu
 		return err
 	}
 
-	if *user.AreaID != *question.AreaID {
+	if user.AreaID == nil || *user.AreaID != *question.AreaID {
 		type_error := apperrors.Conflict
 		message := fmt.Sprintf("La pregunta con id = '%v' solo puede ser tomada por usuarios del area de id = '%v'", question_id, *question.AreaID)
 		err = apperrors.NewError(type_error, message)
@@ -109,4 +109,19 @@ func (s *questionService) ResponseQuestion(ctx context.Context, user *model.User
 	}
 
 	return s.repo.ResponseQuestion(ctx, question_id, response)
+}
+
+func (s *questionService) UpLevel(ctx context.Context, user *model.User, question_id uint) error {
+	question, err := s.repo.GetById(ctx, question_id)
+
+	if err != nil {
+		return err
+	}
+
+	if *question.UserResponsible != user.ID {
+		type_error := apperrors.Conflict
+		message := fmt.Sprintf("El usuario con id = '%v' no es el responsable de la pregunta con id = '%v'", user.ID, question_id)
+		err = apperrors.NewError(type_error, message)
+		return err
+	}
 }
