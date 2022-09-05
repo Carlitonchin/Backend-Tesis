@@ -54,7 +54,7 @@ func (h *Handler) clasifyQuestion(ctx *gin.Context) {
 		return
 	}
 
-	err := h.AreaService.Clasify(ctx.Request.Context(), req.QuestionId, req.AreaId)
+	err := h.QuestionService.Clasify(ctx.Request.Context(), req.QuestionId, req.AreaId)
 
 	if err != nil {
 		handler_utils.SendErrorResponse(ctx, err)

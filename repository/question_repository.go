@@ -2,6 +2,7 @@ package repository
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/Carlitonchin/Backend-Tesis/model"
 	"github.com/Carlitonchin/Backend-Tesis/model/apperrors"
@@ -32,4 +33,17 @@ func (s *questionRepository) CreateQuestion(
 		return nil, e
 	}
 	return question, nil
+}
+
+func (s *questionRepository) Clasify(ctx context.Context, question_id uint, area_id uint) error {
+	err := s.DB.Model(&model.Question{}).Where("id = ?", question_id).Update("area_id", area_id).Error
+
+	if err != nil {
+		type_error := apperrors.Conflict
+		message := fmt.Sprintf("No existe un area con id = '%v'", area_id)
+
+		err = apperrors.NewError(type_error, message)
+	}
+
+	return err
 }

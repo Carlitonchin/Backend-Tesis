@@ -34,3 +34,7 @@ func (s *questionService) AddQuestion(
 	question.StatusId = status_send_id
 	return s.repo.CreateQuestion(ctx, question)
 }
+
+func (s *questionService) Clasify(ctx context.Context, question_id uint, area_id uint) error {
+	return s.repo.Clasify(ctx, question_id, area_id)
+}
