@@ -6,6 +6,7 @@ import (
 
 	"github.com/Carlitonchin/Backend-Tesis/model"
 	"github.com/Carlitonchin/Backend-Tesis/model/apperrors"
+	"github.com/Carlitonchin/Backend-Tesis/some_utils"
 	"gorm.io/gorm"
 )
 
@@ -36,7 +37,13 @@ func (s *questionRepository) CreateQuestion(
 }
 
 func (s *questionRepository) Clasify(ctx context.Context, question_id uint, area_id uint) error {
-	err := s.DB.Model(&model.Question{}).Where("id = ?", question_id).Update("area_id", area_id).Error
+	status_clasified_id, eos := some_utils.GetUintEnv("STATUS_CLASIFIED1_CODE")
+
+	if eos != nil {
+		return eos
+	}
+	err := s.DB.Model(&model.Question{}).Where("id = ?", question_id).Updates(
+		map[string]interface{}{"area_id": area_id, "status_id": status_clasified_id}).Error
 
 	if err != nil {
 		type_error := apperrors.Conflict
