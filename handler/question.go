@@ -81,7 +81,7 @@ func (h *Handler) takeQuestion(ctx *gin.Context) {
 		return
 	}
 
-	err = h.QuestionService.TakeQuestion(ctx.Request.Context(), user.ID, req.Question_id)
+	err = h.QuestionService.TakeQuestion(ctx.Request.Context(), user, req.Question_id)
 
 	if err != nil {
 		handler_utils.SendErrorResponse(ctx, err)
