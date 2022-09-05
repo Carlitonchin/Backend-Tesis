@@ -57,3 +57,25 @@ func (s *questionService) Clasify(ctx context.Context, question_id uint, area_id
 
 	return s.repo.Clasify(ctx, question_id, area_id)
 }
+
+func (s *questionService) TakeQuestion(ctx context.Context, user_id uint, question_id uint) error {
+	status_clasified_id, err := some_utils.GetUintEnv("STATUS_CLASIFIED1_CODE")
+
+	if err != nil {
+		return err
+	}
+
+	question, err := s.repo.GetById(ctx, question_id)
+	if err != nil {
+		return err
+	}
+
+	if question.StatusId != status_clasified_id {
+		type_error := apperrors.Conflict
+		message := fmt.Sprintf("Los especialistas de nivel 1 no pueden tomar preguntas con status_id = '%v'", question.StatusId)
+		err = apperrors.NewError(type_error, message)
+		return err
+	}
+
+	return s.repo.TakeQuestion(ctx, user_id, question_id)
+}
