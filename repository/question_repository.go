@@ -67,3 +67,16 @@ func (s *questionRepository) GetById(ctx context.Context, question_id uint) (*mo
 
 	return &question, err
 }
+
+func (s *questionRepository) TakeQuestion(ctx context.Context, user_id uint, question_id uint) error {
+	err := s.DB.Model(&model.Question{}).Where("id = ?", question_id).Update(
+		"user_responsible", user_id).Error
+
+	if err != nil {
+		type_error := apperrors.Conflict
+		message := fmt.Sprintf("El usuario con id = '%v' no existe", user_id)
+		err = apperrors.NewError(type_error, message)
+	}
+
+	return err
+}
