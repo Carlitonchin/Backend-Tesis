@@ -80,3 +80,25 @@ func (s *questionRepository) TakeQuestion(ctx context.Context, user_id uint, que
 
 	return err
 }
+
+func (s *questionRepository) ResponseQuestion(ctx context.Context, question_id uint, response string) error {
+	status_finish_code, err := some_utils.GetUintEnv("STATUS_FINISH_CODE")
+
+	if err != nil {
+		return err
+	}
+
+	err = s.DB.Model(&model.Question{}).Where("id = ?", question_id).Updates(
+		map[string]interface{}{"response": response, "status_id": status_finish_code}).Error
+
+	if err != nil {
+		type_error := apperrors.Internal
+		message := fmt.Sprintf(
+			"Ocurrio un error inesperado mientras se respondia la pregunta con id = '%v'", question_id)
+
+		err = apperrors.NewError(type_error, message)
+	}
+
+	return err
+
+}
