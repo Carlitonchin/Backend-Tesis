@@ -90,3 +90,30 @@ func (h *Handler) takeQuestion(ctx *gin.Context) {
 
 	ctx.JSON(http.StatusNoContent, gin.H{})
 }
+
+type responseQuestionReq struct {
+	QuestionId uint   `json:"question_id" binding:"required"`
+	Response   string `json:"response" binding:"required"`
+}
+
+func (h *Handler) responseQuestion(ctx *gin.Context) {
+	var req responseQuestionReq
+	if ok := bindData(ctx, &req); !ok {
+		return
+	}
+
+	user, err := handler_utils.GetUser(ctx)
+	if err != nil {
+		handler_utils.SendErrorResponse(ctx, err)
+		return
+	}
+
+	err = h.QuestionService.ResponseQuestion(ctx, user, req.QuestionId, req.Response)
+
+	if err != nil {
+		handler_utils.SendErrorResponse(ctx, err)
+		return
+	}
+
+	ctx.JSON(http.StatusNoContent, gin.H{})
+}
