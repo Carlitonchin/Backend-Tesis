@@ -84,7 +84,7 @@ func (s *questionService) TakeQuestion(ctx context.Context, user *model.User, qu
 		return err
 	}
 
-	if user.AreaID != question.AreaID {
+	if *user.AreaID != *question.AreaID {
 		type_error := apperrors.Conflict
 		message := fmt.Sprintf("La pregunta con id = '%v' solo puede ser tomada por usuarios del area de id = '%v'", question_id, question.AreaID)
 		err = apperrors.NewError(type_error, message)
