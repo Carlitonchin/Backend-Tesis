@@ -10,4 +10,5 @@ type Question struct {
 	Status          *Status `json:"status" gorm:"-"`
 	AreaID          *uint   `json:"area_id"`
 	UserResponsible *uint   `json:"user_responsible_id"`
+	Response        string  `json:"response"`
 }
