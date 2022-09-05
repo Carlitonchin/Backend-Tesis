@@ -54,3 +54,16 @@ func (s *questionRepository) Clasify(ctx context.Context, question_id uint, area
 
 	return err
 }
+
+func (s *questionRepository) GetById(ctx context.Context, question_id uint) (*model.Question, error) {
+	var question model.Question
+	err := s.DB.First(&question, question_id).Error
+
+	if err != nil {
+		type_error := apperrors.Conflict
+		message := fmt.Sprintf("No exite el rol con id = '%v'", question_id)
+		err = apperrors.NewError(type_error, message)
+	}
+
+	return &question, err
+}
