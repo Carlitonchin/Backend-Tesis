@@ -122,3 +122,23 @@ func (s *questionRepository) UpLevel(ctx context.Context, question_id uint) erro
 
 	return err
 }
+
+func (s *questionRepository) UpToAdmin(ctx context.Context, question_id uint) error {
+	status_admin_code, err := some_utils.GetUintEnv("STATUS_ADMIN_CODE")
+	if err != nil {
+		return err
+	}
+
+	err = s.DB.Model(&model.Question{}).Where("id = ?", question_id).Updates(
+		map[string]interface{}{"user_responsible": nil, "status_id": status_admin_code}).Error
+
+	if err != nil {
+		type_error := apperrors.Internal
+		message := fmt.Sprintf(
+			"Ocurrio un error inesperado mientras se subia de nivel la pregunta con id = '%v'", question_id)
+
+		err = apperrors.NewError(type_error, message)
+	}
+
+	return err
+}
