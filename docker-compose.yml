@@ -44,7 +44,7 @@ services:
       - "8080"
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.account.rule=Host(`malcorp.test`) && PathPrefix(`/api/account`)"
+      - "traefik.http.routers.account.rule=Host(`carlos.tesis`) && PathPrefix(`/api/`)"
     environment:
       - ENV=dev
     volumes:
