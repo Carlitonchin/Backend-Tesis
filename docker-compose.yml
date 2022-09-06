@@ -16,7 +16,7 @@ services:
     volumes:
       # So that Traefik can listen to the Docker events
       - /var/run/docker.sock:/var/run/docker.sock
-  postgres-tesis:
+  postgres:
     image: "postgres:alpine"
     environment:
       - POSTGRES_PASSWORD=password
@@ -28,7 +28,7 @@ services:
       - "pgdata_account:/var/lib/postgresql/data"
       # - ./init:/docker-entrypoint-initdb.d/
     command: ["postgres", "-c", "log_statement=all"]
-  redis-tesis:
+  redis:
     image: "redis:alpine"
     ports:
       - "6379:6379"
