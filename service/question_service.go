@@ -66,16 +66,27 @@ func (s *questionService) TakeQuestion(ctx context.Context, user *model.User, qu
 		return err
 	}
 
-	rol_admin := os.Getenv("ROLE_ADMIN")
+	status_claisfied_id2, err := some_utils.GetUintEnv("STATUS_CLASIFIED2_CODE")
+
+	if err != nil {
+		return err
+	}
+
+	role_admin := os.Getenv("ROLE_ADMIN")
+	role_specialist1 := os.Getenv("ROLE_SPECIALIST_LEVEL1")
+	role_specialist2 := os.Getenv("ROLE_SPECIALIST_LEVEL2")
 
 	question, err := s.repo.GetById(ctx, question_id)
 	if err != nil {
 		return err
 	}
 
-	if question.StatusId != status_clasified_id {
+	can_take_specialist1 := user.Role.Name == role_specialist1 && question.StatusId != status_clasified_id
+	can_take_specialist2 := user.Role.Name == role_specialist2 && question.StatusId != status_claisfied_id2
+
+	if !can_take_specialist1 && !can_take_specialist2 {
 		type_error := apperrors.Conflict
-		message := fmt.Sprintf("Los especialistas de nivel 1 no pueden tomar preguntas con status_id = '%v'", question.StatusId)
+		message := fmt.Sprintf("%v no pueden tomar preguntas con status_id = '%v'", user.Role.Name, question.StatusId)
 		err = apperrors.NewError(type_error, message)
 		return err
 	}
@@ -87,7 +98,7 @@ func (s *questionService) TakeQuestion(ctx context.Context, user *model.User, qu
 		return err
 	}
 
-	if user.Role.Name != rol_admin && (user.AreaID == nil || *user.AreaID != *question.AreaID) {
+	if user.Role.Name != role_admin && (user.AreaID == nil || *user.AreaID != *question.AreaID) {
 		type_error := apperrors.Conflict
 		message := fmt.Sprintf("La pregunta con id = '%v' solo puede ser tomada por usuarios del area de id = '%v'", question_id, *question.AreaID)
 		err = apperrors.NewError(type_error, message)
