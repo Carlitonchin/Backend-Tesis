@@ -104,7 +104,7 @@ func (s *questionRepository) ResponseQuestion(ctx context.Context, question_id u
 }
 
 func (s *questionRepository) UpLevel(ctx context.Context, question_id uint) error {
-	clasify2_code, err := some_utils.GetUintEnv("STATUS_CLASIFIED2")
+	clasify2_code, err := some_utils.GetUintEnv("STATUS_CLASIFIED2_CODE")
 	if err != nil {
 		return err
 	}
@@ -115,7 +115,7 @@ func (s *questionRepository) UpLevel(ctx context.Context, question_id uint) erro
 	if err != nil {
 		type_error := apperrors.Internal
 		message := fmt.Sprintf(
-			"Ocurrio un error inesperado mientras se respondia la pregunta con id = '%v'", question_id)
+			"Ocurrio un error inesperado mientras se subia de nivel la pregunta con id = '%v'", question_id)
 
 		err = apperrors.NewError(type_error, message)
 	}
