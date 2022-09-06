@@ -154,3 +154,37 @@ func (s *questionService) UpLevel(ctx context.Context, user *model.User, questio
 
 	return s.repo.UpLevel(ctx, question_id)
 }
+
+func (s *questionService) UpToAdmin(ctx context.Context, user *model.User, question_id uint) error {
+	question, err := s.repo.GetById(ctx, question_id)
+
+	if err != nil {
+		return err
+	}
+
+	status_clasified2_id, err := some_utils.GetUintEnv("STATUS_CLASIFIED2_CODE")
+	if err != nil {
+		return err
+	}
+
+	if question.StatusId != status_clasified2_id {
+		type_error := apperrors.Conflict
+		message := fmt.Sprintf(
+			"Las preguntas con status_id = '%v' no pueden ser elevadas al admin", question.StatusId)
+
+		err = apperrors.NewError(type_error, message)
+		return err
+	}
+
+	if question.UserResponsible == nil || *question.UserResponsible != user.ID {
+		type_error := apperrors.Conflict
+		message := fmt.Sprintf(
+			"El usuario con id = '%v' no es responsable de la pregunta con id = '%v'",
+			user.ID, question_id)
+
+		err = apperrors.NewError(type_error, message)
+		return err
+	}
+
+	return s.repo.UpToAdmin(ctx, question_id)
+}
