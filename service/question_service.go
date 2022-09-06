@@ -118,8 +118,21 @@ func (s *questionService) UpLevel(ctx context.Context, user *model.User, questio
 		return err
 	}
 
-	if *question.UserResponsible != user.ID {
+	status_clasified_id, err := some_utils.GetUintEnv("STATUS_CLASIFIED1_CODE")
+	if err != nil {
+		return err
+	}
+
+	if question.StatusId != status_clasified_id {
 		type_error := apperrors.Conflict
+		message := fmt.Sprintf("No se puede subir de nivel una pregunta con status_id = '%v'", question.StatusId)
+
+		err = apperrors.NewError(type_error, message)
+		return err
+	}
+
+	if *question.UserResponsible != user.ID {
+		type_error := apperrors.Authorization
 		message := fmt.Sprintf("El usuario con id = '%v' no es el responsable de la pregunta con id = '%v'", user.ID, question_id)
 		err = apperrors.NewError(type_error, message)
 		return err
