@@ -118,7 +118,7 @@ func (h *Handler) responseQuestion(ctx *gin.Context) {
 	ctx.JSON(http.StatusNoContent, gin.H{})
 }
 
-func (h *Handler) UpLevel(ctx *gin.Context) {
+func (h *Handler) upLevel(ctx *gin.Context) {
 	var req questionReq
 	if ok := bindData(ctx, &req); !ok {
 		return
@@ -131,6 +131,28 @@ func (h *Handler) UpLevel(ctx *gin.Context) {
 	}
 
 	err = h.QuestionService.UpLevel(ctx.Request.Context(), user, req.Question_id)
+
+	if err != nil {
+		handler_utils.SendErrorResponse(ctx, err)
+		return
+	}
+
+	ctx.JSON(http.StatusNoContent, gin.H{})
+}
+
+func (h *Handler) upToAdmin(ctx *gin.Context) {
+	var req questionReq
+	if ok := bindData(ctx, &req); !ok {
+		return
+	}
+
+	user, err := handler_utils.GetUser(ctx)
+	if err != nil {
+		handler_utils.SendErrorResponse(ctx, err)
+		return
+	}
+
+	err = h.QuestionService.UpToAdmin(ctx.Request.Context(), user, req.Question_id)
 
 	if err != nil {
 		handler_utils.SendErrorResponse(ctx, err)
