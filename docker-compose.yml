@@ -16,7 +16,7 @@ services:
     volumes:
       # So that Traefik can listen to the Docker events
       - /var/run/docker.sock:/var/run/docker.sock
-  postgres-account:
+  postgres-tesis:
     image: "postgres:alpine"
     environment:
       - POSTGRES_PASSWORD=password
@@ -28,18 +28,18 @@ services:
       - "pgdata_account:/var/lib/postgresql/data"
       # - ./init:/docker-entrypoint-initdb.d/
     command: ["postgres", "-c", "log_statement=all"]
-  redis-account:
+  redis-tesis:
     image: "redis:alpine"
     ports:
       - "6379:6379"
     volumes:
       - "redisdata:/data"
-  account:
+  backend:
     build:
-      context: .
+      context: ./backend
       target: builder
     image: account
-    env_file: ./.env
+    env_file: ./backend/.env
     expose:
       - "8080"
     labels:
@@ -48,11 +48,11 @@ services:
     environment:
       - ENV=dev
     volumes:
-      - .:/go/src/app
+      - ./backend:/go/src/app
     # have to use $$ (double-dollar) so docker doesn't try to substitute a variable
     depends_on:
-      - postgres-account
-      - redis-account
+      - postgres-tesis
+      - redis-tesis
     command: ["go", "run", "."]
 volumes:
   pgdata_account:
