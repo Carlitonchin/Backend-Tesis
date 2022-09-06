@@ -56,5 +56,6 @@ func NewHandler(c *Config) {
 	signedIn.PUT("/questions/clasify", middleware.OnlyRoles([]string{"ROLE_ADMIN", "ROLE_DEFAULT_WORKER"}), h.clasifyQuestion)
 	signedIn.PUT("/questions/take", middleware.OnlyRoles([]string{"ROLE_ADMIN", "ROLE_SPECIALIST_LEVEL1"}), h.takeQuestion)
 	signedIn.PUT("/questions/response", h.responseQuestion)
+	signedIn.PUT("/questions/up-level", h.UpLevel)
 	signedIn.POST("areas/add", middleware.OnlyRoles([]string{"ROLE_ADMIN"}), h.addArea)
 }
