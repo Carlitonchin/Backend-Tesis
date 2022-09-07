@@ -1,0 +1,28 @@
+.button
+{
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    font-weight: bolder;
+}
+
+.primary
+{
+    background: var(--primary-color);
+}
+
+.primary:hover
+{
+    background: var(--primary-hover);
+}
+
+.secondary
+{
+    background: white;
+    color: black;
+}
+
+.secondary:hover
+{
+    background: var(--secondary-hover);
+}
