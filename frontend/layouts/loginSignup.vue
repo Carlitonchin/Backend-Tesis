@@ -28,7 +28,7 @@
 
   </div>
 
-  <div id="s-container-form" class="shadow p2 border">
+  <div id="s-container-form" class="shadow p3 border">
     <slot/>
   </div>
 
