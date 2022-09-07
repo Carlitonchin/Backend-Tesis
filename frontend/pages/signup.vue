@@ -46,7 +46,7 @@
 
 <template>
 <div>
-<NuxtLayout name="login-signup"  title="Ask Matcom | Registro">
+<NuxtLayout name="login-signup" submitText="Registrarse"  title="Ask Matcom | Registro">
   <UtilForm :inputs="inputs" :workerModel="worker"/>
 </NuxtLayout>
 </div>

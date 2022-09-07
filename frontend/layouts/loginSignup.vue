@@ -1,5 +1,5 @@
 <script setup>
-  const {title} = defineProps(['title'])
+  const {title, submitText} = defineProps(['title', "submitText"])
   useHead({
     title: title,
     // or, instead:
@@ -31,7 +31,7 @@
   <div id="s-container-form" class="shadow p3 border">
     <slot/>
   </div>
-
+  <div id="s-submit-button" class="button primary">{{submitText}}</div>
 </div>
 </template>
 
@@ -55,6 +55,10 @@
 #s-container-form{
   margin-top:1rem;
   height: 100%;
+}
+
+#s-submit-button{
+  margin-top: 0.5rem;
 }
 
 </style>
