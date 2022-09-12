@@ -1,3 +1,8 @@
+<script setup>
+    import { Form, Field } from 'vee-validate';
+   
+</script>
+
 <template>
     <div class="flex min-h-full items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
   <div class="w-full max-w-md space-y-8">
@@ -5,30 +10,45 @@
         <Logo/>
         <h2 class="text-secondary">Regístrate</h2>
     </div>
-    <form class="mt-8 space-y-6 w-full" action="#" method="POST">
+    <Form class="mt-8 space-y-6 w-full" action="#" method="POST" @submit="handle_submit">
       <input type="hidden" name="remember" value="true">
       <div class="-space-y-px rounded-md shadow-sm w-full">
         <div>
           <label for="user-name" class="sr-only">Nombre de usuario</label>
-          <input id="user-name" name="user-nmae" type="text" autocomplete="name" required class="relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-red-500 focus:outline-none focus:ring-red-500 sm:text-sm" placeholder="Nombre de usuario">
+          <Field id="user-name" name="user-name" type="text" autocomplete="name" required
+           class="relative block w-full appearance-none rounded-none rounded-t-md border
+            border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10
+             focus:border-red-500 focus:outline-none focus:ring-red-500 sm:text-sm" 
+             placeholder="Nombre de usuario"/>
         </div>
         <div>
           <label for="email-address" class="sr-only">Correo eléctronico</label>
-          <input id="email-address" name="email" type="email" autocomplete="email" required class="relative block w-full appearance-none rounded-none border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-red-500 focus:outline-none focus:ring-red-500 sm:text-sm" placeholder="Correo">
+          <Field id="email-address" name="email" type="email" autocomplete="email" required 
+          class="relative block w-full appearance-none rounded-none border border-gray-300 px-3 py-2
+           text-gray-900 placeholder-gray-500 focus:z-10 focus:border-red-500 focus:outline-none
+            focus:ring-red-500 sm:text-sm" placeholder="Correo"/>
         </div>
         <div>
           <label for="password" class="sr-only">Contraseña</label>
-          <input id="password" name="password" type="password" autocomplete="current-password" required class="relative block w-full appearance-none rounded-none border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-red-500 focus:outline-none focus:ring-red-500 sm:text-sm" placeholder="Contraseña">
+          <Field id="password" name="password" type="password" autocomplete="current-password" required 
+          class="relative block w-full appearance-none rounded-none border
+           border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500
+            focus:z-10 focus:border-red-500 focus:outline-none
+             focus:ring-red-500 sm:text-sm" placeholder="Contraseña"/>
         </div>
         <div>
-          <label for="password" class="sr-only">Repite la contraseña</label>
-          <input id="password" name="password" type="password" autocomplete="current-password" required class="relative block w-full appearance-none rounded-none rounded-b-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-red-500 focus:outline-none focus:ring-red-500 sm:text-sm" placeholder="Repite la contraseña">
+          <label for="password-repeat" class="sr-only">Repite la contraseña</label>
+          <Field id="password-repeat" name="password-repeat" type="password" autocomplete="current-password" required 
+          class="relative block w-full appearance-none rounded-none 
+          rounded-b-md border border-gray-300 px-3 py-2 text-gray-900
+           placeholder-gray-500 focus:z-10 focus:border-red-500 focus:outline-none
+            focus:ring-red-500 sm:text-sm" placeholder="Repite la contraseña"/>
         </div>
       </div>
 
       <div class="flex items-center justify-between">
         <div class="flex items-center">
-          <input id="worker" name="worker" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-red-600 focus:ring-red-500">
+          <Field id="worker" name="worker" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-red-600 focus:ring-red-500"/>
           <label for="worker" class="ml-2 block text-sm">Soy trabajador de Matcom</label>
         </div>
 
@@ -48,7 +68,7 @@
       <div class="text-sm flex justify-center">
           <a href="#" class="font-medium text-red-600 hover:text-red-500">¿Ya te registraste? Inicia sesión aquí</a>
         </div>
-    </form>
+    </Form>
   </div>
 </div>
 </template>
