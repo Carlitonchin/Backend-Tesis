@@ -1,6 +1,8 @@
 <script setup>
-    import { Form, Field } from 'vee-validate';
-   
+    import { Form, Field, ErrorMessage } from 'vee-validate';
+    import {validate_email, validate_username, validate_pass} from '../utils/form_validations'
+
+    const fields = ["username", "email", "password"]
 </script>
 
 <template>
@@ -10,23 +12,24 @@
         <Logo/>
         <h2 class="text-secondary">Regístrate</h2>
     </div>
-    <Form class="mt-8 space-y-6 w-full" action="#" method="POST" @submit="handle_submit">
+    <Form class="mt-8 space-y-6 w-full" action="#" method="POST">
       <input type="hidden" name="remember" value="true">
       <div class="-space-y-px rounded-md shadow-sm w-full">
         <div>
-          <label for="user-name" class="sr-only">Nombre de usuario</label>
-          <Field id="user-name" name="user-name" type="text" autocomplete="name" required
+          <label for="username" class="sr-only">Nombre de usuario</label>
+          <Field id="username" name="username" type="text" autocomplete="name" required
            class="relative block w-full appearance-none rounded-none rounded-t-md border
             border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10
              focus:border-red-500 focus:outline-none focus:ring-red-500 sm:text-sm" 
-             placeholder="Nombre de usuario"/>
+             placeholder="Nombre de usuario" :rules="validate_username"/>
         </div>
         <div>
-          <label for="email-address" class="sr-only">Correo eléctronico</label>
-          <Field id="email-address" name="email" type="email" autocomplete="email" required 
+          <label for="email" class="sr-only">Correo eléctronico</label>
+          <Field id="email" name="email" type="email" autocomplete="email" required 
           class="relative block w-full appearance-none rounded-none border border-gray-300 px-3 py-2
            text-gray-900 placeholder-gray-500 focus:z-10 focus:border-red-500 focus:outline-none
-            focus:ring-red-500 sm:text-sm" placeholder="Correo"/>
+            focus:ring-red-500 sm:text-sm" placeholder="Correo" :rules="validate_email"/>
+           
         </div>
         <div>
           <label for="password" class="sr-only">Contraseña</label>
@@ -34,11 +37,11 @@
           class="relative block w-full appearance-none rounded-none border
            border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500
             focus:z-10 focus:border-red-500 focus:outline-none
-             focus:ring-red-500 sm:text-sm" placeholder="Contraseña"/>
+             focus:ring-red-500 sm:text-sm" placeholder="Contraseña" :rules="validate_pass"/>
         </div>
         <div>
-          <label for="password-repeat" class="sr-only">Repite la contraseña</label>
-          <Field id="password-repeat" name="password-repeat" type="password" autocomplete="current-password" required 
+          <label for="passwordrepeat" class="sr-only">Repite la contraseña</label>
+          <Field id="passwordrepeat" name="passwordrepeat" type="password" autocomplete="current-password" required 
           class="relative block w-full appearance-none rounded-none 
           rounded-b-md border border-gray-300 px-3 py-2 text-gray-900
            placeholder-gray-500 focus:z-10 focus:border-red-500 focus:outline-none
@@ -67,6 +70,10 @@
       </div>
       <div class="text-sm flex justify-center">
           <a href="#" class="font-medium text-red-600 hover:text-red-500">¿Ya te registraste? Inicia sesión aquí</a>
+        </div>
+
+        <div class="flex flex-col justify-center items-center text-yellow-200">
+            <ValidationError v-for="field in fields" :field="field" />
         </div>
     </Form>
   </div>
