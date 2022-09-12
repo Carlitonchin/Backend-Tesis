@@ -11,12 +11,23 @@ import (
 	"github.com/Carlitonchin/Backend-Tesis/repository"
 	"github.com/Carlitonchin/Backend-Tesis/service"
 	"github.com/dgrijalva/jwt-go"
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 )
 
 func inject(data_source *dataSource) (*gin.Engine, error) {
 
 	router := gin.Default()
+
+	router.Use(cors.New(cors.Config{
+		AllowAllOrigins:  true,
+		AllowMethods:     []string{"PUT", "POST", "GET"},
+		AllowHeaders:     []string{"Origin", "Content-Type"},
+		ExposeHeaders:    []string{"Content-Length"},
+		AllowCredentials: true,
+		MaxAge:           12 * time.Hour,
+	}))
+
 	user_repo := repository.NewUserRepository(data_source.DB)
 	token_repo := repository.NewTokenRepository(data_source.RedisClient)
 	us_config := &service.USConfig{UserRepository: user_repo}
