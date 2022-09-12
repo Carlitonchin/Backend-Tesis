@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-gray-900 w-screen h-screen">
-    <h1 class="text-white">Hellp Tailwind</h1>
+  <div class="bg-gray-900 text-white min-h-screen min-w-full">
+    <NuxtPage />
   </div>
 </template>
