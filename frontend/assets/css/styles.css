@@ -1,8 +1,16 @@
+@import url('https://fonts.googleapis.com/css2?family=Righteous&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Righteous&display=swap');
+.text-primary{
+    @apply text-4xl font-bold
+}
+
+.text-secondary{
+    @apply text-3xl
+}
 
 .font-brand{
     font-family: 'Righteous', cursive;
