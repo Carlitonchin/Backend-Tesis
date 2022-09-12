@@ -1,8 +1,9 @@
 <script setup>
     import { Form, Field, ErrorMessage } from 'vee-validate';
     import {validate_email, validate_username, validate_pass} from '../utils/form_validations'
+    import post from '../api/signup'
 
-    const fields = ["username", "email", "password", "passwordrepeat"]
+    const fields = ["name", "email", "pass", "passwordrepeat"]
     const pass = ref(null)
 
     function match_pass(value){
@@ -10,6 +11,21 @@
             return "Las contraseñas no coinciden"
         
         return true
+    }
+
+    async function handle_submit(value){
+        delete value.passwordrepeat
+        value.worker = value.worker ? "1":"0"
+        let response = await post(value)
+
+        if(response.error){
+          alert(response.error)
+          return
+        }
+          
+        const tokens_cookie = useCookie("tokens")
+        tokens_cookie.value = response
+        return navigateTo('/')
     }
 </script>
 
@@ -20,12 +36,12 @@
         <Logo/>
         <h2 class="text-secondary">Regístrate</h2>
     </div>
-    <Form class="mt-8 space-y-6 w-full" action="#" method="POST">
+    <Form class="mt-8 space-y-6 w-full" action="#" method="POST" @submit="handle_submit">
       <input type="hidden" name="remember" value="true">
       <div class="-space-y-px rounded-md shadow-sm w-full">
         <div>
-          <label for="username" class="sr-only">Nombre de usuario</label>
-          <Field id="username" name="username" type="text" autocomplete="name" required
+          <label for="name" class="sr-only">Nombre de usuario</label>
+          <Field id="username" name="name" type="text" autocomplete="name" required
            class="relative block w-full appearance-none rounded-none rounded-t-md border
             border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10
              focus:border-red-500 focus:outline-none focus:ring-red-500 sm:text-sm" 
@@ -40,8 +56,8 @@
            
         </div>
         <div>
-          <label for="password" class="sr-only">Contraseña</label>
-          <Field id="password" v-model="pass" name="password" type="password" autocomplete="current-password" required 
+          <label for="pass" class="sr-only">Contraseña</label>
+          <Field id="password" v-model="pass" name="pass" type="password" autocomplete="current-password" required 
           class="relative block w-full appearance-none rounded-none border
            border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500
             focus:z-10 focus:border-red-500 focus:outline-none
@@ -59,7 +75,7 @@
 
       <div class="flex items-center justify-between">
         <div class="flex items-center">
-          <Field id="worker" name="worker" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-red-600 focus:ring-red-500"/>
+          <Field id="worker" name="worker" type="checkbox" :value="true" class="h-4 w-4 rounded border-gray-300 text-red-600 focus:ring-red-500"/>
           <label for="worker" class="ml-2 block text-sm">Soy trabajador de Matcom</label>
         </div>
 
