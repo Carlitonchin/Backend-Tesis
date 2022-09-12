@@ -51,8 +51,8 @@ services:
       - ./backend:/go/src/app
     # have to use $$ (double-dollar) so docker doesn't try to substitute a variable
     depends_on:
-      - postgres-tesis
-      - redis-tesis
+      - postgres
+      - redis
     command: ["go", "run", "."]
 volumes:
   pgdata_account:
