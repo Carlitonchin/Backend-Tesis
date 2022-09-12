@@ -15,6 +15,7 @@
     "tailwindcss": "^3.1.8"
   },
   "dependencies": {
+    "jwt-decode": "^3.1.2",
     "vee-validate": "^4.6.7"
   }
 }
