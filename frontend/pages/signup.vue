@@ -5,9 +5,9 @@
         <Logo/>
         <h2 class="text-secondary">Regístrate</h2>
     </div>
-    <form class="mt-8 space-y-6" action="#" method="POST">
+    <form class="mt-8 space-y-6 w-full" action="#" method="POST">
       <input type="hidden" name="remember" value="true">
-      <div class="-space-y-px rounded-md shadow-sm">
+      <div class="-space-y-px rounded-md shadow-sm w-full">
         <div>
           <label for="user-name" class="sr-only">Nombre de usuario</label>
           <input id="user-name" name="user-nmae" type="text" autocomplete="name" required class="relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-red-500 focus:outline-none focus:ring-red-500 sm:text-sm" placeholder="Nombre de usuario">
