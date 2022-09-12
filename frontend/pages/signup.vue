@@ -2,7 +2,15 @@
     import { Form, Field, ErrorMessage } from 'vee-validate';
     import {validate_email, validate_username, validate_pass} from '../utils/form_validations'
 
-    const fields = ["username", "email", "password"]
+    const fields = ["username", "email", "password", "passwordrepeat"]
+    const pass = ref(null)
+
+    function match_pass(value){
+        if(pass.value != value)
+            return "Las contraseñas no coinciden"
+        
+        return true
+    }
 </script>
 
 <template>
@@ -33,7 +41,7 @@
         </div>
         <div>
           <label for="password" class="sr-only">Contraseña</label>
-          <Field id="password" name="password" type="password" autocomplete="current-password" required 
+          <Field id="password" v-model="pass" name="password" type="password" autocomplete="current-password" required 
           class="relative block w-full appearance-none rounded-none border
            border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500
             focus:z-10 focus:border-red-500 focus:outline-none
@@ -45,7 +53,7 @@
           class="relative block w-full appearance-none rounded-none 
           rounded-b-md border border-gray-300 px-3 py-2 text-gray-900
            placeholder-gray-500 focus:z-10 focus:border-red-500 focus:outline-none
-            focus:ring-red-500 sm:text-sm" placeholder="Repite la contraseña"/>
+            focus:ring-red-500 sm:text-sm" placeholder="Repite la contraseña" :rules="match_pass"/>
         </div>
       </div>
 
