@@ -13,5 +13,8 @@
     "nuxt": "3.0.0-rc.9",
     "postcss": "^8.4.16",
     "tailwindcss": "^3.1.8"
+  },
+  "dependencies": {
+    "vee-validate": "^4.6.7"
   }
 }
