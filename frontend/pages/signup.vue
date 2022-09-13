@@ -3,6 +3,11 @@
     import {validate_email, validate_username, validate_pass} from '../utils/form_validations'
     import post from '../api/signup'
 
+    const user = useCookie("user").value
+    if(!user){
+        navigateTo("/")
+    }
+    
     const fields = ["name", "email", "pass", "passwordrepeat"]
     const pass = ref(null)
 
@@ -24,7 +29,7 @@
         }
           
         const tokens_cookie = useCookie("tokens")
-        tokens_cookie.value = response
+        tokens_cookie.value = response.tokens
         return navigateTo('/')
     }
 </script>
