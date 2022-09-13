@@ -7,7 +7,7 @@
 <template>
     <NuxtLayout>
     <div>
-    <h1>Bienvenidos</h1>
+    <h1>Bienvenido</h1>
     </div>
 </NuxtLayout>
 </template>
