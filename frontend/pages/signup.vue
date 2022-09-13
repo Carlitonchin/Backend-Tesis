@@ -4,7 +4,7 @@
     import post from '../api/signup'
 
     const user = useCookie("user").value
-    if(!user){
+    if(user){
         navigateTo("/")
     }
     
