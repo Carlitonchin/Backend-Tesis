@@ -7,12 +7,10 @@ export default async (tokens,body)=>{
         ...HEADERS,
         'Authorization': `Bearer ${tokens["idToken"]}`, 
     }
-    console.log(headers)
     let response = await fetch(API_URL + PATH,{
         method:"POST",
         headers:headers,
         body:JSON.stringify(body)
     })
-    response = await response.json()
     return response
 }
