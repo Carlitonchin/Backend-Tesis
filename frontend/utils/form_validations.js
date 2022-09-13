@@ -28,3 +28,10 @@ export const validate_pass = (value)=>{
     
     return true
 }
+
+export const validate_question = (value) =>{
+    if(!value || value.trim() === '')
+        return "Escribe una pregunta"
+    
+    return true
+}
