@@ -10,7 +10,6 @@ export default async (tokens)=>{
         headers:HEADERS,
         body:JSON.stringify(body)
     })
-
     response = await response.json()
     return response
 }
