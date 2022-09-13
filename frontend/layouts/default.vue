@@ -10,7 +10,6 @@
 
       async function logout_handler()
       {
-        console.log("logout")
         let response = await logout_post(tokens)
         response = await refresh_tokens(response, tokens, logout_post, null)
     
