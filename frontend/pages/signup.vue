@@ -101,7 +101,7 @@
         </button>
       </div>
       <div class="text-sm flex justify-center">
-          <a href="#" class="font-medium text-red-600 hover:text-red-500">¿Ya te registraste? Inicia sesión aquí</a>
+          <a href="signin" class="font-medium text-red-600 hover:text-red-500">¿Ya te registraste? Inicia sesión aquí</a>
         </div>
 
         <div class="flex flex-col justify-center items-center text-yellow-200">
