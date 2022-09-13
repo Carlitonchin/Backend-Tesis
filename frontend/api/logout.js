@@ -2,7 +2,7 @@ import { API_URL, HEADERS } from "./options";
 
 const PATH = "api/account/signout"
 
-export default async (tokens,body)=>{
+export default async (tokens)=>{
     const headers = {
         ...HEADERS,
         'Authorization': `Bearer ${tokens["idToken"]}`, 
@@ -10,7 +10,6 @@ export default async (tokens,body)=>{
     let response = await fetch(API_URL + PATH,{
         method:"POST",
         headers:headers,
-        body:JSON.stringify(body)
     })
     return response
 }
