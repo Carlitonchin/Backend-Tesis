@@ -37,7 +37,7 @@
     <div>
       <button v-if="user" @click="logout_handler" class="primary-button">Cerrar Sesion</button>
       <div v-else class="flex space-x-2">
-        <a>
+        <a href="signin">
         <button class="secondary-button">
           Inciar sesión
         </button>
