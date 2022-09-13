@@ -11,5 +11,7 @@ const tokens = useCookie("tokens").value
 </script>
 
 <template>
+    <NuxtLayout>
         <Student :user="user" :tokens="tokens" :v-if="role === STUDENT_ROLE"/>
+    </NuxtLayout>
 </template>
