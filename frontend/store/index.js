@@ -1,12 +1,10 @@
-import {createStore} from 'vuex'
+import {defineStore} from 'pinia'
 
-export default createStore({
-    state:{
-        user:null
-    },
-    mutations:{
-        SET_USER(state, payload){
-            state.user = payload
-        }
+export const userStore = defineStore('userStore',()=>{
+    const user = ref(null)
+    function setUser(value){
+        user.value = value
     }
+
+    return {user, setUser}
 })
