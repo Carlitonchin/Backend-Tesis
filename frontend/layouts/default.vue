@@ -10,7 +10,6 @@
 
       async function logout_handler()
       {
-        console.log("logout")
         let response = await logout_post(tokens)
         response = await refresh_tokens(response, tokens, logout_post, null)
     
@@ -37,7 +36,7 @@
     <div>
       <button v-if="user" @click="logout_handler" class="primary-button">Cerrar Sesion</button>
       <div v-else class="flex space-x-2">
-        <a>
+        <a href="/signin">
         <button class="secondary-button">
           Inciar sesión
         </button>
