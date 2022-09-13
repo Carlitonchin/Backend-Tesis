@@ -16,6 +16,7 @@
   },
   "dependencies": {
     "jwt-decode": "^3.1.2",
-    "vee-validate": "^4.6.7"
+    "vee-validate": "^4.6.7",
+    "vuex": "^4.0.2"
   }
 }
