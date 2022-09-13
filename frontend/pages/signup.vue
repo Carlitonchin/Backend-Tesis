@@ -2,12 +2,12 @@
     import { Form, Field, ErrorMessage } from 'vee-validate';
     import {validate_email, validate_username, validate_pass} from '../utils/form_validations'
     import post from '../api/signup'
+    import jwtDecode from 'jwt-decode'
 
-    const user = useCookie("user").value
-    if(user){
-        navigateTo("/")
-    }
-    
+    definePageMeta({
+  middleware: ["auth"]
+  // or middleware: 'auth'
+})
     const fields = ["name", "email", "pass", "passwordrepeat"]
     const pass = ref(null)
 
@@ -30,8 +30,11 @@
           
         const tokens_cookie = useCookie("tokens")
         tokens_cookie.value = response.tokens
-        return navigateTo('/')
+        const user = jwtDecode(response.tokens.idToken).user
+        useCookie("user").value = user
+        return navigateTo("/dashbord")
     }
+    
 </script>
 
 <template>
