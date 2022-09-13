@@ -12,6 +12,6 @@
 
 <template>
     <div v-if="!user">
-    <NuxtLink to="/signup" >Registrarse</NuxtLink>
+    <h1>Bienvenidos</h1>
     </div>
 </template>
