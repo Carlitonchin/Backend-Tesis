@@ -2,7 +2,7 @@
     import { Field, Form, ErrorMessage } from 'vee-validate';
     import { validate_question } from '~~/utils/form_validations';
 
-    const {user} = defineProps(['user'])
+    const {user, tokens} = defineProps(['user', 'tokens'])
     const fields = ['question']
     
     function handle_submit(value){
