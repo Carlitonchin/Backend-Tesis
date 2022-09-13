@@ -1,12 +1,21 @@
 <script setup>
     import { Field, Form, ErrorMessage } from 'vee-validate';
     import { validate_question } from '~~/utils/form_validations';
+    import post_question from '../../api/question'
+    import post_token from '../../api/tokens'
+    import refresh_tokens from '../../utils/refresh_tokens'
 
     const {user, tokens} = defineProps(['user', 'tokens'])
-    const fields = ['question']
+    const fields = ['text']
     
-    function handle_submit(value){
-        console.log(value)
+    async function handle_submit(value){
+        let response = await post_question(tokens, value)
+        response = await refresh_tokens(response, tokens, post_question, value)
+
+        if(response.error){
+            console.log(response.error)
+            return
+        }
     }
 
 </script>
@@ -16,7 +25,7 @@
     <h2 class="text-secondary">Hola <span class="text-red-500">{{user.name}}</span></h2>
     <div class="h-fit w-full flex flex-col items-center">
     <Form class="w-full max-w-md" method="POST" @submit="handle_submit">
-        <Field id="question" name="question" as="textarea" autocomplete="name" required
+        <Field id="question" name="text" as="textarea" autocomplete="name" required
            class="relative block w-full h-52 appearance-none rounded-md border
             border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10
              focus:border-red-500 focus:outline-none focus:ring-red-500 sm:text-sm" 
