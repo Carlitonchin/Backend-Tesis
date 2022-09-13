@@ -5,7 +5,7 @@ export default async (tokens)=>{
     const body = {
         "refreshToken":tokens['refreshToken']
     }
-    let response = await fetch(API_URL + SIGNUP_PATH,{
+    let response = await fetch(API_URL + PATH,{
         method:"POST",
         headers:HEADERS,
         body:JSON.stringify(body)
