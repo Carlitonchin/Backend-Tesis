@@ -1,7 +1,7 @@
 <script setup>
     import { Form, Field, ErrorMessage } from 'vee-validate';
     import {validate_email, validate_username, validate_pass} from '../utils/form_validations'
-    import post from '../api/signup'
+    import post from '../api/signin'
     import jwtDecode from 'jwt-decode'
 
     definePageMeta({
@@ -9,18 +9,8 @@
   // or middleware: 'auth'
 })
     const fields = ["email", "pass"]
-    const pass = ref(null)
-
-    function match_pass(value){
-        if(pass.value != value)
-            return "Las contraseñas no coinciden"
-        
-        return true
-    }
 
     async function handle_submit(value){
-        delete value.passwordrepeat
-        value.worker = value.worker ? "1":"0"
         let response = await post(value)
 
         if(response.error){
