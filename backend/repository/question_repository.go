@@ -162,7 +162,7 @@ func (s *questionRepository) GetUnClasifiedQuestions(ctx context.Context) ([]mod
 
 	if err != nil {
 		type_error := apperrors.Internal
-		message := fmt.Sprintf("Ocurrió un error inesperado en la base de datos mientras se buscaban las preguntas del usuario con id = '%v'", user_id)
+		message := fmt.Sprintf("Ocurrió un error inesperado en la base de datos mientras se buscaban las preguntas sin clasificar")
 		err = apperrors.NewError(type_error, message)
 	}
 
