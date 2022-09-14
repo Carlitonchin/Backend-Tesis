@@ -155,3 +155,16 @@ func (s *questionRepository) GetMyQuestions(ctx context.Context, user_id uint) (
 
 	return questions, err
 }
+
+func (s *questionRepository) GetUnClasifiedQuestions(ctx context.Context) ([]model.Question, error) {
+	var questions []model.Question
+	err := s.DB.Find(&questions).Error
+
+	if err != nil {
+		type_error := apperrors.Internal
+		message := fmt.Sprintf("Ocurrió un error inesperado en la base de datos mientras se buscaban las preguntas del usuario con id = '%v'", user_id)
+		err = apperrors.NewError(type_error, message)
+	}
+
+	return questions, err
+}
