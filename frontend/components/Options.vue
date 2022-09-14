@@ -13,7 +13,7 @@
 
 <template>
  <!-- This example requires Tailwind CSS v2.0+ -->
-<div class="relative inline-block text-left">
+<div class="relative inline-block text-left w-full mb-4">
   <div>
     <button @click="clickOptions" @blur="blurOptions" type="button" class="inline-flex w-full justify-center border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-100" id="menu-button" aria-expanded="true" aria-haspopup="true">
       Opciones
