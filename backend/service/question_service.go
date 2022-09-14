@@ -192,3 +192,7 @@ func (s *questionService) UpToAdmin(ctx context.Context, user *model.User, quest
 func (s *questionService) GetMyQuestions(ctx context.Context, user_id uint) ([]model.Question, error) {
 	return s.repo.GetMyQuestions(ctx, user_id)
 }
+
+func (s *questionService) GetUnClasifiedQuestions(ctx context.Context) ([]model.Question, error) {
+	return s.repo.GetUnClasifiedQuestions(ctx)
+}
