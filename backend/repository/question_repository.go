@@ -158,7 +158,12 @@ func (s *questionRepository) GetMyQuestions(ctx context.Context, user_id uint) (
 
 func (s *questionRepository) GetUnClasifiedQuestions(ctx context.Context) ([]model.Question, error) {
 	var questions []model.Question
-	err := s.DB.Find(&questions).Error
+	status_send, err := some_utils.GetUintEnv("STATUS_SEND_CODE")
+	if err != nil {
+		return nil, err
+	}
+
+	err = s.DB.Where("status_id = ?", status_send).Find(&questions).Error
 
 	if err != nil {
 		type_error := apperrors.Internal
