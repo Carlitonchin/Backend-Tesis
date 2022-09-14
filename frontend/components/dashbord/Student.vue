@@ -21,7 +21,7 @@
 </script>
 
 <template>
-    <div class="flex min-h-screen w-full flex-col space-y-20 items-center p-6 pt-24">
+    <div class="flex min-h-screen w-full flex-col space-y-20 items-center pr-6 pl-6">
     <h2 class="text-secondary">Hola <span class="text-red-500">{{user.name}}</span></h2>
     <div class="h-fit w-full flex flex-col items-center">
     <Form class="w-full max-w-md" method="POST" @submit="handle_submit">
