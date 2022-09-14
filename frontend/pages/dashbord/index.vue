@@ -1,12 +1,12 @@
 <script setup>
 import Student from "../../components/dashbord/Student.vue";
 import {STUDENT_ROLE} from '../../api/options'
-const tokens = useCookie("tokens").value
-    const user = useCookie("user").value
-    if(!user || !tokens){
-        navigateTo("/")
-    }
+    
+definePageMeta({
+  middleware: ["index"]
+})
 
+    const user = useCookie("user").value
     const role = user.role.name
 </script>
 
