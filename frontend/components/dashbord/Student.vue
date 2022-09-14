@@ -18,9 +18,14 @@
         }
     }
 
+    const options = [[
+        {href:"/dashbord/my-questions", text:"Mis preguntas"}
+    ]]
 </script>
 
 <template>
+    <div class="w-full flex flex-col space-y-4">
+    <Options :options="options"/>
     <div class="flex min-h-screen w-full flex-col space-y-20 items-center pr-6 pl-6">
     <h2 class="text-secondary">Hola <span class="text-red-500">{{user.name}}</span></h2>
     <div class="h-fit w-full flex flex-col items-center">
@@ -40,6 +45,7 @@
             <ValidationError v-for="field in fields" :field="field" />
         </div>
     </Form>
+</div>
 </div>
 </div>
 </template>
