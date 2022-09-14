@@ -62,6 +62,7 @@ type QuestionService interface {
 	UpLevel(ctx context.Context, user *User, question_id uint) error
 	UpToAdmin(ctx context.Context, user *User, question_id uint) error
 	GetMyQuestions(ctx context.Context, user_id uint) ([]Question, error)
+	GetUnClasifiedQuestions(ctx context.Context) ([]Question, error)
 }
 
 type QuestionRepository interface {
@@ -73,4 +74,5 @@ type QuestionRepository interface {
 	UpLevel(ctx context.Context, question_id uint) error
 	UpToAdmin(ctx context.Context, question_id uint) error
 	GetMyQuestions(ctx context.Context, user_id uint) ([]Question, error)
+	GetUnClasifiedQuestions(ctx context.Context) ([]Question, error)
 }
