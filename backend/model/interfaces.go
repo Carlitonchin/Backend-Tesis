@@ -61,6 +61,7 @@ type QuestionService interface {
 	ResponseQuestion(ctx context.Context, user *User, question_id uint, response string) error
 	UpLevel(ctx context.Context, user *User, question_id uint) error
 	UpToAdmin(ctx context.Context, user *User, question_id uint) error
+	GetMyQuestions(ctx context.Context, user_id uint) ([]Question, error)
 }
 
 type QuestionRepository interface {
@@ -71,4 +72,5 @@ type QuestionRepository interface {
 	ResponseQuestion(ctx context.Context, question_id uint, response string) error
 	UpLevel(ctx context.Context, question_id uint) error
 	UpToAdmin(ctx context.Context, question_id uint) error
+	GetMyQuestions(ctx context.Context, user_id uint) ([]Question, error)
 }
