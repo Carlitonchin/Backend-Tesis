@@ -5,7 +5,7 @@ import {STUDENT_ROLE} from '../../api/options'
 definePageMeta({
   middleware: ["index"]
 })
-
+    const tokens = useCookie("tokens").value
     const user = useCookie("user").value
     const role = user.role.name
 </script>
