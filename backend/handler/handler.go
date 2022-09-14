@@ -52,6 +52,7 @@ func NewHandler(c *Config) {
 	signedIn.GET("/users", middleware.OnlyRoles([]string{"ROLE_ADMIN"}), h.getAllUsers)
 	signedIn.PUT("/users/update-role", middleware.OnlyRoles([]string{"ROLE_ADMIN"}), h.updateUserRole)
 	signedIn.PUT("/users/update-area", middleware.OnlyRoles([]string{"ROLE_ADMIN"}), h.updateUserArea)
+	signedIn.GET("/questions", middleware.OnlyRoles([]string{"ROLE_ADMIN", "ROLE_DEFAULT_WORKER"}), h.getUnclasifiedQuestions)
 	signedIn.GET("/my-questions", middleware.OnlyRoles([]string{"ROLE_DEFAULT_STUDENT"}), h.getMyQuestions)
 	signedIn.POST("/questions/add", middleware.OnlyRoles([]string{"ROLE_DEFAULT_STUDENT"}), h.addQuestion)
 	signedIn.PUT("/questions/clasify", middleware.OnlyRoles([]string{"ROLE_ADMIN", "ROLE_DEFAULT_WORKER"}), h.clasifyQuestion)

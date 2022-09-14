@@ -179,3 +179,16 @@ func (h *Handler) getMyQuestions(ctx *gin.Context) {
 		"questions": questions,
 	})
 }
+
+func (h *Handler) getUnclasifiedQuestions(ctx *gin.Context) {
+	questions, err := h.QuestionService.GetUnClasifiedQuestions(ctx.Request.Context())
+
+	if err != nil {
+		handler_utils.SendErrorResponse(ctx, err)
+		return
+	}
+
+	ctx.JSON(http.StatusOK, gin.H{
+		"questions": questions,
+	})
+}
