@@ -142,3 +142,16 @@ func (s *questionRepository) UpToAdmin(ctx context.Context, question_id uint) er
 
 	return err
 }
+
+func (s *questionRepository) GetMyQuestions(ctx context.Context, user_id uint) ([]model.Question, error) {
+	var questions []model.Question
+	err := s.DB.Where("user_refer = ?", user_id).Find(&questions).Error
+
+	if err != nil {
+		type_error := apperrors.Internal
+		message := fmt.Sprintf("Ocurrió un error inesperado en la base de datos mientras se buscaban las preguntas del usuario con id = '%v'", user_id)
+		err = apperrors.NewError(type_error, message)
+	}
+
+	return questions, err
+}
