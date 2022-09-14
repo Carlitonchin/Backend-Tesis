@@ -17,7 +17,12 @@
 
 <template>
     <div class="p-6">
-        <h2 class="text-2xl font-semibold mb-4">Mis dudas:</h2>
+        <a href="/dashbord">
+            <button class="secondary-button">
+                Volver
+            </button>
+        </a>
+        <h2 class="text-2xl font-semibold mb-4 mt-4">Mis dudas:</h2>
         <div class="space-y-3">
         <div v-for="question,i in questions">
             <p><span class="font-semibold text-red-500">{{(i+1) + ". "}}</span> {{question.text}}</p>
