@@ -7,7 +7,7 @@ export default async (response, tokens, fetcher, value)=>{
         response = await post_token(tokens)
         if(response.error){
             remove_user_cookie()
-            window.location.href("/")
+            window.location.href = "/"
             return
         }
 
