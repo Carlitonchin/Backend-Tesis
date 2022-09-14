@@ -19,7 +19,7 @@
     }
 
     const options = [[
-        {href:"/dashbord/my-questions", text:"Mis preguntas"}
+        {href:"/dashbord/my-questions", text:"Mis dudas"}
     ]]
 </script>
 
