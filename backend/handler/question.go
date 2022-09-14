@@ -161,3 +161,21 @@ func (h *Handler) upToAdmin(ctx *gin.Context) {
 
 	ctx.JSON(http.StatusNoContent, gin.H{})
 }
+
+func (h *Handler) getMyQuestions(ctx *gin.Context) {
+	user, err := handler_utils.GetUser(ctx)
+	if err != nil {
+		handler_utils.SendErrorResponse(ctx, err)
+		return
+	}
+
+	questions, err := h.QuestionService.GetMyQuestions(ctx.Request.Context(), user.ID)
+	if err != nil {
+		handler_utils.SendErrorResponse(ctx, err)
+		return
+	}
+
+	ctx.JSON(http.StatusOK, gin.H{
+		"questions": questions,
+	})
+}
