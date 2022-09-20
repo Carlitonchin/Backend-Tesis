@@ -39,7 +39,7 @@
 !focus ? 'hidden' : 'block']" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1">
     <div v-for="group in options" class="py-1" role="none">
       <!-- Active: "bg-gray-100 text-gray-900", Not Active: "text-gray-700" -->
-      <a v-for="link in group" :href="link.href" class="block px-4 py-2 text-sm" role="menuitem" tabindex="-1" id="menu-item-0">{{link.text}}</a>
+      <a v-for="link in group" :href="link.href" class="block px-4 py-2 text-sm hover:bg-gray-500" role="menuitem" tabindex="-1" id="menu-item-0">{{link.text}}</a>
     </div>
   </div>
 </div>
