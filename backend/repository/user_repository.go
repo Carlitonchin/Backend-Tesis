@@ -84,16 +84,32 @@ func (s *userRepository) FindByEmail(ctx context.Context, email string) (*model.
 func (s *userRepository) GetAllUsers(ctx context.Context) ([]model.User, error) {
 	var users []model.User
 
-	rows, err := s.DB.Table("users").Select("users.id, users.name, users.email, users.role_id, roles.name").Joins("left join roles on users.role_id = roles.id").Rows()
+	rows, err := s.DB.Table("users").Select("users.id, users.name, users.email,	users.area_id, users.role_id, areas.name, roles.name").
+		Joins("left join roles on users.role_id = roles.id").
+		Joins("left join areas on users.area_id = areas.id").
+		Rows()
 	for rows.Next() {
 		var user_id uint
 		var user_name string
 		var user_email string
 
+		var area_id *uint
+		var area_name *string
+		var area *model.Area
+
 		var role_id uint
 		var role_name string
 
-		rows.Scan(&user_id, &user_name, &user_email, &role_id, &role_name)
+		rows.Scan(&user_id, &user_name, &user_email, &area_id, &role_id, &area_name, &role_name)
+
+		if area_id != nil {
+			area = &model.Area{
+				Name: *area_name,
+			}
+
+			area.ID = *area_id
+		}
+
 		role := &model.Role{
 			Name: role_name,
 		}
@@ -104,6 +120,8 @@ func (s *userRepository) GetAllUsers(ctx context.Context) ([]model.User, error) 
 			Name:   user_name,
 			RoleID: role_id,
 			Role:   role,
+			AreaID: area_id,
+			Area:   area,
 		}
 		u.ID = user_id
 		users = append(users, u)
