@@ -7,7 +7,7 @@
     function blurOptions(e){
         setTimeout(()=>{
             focus.value = false
-        }, 100)
+        }, 200)
     }
 </script>
 
