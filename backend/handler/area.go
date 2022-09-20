@@ -55,3 +55,16 @@ func (h *Handler) updateUserArea(ctx *gin.Context) {
 
 	ctx.JSON(http.StatusNoContent, gin.H{})
 }
+
+func (h *Handler) get_areas(ctx *gin.Context) {
+	areas, err := h.AreaService.GetAreas(ctx.Request.Context())
+
+	if err != nil {
+		handler_utils.SendErrorResponse(ctx, err)
+		return
+	}
+
+	ctx.JSON(http.StatusOK, gin.H{
+		"areas": areas,
+	})
+}
