@@ -25,7 +25,6 @@
     }
 
     function change_handler(){
-        console.log("asd;ksa;dlkalsdkasl;dk;alsdk;lasd")
         error.value = ""
     }
 
