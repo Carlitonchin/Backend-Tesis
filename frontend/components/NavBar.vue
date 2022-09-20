@@ -19,7 +19,8 @@
         }
     
         remove_user_cookie()
-        window.location.href="/"
+        return navigateTo("/")
+        //window.location.href="/"
     
       }
     </script>
