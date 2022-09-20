@@ -22,7 +22,8 @@
         tokens_cookie.value = response.tokens
         const user = jwtDecode(response.tokens.idToken).user
         useCookie("user").value = user
-        return navigateTo("/dashbord")
+        window.location.href = "/dashbord"
+        //return navigateTo("/dashbord")
     }
     
 </script>
