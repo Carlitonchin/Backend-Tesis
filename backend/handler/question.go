@@ -61,7 +61,7 @@ func (h *Handler) clasifyQuestion(ctx *gin.Context) {
 		return
 	}
 
-	ctx.JSON(http.StatusNoContent, gin.H{})
+	ctx.JSON(http.StatusOK, gin.H{})
 }
 
 type questionReq struct {
@@ -88,7 +88,7 @@ func (h *Handler) takeQuestion(ctx *gin.Context) {
 		return
 	}
 
-	ctx.JSON(http.StatusNoContent, gin.H{})
+	ctx.JSON(http.StatusOK, gin.H{})
 }
 
 type responseQuestionReq struct {
@@ -115,7 +115,7 @@ func (h *Handler) responseQuestion(ctx *gin.Context) {
 		return
 	}
 
-	ctx.JSON(http.StatusNoContent, gin.H{})
+	ctx.JSON(http.StatusOK, gin.H{})
 }
 
 func (h *Handler) upLevel(ctx *gin.Context) {
@@ -137,7 +137,7 @@ func (h *Handler) upLevel(ctx *gin.Context) {
 		return
 	}
 
-	ctx.JSON(http.StatusNoContent, gin.H{})
+	ctx.JSON(http.StatusOK, gin.H{})
 }
 
 func (h *Handler) upToAdmin(ctx *gin.Context) {
@@ -159,7 +159,7 @@ func (h *Handler) upToAdmin(ctx *gin.Context) {
 		return
 	}
 
-	ctx.JSON(http.StatusNoContent, gin.H{})
+	ctx.JSON(http.StatusOK, gin.H{})
 }
 
 func (h *Handler) getMyQuestions(ctx *gin.Context) {

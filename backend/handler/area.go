@@ -53,7 +53,7 @@ func (h *Handler) updateUserArea(ctx *gin.Context) {
 		return
 	}
 
-	ctx.JSON(http.StatusNoContent, gin.H{})
+	ctx.JSON(http.StatusOK, gin.H{})
 }
 
 func (h *Handler) get_areas(ctx *gin.Context) {
