@@ -1,6 +1,6 @@
 import { API_URL, HEADERS } from "./options";
 
-const PATH = "api/questions/"
+const PATH = "api/questions"
 
 export default async (tokens)=>{
     const headers = {
@@ -8,7 +8,8 @@ export default async (tokens)=>{
         'Authorization': `Bearer ${tokens["idToken"]}`, 
     }
     let response = await fetch(API_URL + PATH,{
-        headers:headers,
+        method:'GET',
+        headers:headers
     })
     return response
 }
