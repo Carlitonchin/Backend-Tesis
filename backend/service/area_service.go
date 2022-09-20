@@ -19,3 +19,7 @@ func NewAreaService(area_repo model.AreaRepository) model.AreaService {
 func (s *areaService) AddArea(ctx context.Context, area *model.Area) (*model.Area, error) {
 	return s.repo.CreateArea(ctx, area)
 }
+
+func (s *areaService) GetAreas(ctx context.Context) ([]model.Area, error) {
+	return s.repo.GetAreas(ctx)
+}
