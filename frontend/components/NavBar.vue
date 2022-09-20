@@ -19,7 +19,7 @@
         }
     
         remove_user_cookie()
-        window.location.href="/"
+        window.location.href = "/"
     
       }
     </script>
