@@ -15,7 +15,7 @@
 <template>
     <div class="p-6 w-full">
     <h2 class="text-secondary max-w-full">Preguntas sin clasificar</h2>
-    <div class="space-y-4 mt-5">
+    <div class="space-y-8 mt-5">
         <div v-for="question in questions" class="flex space-x-3">
         <div class="leading-6">
            {{question.text}}
