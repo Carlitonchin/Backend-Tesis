@@ -83,6 +83,13 @@ func (s *userRepository) FindByEmail(ctx context.Context, email string) (*model.
 	}
 
 	role, err := s.getRoleById(ctx, user.RoleID)
+	var area *model.Area
+	if user.AreaID != nil {
+		area, err = s.getAreaById(ctx, *user.AreaID)
+		if err != nil {
+			return nil, err
+		}
+	}
 
 	if err != nil {
 		return nil, err
@@ -90,6 +97,12 @@ func (s *userRepository) FindByEmail(ctx context.Context, email string) (*model.
 
 	user.Role = &model.Role{
 		Name: role.Name,
+	}
+
+	if area != nil {
+		user.Area = &model.Area{
+			Name: area.Name,
+		}
 	}
 
 	return &user, nil
