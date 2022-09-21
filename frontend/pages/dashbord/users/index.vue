@@ -6,6 +6,7 @@ import ThreePointOptions1 from '~~/components/ThreePointOptions.vue';
 import get_areas from '~~/api/get_areas';
 import get_roles from '~~/api/get_roles';
 import update_user_role from '~~/api/update_user_role'
+import update_user_area from '~~/api/update_user_area'
 import my_fetch from '~~/utils/my_fetch'
 
 definePageMeta({
@@ -44,8 +45,29 @@ async function update_role(user_id, role_id){
     })
 }
 
-function update_area(user_id, role_id){
-    console.log(user_id, role_id)
+async function update_area(user_id, area_id){
+    let body = {user_id, area_id}
+    let response = await my_fetch(tokens, update_user_area, body)
+
+    if(response.error){
+        console.log(response.error)
+        return
+    }
+
+    let area_name = areas.value.find(a=>a.ID == area_id).name
+
+    users.value = users.value.map(u=>{
+        if(u.ID != user_id)
+            return u
+        
+        u.area_id = area_id
+        if(!u.area)
+            u.area = {}
+        
+        u.area.ID = area_id
+        u.area.name = area_name
+        return u
+    })
 }
 
 const current_user = useCookie("user").value
