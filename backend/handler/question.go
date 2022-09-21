@@ -225,6 +225,7 @@ func (h *Handler) getQuestionByStatus(ctx *gin.Context) {
 	role_clasifier := os.Getenv("ROLE_DEFAULT_WORKER")
 	role_specialist1 := os.Getenv("ROLE_SPECIALIST_LEVEL1")
 	role_specialist2 := os.Getenv("ROLE_SPECIALIST_LEVEL2")
+	role_admin := os.Getenv("ROLE_ADMIN")
 
 	if some_utils.AtLeastOneError(err1, err2, err3) {
 		type_error := apperrors.Internal
@@ -256,7 +257,13 @@ func (h *Handler) getQuestionByStatus(ctx *gin.Context) {
 		return
 	}
 
-	questions, err := h.QuestionService.GetQuestionsByStatus(ctx.Request.Context(), uint(status_uint))
+	var area_id *uint
+	if role_admin == role_user {
+		area_id = nil
+	} else {
+		area_id = user.AreaID
+	}
+	questions, err := h.QuestionService.GetQuestionsByStatus(ctx.Request.Context(), uint(status_uint), area_id)
 	if err != nil {
 		handler_utils.SendErrorResponse(ctx, err)
 		return
