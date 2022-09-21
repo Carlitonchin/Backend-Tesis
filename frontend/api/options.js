@@ -10,3 +10,11 @@ export const UNAUTH_STATUS = 401
 export const HEADERS = {
     'Content-Type': 'application/json'
   }
+
+export const QuestionsStatusDict = {
+  1:'Preguntas sin clasificar',
+  2:'Preguntas clasificadas (Nivel 1)',
+  3:'Preguntas clasificadas (Nivel 2)',
+  4:'Preguntas clasificadas (Nivel Admin)',
+  5:'Preguntas resueltas'
+}
