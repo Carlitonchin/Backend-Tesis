@@ -1,10 +1,15 @@
 package handler
 
 import (
+	"fmt"
 	"net/http"
+	"os"
+	"strconv"
 
 	"github.com/Carlitonchin/Backend-Tesis/handler/handler_utils"
 	"github.com/Carlitonchin/Backend-Tesis/model"
+	"github.com/Carlitonchin/Backend-Tesis/model/apperrors"
+	"github.com/Carlitonchin/Backend-Tesis/some_utils"
 	"github.com/gin-gonic/gin"
 )
 
@@ -183,6 +188,75 @@ func (h *Handler) getMyQuestions(ctx *gin.Context) {
 func (h *Handler) getUnclasifiedQuestions(ctx *gin.Context) {
 	questions, err := h.QuestionService.GetUnClasifiedQuestions(ctx.Request.Context())
 
+	if err != nil {
+		handler_utils.SendErrorResponse(ctx, err)
+		return
+	}
+
+	ctx.JSON(http.StatusOK, gin.H{
+		"questions": questions,
+	})
+}
+
+func (h *Handler) getQuestionByStatus(ctx *gin.Context) {
+	status := ctx.Param("status")
+	if status == "" {
+		type_error := apperrors.BadRequest
+		message := "Falto agregar el status"
+		err := apperrors.NewError(type_error, message)
+		handler_utils.SendErrorResponse(ctx, err)
+		return
+	}
+
+	status_uint, err := strconv.ParseUint(status, 0, 64)
+	if err != nil {
+		type_error := apperrors.BadRequest
+		message := "El status tiene que ser un entero no negativo"
+		err = apperrors.NewError(type_error, message)
+		handler_utils.SendErrorResponse(ctx, err)
+		return
+	}
+
+	status_send, err1 := some_utils.GetUintEnv("STATUS_SEND_CODE")
+	status_clasified1, err2 := some_utils.GetUintEnv("STATUS_CLASIFIED1_CODE")
+	status_clasified2, err3 := some_utils.GetUintEnv("STATUS_CLASIFIED2_CODE")
+
+	role_student := os.Getenv("ROLE_DEFAULT_STUDENT")
+	role_clasifier := os.Getenv("ROLE_DEFAULT_WORKER")
+	role_specialist1 := os.Getenv("ROLE_SPECIALIST_LEVEL1")
+	role_specialist2 := os.Getenv("ROLE_SPECIALIST_LEVEL2")
+
+	if some_utils.AtLeastOneError(err1, err2, err3) {
+		type_error := apperrors.Internal
+		message := "Ocurrio un error inesperado"
+		err = apperrors.NewError(type_error, message)
+		handler_utils.SendErrorResponse(ctx, err)
+		return
+	}
+
+	user, err := handler_utils.GetUser(ctx)
+	if err != nil {
+		handler_utils.SendErrorResponse(ctx, err)
+		return
+	}
+
+	role_user := user.Role.Name
+
+	fail := false
+	fail = fail || role_user == role_student
+	fail = fail || (role_user == role_clasifier && status_uint != uint64(status_send))
+	fail = fail || (role_user == role_specialist1 && status_uint != uint64(status_clasified1))
+	fail = fail || (role_user == role_specialist2 && status_uint != uint64(status_clasified2))
+
+	if fail {
+		type_error := apperrors.Authorization
+		message := fmt.Sprintf("No esta autorizado a acceder a las preguntas con status_id = '%v'", status_uint)
+		err = apperrors.NewError(type_error, message)
+		handler_utils.SendErrorResponse(ctx, err)
+		return
+	}
+
+	questions, err := h.QuestionService.GetQuestionsByStatus(ctx.Request.Context(), uint(status_uint))
 	if err != nil {
 		handler_utils.SendErrorResponse(ctx, err)
 		return
