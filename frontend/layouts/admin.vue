@@ -1,7 +1,7 @@
 <script setup>
     const options = [[
-    {text:"Áreas", href:"/dashbord/area"},
-    {text:"Usuarios", href:"/dashbord/users"}
+    {text:"Áreas", href:"/dashbord/areas/"},
+    {text:"Usuarios", href:"/dashbord/users/"}
     ]]
 </script>
 
