@@ -59,10 +59,12 @@ else
                 <h2 class="text-primary">Users:</h2>
                 <div class="w-full flex justify-center mt-2 mb-2">
                     <div @click="change_tab(true)" :class="['cursor-pointer', 'p-3', 'pl-5', 'pr-5', 'rounded-l-md',
-                    'border-solid', 'border', 'border-blue-500', (tab_worker?'bg-blue-300 text-gray-900':'bg-transparent')]">Trabajadores</div>
+                    'border-solid', 'border', 'border-blue-500', (tab_worker?'bg-blue-300 text-gray-900':''),
+                    (!tab_worker?'hover:bg-gray-500':'')]">Trabajadores</div>
                     
                     <div @click="change_tab(false)" :class="['cursor-pointer', 'p-3', 'pl-5', 'pr-5', 'rounded-r-md',
-                    'border-solid', 'border', 'border-blue-500', (!tab_worker?'bg-blue-300 text-gray-900':'bg-transparent')]">Estudiantes</div>
+                    'border-solid', 'border', 'border-blue-500', (!tab_worker?'bg-blue-300 text-gray-900':''),
+                    (tab_worker?'hover:bg-gray-500':'')]">Estudiantes</div>
                 </div>
                 <div class="space-y-4">
                 <div v-for="user in users_to_show">
