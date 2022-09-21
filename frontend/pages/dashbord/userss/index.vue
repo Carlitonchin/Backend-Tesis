@@ -16,6 +16,10 @@ const areas = ref([])
 const roles = ref([])
 const tab_worker = ref(true)
 
+function change_tab(value){
+    tab_worker.value = value
+}
+
 const current_user = useCookie("user").value
 console.log(current_user)
 const users_to_show = computed(()=>{
@@ -53,9 +57,12 @@ else
         <NuxtLayout name="admin">
             <div class="pl-4 pr-4 flex flex-col items-center">
                 <h2 class="text-primary">Users:</h2>
-                <div class="w-full flex space-x-6 justify-center">
-                    <div class="cursor-pointer p-3 rounded-md border-solid border-2 border-b-gray-500">Trabajadores</div>
-                    <div class="cursor-pointer p-3">Estudiantes</div>
+                <div class="w-full flex justify-center mt-2 mb-2">
+                    <div @click="change_tab(true)" :class="['cursor-pointer', 'p-3', 'pl-5', 'pr-5', 'rounded-l-md',
+                    'border-solid', 'border', 'border-blue-500', (tab_worker?'bg-blue-300 text-gray-900':'bg-transparent')]">Trabajadores</div>
+                    
+                    <div @click="change_tab(false)" :class="['cursor-pointer', 'p-3', 'pl-5', 'pr-5', 'rounded-r-md',
+                    'border-solid', 'border', 'border-blue-500', (!tab_worker?'bg-blue-300 text-gray-900':'bg-transparent')]">Estudiantes</div>
                 </div>
                 <div class="space-y-4">
                 <div v-for="user in users_to_show">
