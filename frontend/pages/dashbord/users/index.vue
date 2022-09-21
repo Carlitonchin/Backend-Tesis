@@ -49,7 +49,7 @@ function update_area(user_id, role_id){
 }
 
 const current_user = useCookie("user").value
-console.log(current_user)
+
 const users_to_show = computed(()=>{
     if(tab_worker.value)
         return users.value.filter(u => u.role.name != STUDENT_ROLE && u.ID != current_user.ID)
