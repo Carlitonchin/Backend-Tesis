@@ -260,8 +260,14 @@ func (h *Handler) getQuestionByStatus(ctx *gin.Context) {
 	var area_id *uint
 	if role_admin == role_user {
 		area_id = nil
-	} else {
+	} else if user.AreaID != nil {
 		area_id = user.AreaID
+	} else {
+		type_error := apperrors.Authorization
+		message := fmt.Sprintf("El usuario %s no tiene asignada un ára", user.Name)
+		err = apperrors.NewError(type_error, message)
+		handler_utils.SendErrorResponse(ctx, err)
+		return
 	}
 	questions, err := h.QuestionService.GetQuestionsByStatus(ctx.Request.Context(), uint(status_uint), area_id)
 	if err != nil {
