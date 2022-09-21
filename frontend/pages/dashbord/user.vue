@@ -15,14 +15,15 @@ const areas = ref([])
 const roles = ref([])
 const tab_worker = ref(true)
 
+const tokens = useCookie("tokens").value
+const current_user = useCookie("user").value
+console.log(current_user)
 const users_to_show = computed(()=>{
     if(tab_worker.value)
-        return users.value.filter(u => u.role.name != STUDENT_ROLE)
+        return users.value.filter(u => u.role.name != STUDENT_ROLE && u.ID != current_user.ID)
 
-    return users.value.filter(u=>u.role.name == STUDENT_ROLE)
+    return users.value.filter(u=>u.role.name == STUDENT_ROLE && u.ID != current_user.ID)
 })
-
-const tokens = useCookie("tokens").value
 
 let response = await get_users(tokens)
 response = await refresh_tokens(response, tokens, get_users, null)
@@ -50,10 +51,14 @@ else
 <template>
     <NuxtLayout>
         <NuxtLayout name="admin">
-            <div class="pl-4 pr-4">
+            <div class="pl-4 pr-4 flex flex-col items-center">
                 <h2 class="text-primary">Users:</h2>
+                <div class="w-full flex space-x-6 justify-center">
+                    <div class="cursor-pointer p-3 rounded-md border-solid border-2 border-b-gray-500">Trabajadores</div>
+                    <div class="cursor-pointer p-3">Estudiantes</div>
+                </div>
                 <div class="space-y-4">
-                <div v-for="user in users">
+                <div v-for="user in users_to_show">
                     <h2 class="text-secondary text-yellow-500">{{user.name}}</h2>
                     <a :href="'mailto:' + user.email" class="text-red-500">{{user.email}}</a>
 
