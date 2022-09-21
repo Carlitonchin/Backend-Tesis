@@ -60,6 +60,20 @@ func (s *userRepository) getRoleById(ctx context.Context, id uint) (*model.Role,
 	return role, err
 }
 
+func (s *userRepository) getAreaById(ctx context.Context, id uint) (*model.Area, error) {
+	var area *model.Area
+
+	err := s.DB.First(&area, id).Error
+
+	if err != nil {
+		type_error := apperrors.Internal
+		message := fmt.Sprintf("No se pudo encontrar el area con id = '%v'", id)
+		err = apperrors.NewError(type_error, message)
+	}
+
+	return area, err
+}
+
 func (s *userRepository) FindByEmail(ctx context.Context, email string) (*model.User, error) {
 	var user model.User
 	tx := s.DB.Where("email = ?", email).First(&user)
