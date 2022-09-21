@@ -173,3 +173,17 @@ func (s *questionRepository) GetUnClasifiedQuestions(ctx context.Context) ([]mod
 
 	return questions, err
 }
+
+func (s *questionRepository) GetQuestionsByStatus(ctx context.Context, status uint) ([]model.Question, error) {
+	var questions []model.Question
+
+	err := s.DB.Where("status_id = ?", status).Find(&questions).Error
+
+	if err != nil {
+		type_error := apperrors.Internal
+		message := fmt.Sprintf("Ocurrio un error inesperado mientras se recuperaban las preguntas con status_id = %v", status)
+		err = apperrors.NewError(type_error, message)
+	}
+
+	return questions, err
+}

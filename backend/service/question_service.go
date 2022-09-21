@@ -196,3 +196,7 @@ func (s *questionService) GetMyQuestions(ctx context.Context, user_id uint) ([]m
 func (s *questionService) GetUnClasifiedQuestions(ctx context.Context) ([]model.Question, error) {
 	return s.repo.GetUnClasifiedQuestions(ctx)
 }
+
+func (s *questionService) GetQuestionsByStatus(ctx context.Context, status uint) ([]model.Question, error) {
+	return s.repo.GetQuestionsByStatus(ctx, status)
+}
