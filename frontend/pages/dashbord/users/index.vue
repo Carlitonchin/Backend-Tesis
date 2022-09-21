@@ -1,7 +1,7 @@
 <script setup>
     import refresh_tokens from '~~/utils/refresh_tokens';
     import { STUDENT_ROLE } from '~~/api/options';
-import get_users from '../../api/get_users'
+import get_users from '~~/api/get_users'
 import ThreePointOptions1 from '~~/components/ThreePointOptions.vue';
 import get_areas from '~~/api/get_areas';
 import get_roles from '~~/api/get_roles';
@@ -9,13 +9,13 @@ import get_roles from '~~/api/get_roles';
 definePageMeta({
   middleware: ["index"]
 })
+const tokens = useCookie("tokens").value
 
 const users = ref([])
 const areas = ref([])
 const roles = ref([])
 const tab_worker = ref(true)
 
-const tokens = useCookie("tokens").value
 const current_user = useCookie("user").value
 console.log(current_user)
 const users_to_show = computed(()=>{
