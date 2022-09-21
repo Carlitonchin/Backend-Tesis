@@ -2,7 +2,6 @@
     import refresh_tokens from '~~/utils/refresh_tokens';
     import { STUDENT_ROLE } from '~~/api/options';
 import get_users from '~~/api/get_users'
-import ThreePointOptions1 from '~~/components/ThreePointOptions.vue';
 import get_areas from '~~/api/get_areas';
 import get_roles from '~~/api/get_roles';
 import update_user_role from '~~/api/update_user_role'
