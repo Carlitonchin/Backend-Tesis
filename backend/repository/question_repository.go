@@ -174,10 +174,14 @@ func (s *questionRepository) GetUnClasifiedQuestions(ctx context.Context) ([]mod
 	return questions, err
 }
 
-func (s *questionRepository) GetQuestionsByStatus(ctx context.Context, status uint) ([]model.Question, error) {
+func (s *questionRepository) GetQuestionsByStatus(ctx context.Context, status uint, area_id *uint) ([]model.Question, error) {
 	var questions []model.Question
-
-	err := s.DB.Where("status_id = ?", status).Find(&questions).Error
+	var err error
+	if area_id == nil {
+		err = s.DB.Where("status_id = ?", status).Find(&questions).Error
+	} else {
+		err = s.DB.Where("status_id = ? AND area_id = ?", status, *area_id).Error
+	}
 
 	if err != nil {
 		type_error := apperrors.Internal
