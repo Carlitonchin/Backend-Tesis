@@ -5,6 +5,8 @@ import get_users from '~~/api/get_users'
 import ThreePointOptions1 from '~~/components/ThreePointOptions.vue';
 import get_areas from '~~/api/get_areas';
 import get_roles from '~~/api/get_roles';
+import update_user_role from '~~/api/update_user_role'
+import my_fetch from '~~/utils/my_fetch'
 
 definePageMeta({
   middleware: ["index"]
@@ -18,6 +20,32 @@ const tab_worker = ref(true)
 
 function change_tab(value){
     tab_worker.value = value
+}
+
+async function update_role(user_id, role_id){
+    let body = {user_id, role_id}
+    let response = await my_fetch(tokens, update_user_role, body)
+    if(response.error){
+        console.log(response.error)
+        return
+    }
+
+    let role_name = roles.value.filter(r=>r.ID == role_id)[0].name
+
+    users.value = users.value.map(u=>
+    {
+        if(u.ID != user_id)
+            return u;
+        
+        u.role_id = role_id
+        u.role.ID = role_id
+        u.role.name = role_name
+        return u;
+    })
+}
+
+function update_area(user_id, role_id){
+    console.log(user_id, role_id)
 }
 
 const current_user = useCookie("user").value
@@ -73,12 +101,14 @@ else
 
                     <div class="flex">
                     <p><span class="text-red-500">Rol: </span>{{user.role.name}}</p>
-                    <ThreePointOptions :options="roles.filter(r=>r.ID != user.role_id)"/>
+                    <ThreePointOptions :options="roles.filter(r=>r.ID != user.role_id)" 
+                        :handle_click="(role_id)=>update_role(user.ID, role_id)"/>
                 </div>
 
                 <div class="flex">
                     <p><span class="text-red-500">Área: </span> {{user.area ? user.area.name : "-"}}</p>
-                    <ThreePointOptions :options="areas.filter(a=>user.area == null || user.area_id != a.ID)"/>
+                    <ThreePointOptions :options="areas.filter(a=>user.area == null || user.area_id != a.ID)"
+                        :handle_click="(area_id)=>update_area(user.ID, area_id)"/>
                 </div>
                 </div>
             </div>
