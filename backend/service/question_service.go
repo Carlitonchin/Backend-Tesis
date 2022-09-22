@@ -81,10 +81,10 @@ func (s *questionService) TakeQuestion(ctx context.Context, user *model.User, qu
 		return err
 	}
 
-	can_take_specialist1 := user.Role.Name == role_specialist1 && question.StatusId != status_clasified_id
-	can_take_specialist2 := user.Role.Name == role_specialist2 && question.StatusId != status_claisfied_id2
+	can_take_specialist1 := user.Role.Name == role_specialist1 && question.StatusId == status_clasified_id
+	can_take_specialist2 := user.Role.Name == role_specialist2 && question.StatusId == status_claisfied_id2
 
-	if !can_take_specialist1 && !can_take_specialist2 {
+	if user.Role.Name != role_admin && !can_take_specialist1 && !can_take_specialist2 {
 		type_error := apperrors.Conflict
 		message := fmt.Sprintf("%v no pueden tomar preguntas con status_id = '%v'", user.Role.Name, question.StatusId)
 		err = apperrors.NewError(type_error, message)
