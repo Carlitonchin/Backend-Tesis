@@ -11,6 +11,7 @@
     const fields = ["email", "pass"]
 
     async function handle_submit(value){
+      console.log("siginisndflsdfsdjfk")
         let response = await post(value)
 
         if(response.error){
@@ -48,7 +49,7 @@
         </div>
         <div>
           <label for="pass" class="sr-only">Contraseña</label>
-          <Field id="password" v-model="pass" name="pass" type="password" autocomplete="current-password" required 
+          <Field id="password" name="pass" type="password" autocomplete="current-password" required 
           class="relative block w-full appearance-none rounded-b-md border
            border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500
             focus:z-10 focus:border-red-500 focus:outline-none
