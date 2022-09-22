@@ -178,9 +178,9 @@ func (s *questionRepository) GetQuestionsByStatus(ctx context.Context, status ui
 	var questions []model.Question
 	var err error
 	if area_id == nil {
-		err = s.DB.Where("status_id = ?", status).Find(&questions).Error
+		err = s.DB.Where("status_id = ? AND not user_responsible is null", status).Find(&questions).Error
 	} else {
-		err = s.DB.Where("status_id = ? AND area_id = ?", status, *area_id).Find(&questions).Error
+		err = s.DB.Where("status_id = ? AND area_id = ? AND not user_responsible is null", status, *area_id).Find(&questions).Error
 	}
 
 	if err != nil {
