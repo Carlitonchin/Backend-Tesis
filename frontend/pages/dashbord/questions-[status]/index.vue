@@ -3,6 +3,7 @@ import get_question from '~~/api/get_question_by_status'
 import my_fetch from '~~/utils/my_fetch';
 import {ADMIN_ROLE, QuestionsStatusDict} from '~~/api/options'
 import ThreePointOptions from '~~/components/ThreePointOptions.vue';
+import take_question_req from '~~/api/take_question'
 
 definePageMeta({
   middleware: ["index"]
@@ -30,7 +31,14 @@ else
 const options = [{name:'Tomar'}]
 
 function take_question(question_id){
-    console.log(user.ID, question_id)
+    let response = my_fetch(tokens, take_question_req, {question_id})
+    if(response.error)
+    {
+        console.log(response.error)
+        return
+    }
+
+    questions.value = questions.value.filter(q=>q.ID != question_id)
 }
 
 </script>
