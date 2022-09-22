@@ -2,6 +2,7 @@
 import get_question from '~~/api/get_question_by_status'
 import my_fetch from '~~/utils/my_fetch';
 import {ADMIN_ROLE, QuestionsStatusDict} from '~~/api/options'
+import ThreePointOptions from '~~/components/ThreePointOptions.vue';
 
 definePageMeta({
   middleware: ["index"]
@@ -26,6 +27,12 @@ if(response.error)
 else
     questions.value = response.questions
 
+const options = [{name:'Tomar'}]
+
+function take_question(question_id){
+    console.log(user.ID, question_id)
+}
+
 </script>
 
 <template>
@@ -39,6 +46,7 @@ else
         <div class="leading-6">
            {{question.text}}
         </div>
+        <ThreePointOptions :options="options" :handle_click="take_question.bind(this, question.ID)"/>
     </div>
     <p v-else>No hay</p>
     </div>
@@ -53,6 +61,7 @@ else
         <div class="leading-6">
            {{question.text}}
         </div>
+        <ThreePointOptions :options="options"/>
     </div>
     <p v-else>No hay</p>
     </div>
