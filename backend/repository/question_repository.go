@@ -180,7 +180,7 @@ func (s *questionRepository) GetQuestionsByStatus(ctx context.Context, status ui
 	if area_id == nil {
 		err = s.DB.Where("status_id = ?", status).Find(&questions).Error
 	} else {
-		err = s.DB.Where("status_id = ? AND area_id = ?", status, *area_id).Error
+		err = s.DB.Where("status_id = ? AND area_id = ?", status, *area_id).Find(&questions).Error
 	}
 
 	if err != nil {
