@@ -2,7 +2,7 @@
 import get_question from '~~/api/get_question_by_status'
 import my_fetch from '~~/utils/my_fetch';
 import {ADMIN_ROLE, QuestionsStatusDict, LEVEL1_SPECIALIST, LEVEL2_SPECIALIST, 
-    clasified1_code, clasified2_code} from '~~/api/options'
+    clasified1_code, clasified2_code, admin_code} from '~~/api/options'
 import ThreePointOptions from '~~/components/ThreePointOptions.vue';
 import take_question_req from '~~/api/take_question'
 
@@ -22,6 +22,9 @@ switch(user.role.name){
         break
     case LEVEL2_SPECIALIST:
         status_code = clasified2_code
+        break
+    case ADMIN_ROLE:
+        status_code = admin_code
         break
     default:
         window.location.href = "/"
