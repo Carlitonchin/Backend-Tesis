@@ -210,8 +210,8 @@ func (s *questionRepository) GetTakenQuestionById(ctx context.Context, question_
 	err := s.DB.First(&question, "id = ? AND user_responsible = ?", question_id, user_id).Error
 
 	if err != nil {
-		type_error := apperrors.Internal
-		message := "Ocurrio un error inesperado mientras se recuperaba una pregunta"
+		type_error := apperrors.NotFound
+		message := fmt.Sprintf("La pregunta con id = '%v' o no existe o tiene otro responsable", question_id)
 		err = apperrors.NewError(type_error, message)
 	}
 
