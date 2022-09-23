@@ -194,7 +194,7 @@ func (s *questionRepository) GetQuestionsByStatus(ctx context.Context, status ui
 
 func (s *questionRepository) GetTakenQuestions(ctx context.Context, user_id uint) ([]model.Question, error) {
 	var questions []model.Question
-	err := s.DB.First(&questions, "user_responsible = ?", user_id).Error
+	err := s.DB.Where("user_responsible = ?", user_id).Find(&questions).Error
 
 	if err != nil {
 		type_error := apperrors.Internal
