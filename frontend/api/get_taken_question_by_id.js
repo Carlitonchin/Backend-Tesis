@@ -2,7 +2,7 @@ import { API_URL, HEADERS } from "./options";
 
 const PATH = "api/questions/taken/"
 
-export default async ({tokens, question_id})=>{
+export default async (tokens, {question_id})=>{
     const headers = {
         ...HEADERS,
         'Authorization': `Bearer ${tokens["idToken"]}`, 
