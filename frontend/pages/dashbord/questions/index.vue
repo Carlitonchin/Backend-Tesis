@@ -74,7 +74,7 @@ function take_question(question_id){
         <div class="leading-6">
            {{question.text}}
         </div>
-        <ThreePointOptions :options="options"/>
+        <ThreePointOptions :options="options" :handle_click="take_question.bind(this, question.ID)"/>
     </div>
     <p v-else>No hay</p>
     </div>
