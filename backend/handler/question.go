@@ -279,3 +279,22 @@ func (h *Handler) getQuestionByStatus(ctx *gin.Context) {
 		"questions": questions,
 	})
 }
+
+func (h *Handler) getTakenQuestions(ctx *gin.Context) {
+	user, err := handler_utils.GetUser(ctx)
+	if err != nil {
+		handler_utils.SendErrorResponse(ctx, err)
+		return
+	}
+
+	questions, err := h.QuestionService.GetTakenQuestions(ctx.Request.Context(), user.ID)
+
+	if err != nil {
+		handler_utils.SendErrorResponse(ctx, err)
+		return
+	}
+
+	ctx.JSON(http.StatusOK, gin.H{
+		"questions": questions,
+	})
+}
