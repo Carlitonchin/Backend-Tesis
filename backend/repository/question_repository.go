@@ -204,3 +204,16 @@ func (s *questionRepository) GetTakenQuestions(ctx context.Context, user_id uint
 
 	return questions, err
 }
+
+func (s *questionRepository) GetTakenQuestionById(ctx context.Context, question_id uint, user_id uint) (*model.Question, error) {
+	var question model.Question
+	err := s.DB.First(&question, "id = ? AND user_responsible = ?", question_id, user_id).Error
+
+	if err != nil {
+		type_error := apperrors.Internal
+		message := "Ocurrio un error inesperado mientras se recuperaba una pregunta"
+		err = apperrors.NewError(type_error, message)
+	}
+
+	return &question, err
+}
