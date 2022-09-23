@@ -52,9 +52,8 @@ function take_question(question_id){
 </script>
 
 <template>
-    <NuxtLayout>
-        <NuxtLayout name="admin" v-if="user.role.name === ADMIN_ROLE">
-    <div class="p-6 w-full">
+    <NuxtLayout name="logged">
+    <div class="p-6 w-full" v-if="user.role.name === ADMIN_ROLE">
     <h2 class="text-secondary max-w-full">{{QuestionsStatusDict[status_code]}}</h2>
     <h3 v-if="user.role.name !== ADMIN_ROLE" class="text-xl">Área: {{user.area.name}}</h3>
     <div class="space-y-8 mt-5">
@@ -67,7 +66,6 @@ function take_question(question_id){
     <p v-else>No hay</p>
     </div>
 </div>
-</NuxtLayout>
 
 <div v-else class="p-6 w-full">
     <h2 class="text-secondary max-w-full">{{QuestionsStatusDict[status_code]}}</h2>

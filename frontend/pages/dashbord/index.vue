@@ -13,7 +13,7 @@ definePageMeta({
 </script>
 
 <template>
-    <NuxtLayout>
+    <NuxtLayout name="logged">
         <Student :user="user" :tokens="tokens" v-if="role === STUDENT_ROLE"/>
         <UnclasifiedQuestions :user="user" :tokens="tokens" v-else-if="role === WORKER_ROLE"/>
         <Admin :user="user" :tokens="tokens" v-else-if="role === ADMIN_ROLE"/>

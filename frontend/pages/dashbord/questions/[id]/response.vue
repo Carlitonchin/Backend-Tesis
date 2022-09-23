@@ -43,7 +43,7 @@
 </script>
 
 <template>
-    <NuxtLayout>
+    <NuxtLayout name="logged">
         <div class="p-4">
             <div v-if="error">{{error}}</div>
             <div v-else class="flex flex-col items-center">

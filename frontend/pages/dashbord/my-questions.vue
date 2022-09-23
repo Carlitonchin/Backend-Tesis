@@ -10,7 +10,7 @@ const role = user.role.name
 </script>
 
 <template>
-    <NuxtLayout>
+    <NuxtLayout name="logged">
         <StudentQuestions v-if="role == STUDENT_ROLE"/>
 </NuxtLayout>
 </template>

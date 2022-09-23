@@ -69,7 +69,7 @@ async function upAdmin(question_id){
 </script>
 
 <template>
-    <NuxtLayout>
+    <NuxtLayout name="logged">
         <div class="p-4">
         <h1 class="text-primary mb-4">
             Tus preguntas

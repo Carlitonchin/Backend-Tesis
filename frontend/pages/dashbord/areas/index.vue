@@ -30,8 +30,7 @@ definePageMeta({
     }
 </script>
 <template>
-    <NuxtLayout>
-        <NuxtLayout name="admin">
+        <NuxtLayout name="logged">
             <div class="pl-2 pr-2">
                 <form class="space-y-1 w-full" method="POST" @submit="handle_submit">
       <input type="hidden" name="remember" value="true">
@@ -61,5 +60,4 @@ definePageMeta({
     </p>
             </div>
         </NuxtLayout>
-    </NuxtLayout>
 </template>

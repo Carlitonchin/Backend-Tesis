@@ -2,7 +2,7 @@
     import {ADMIN_ROLE, LEVEL1_SPECIALIST, 
     LEVEL2_SPECIALIST, STUDENT_ROLE, WORKER_ROLE} from '~~/api/options'
 
-    const user_role = useCookie("user").role.name
+    const user_role = useCookie("user").value.role.name
     let options = []
     switch(user_role){
         case STUDENT_ROLE:
@@ -29,8 +29,8 @@
 
 <template>
     <NuxtLayout>
-    <div v-if="user_role != WORKER_ROLE" class="w-full flex flex-col space-y-4">
-        <Options :options="options"/>
+    <div class="w-full flex flex-col space-y-4">
+        <Options v-if="user_role != WORKER_ROLE" :options="options"/>
         <slot/>
     </div>
 </NuxtLayout>

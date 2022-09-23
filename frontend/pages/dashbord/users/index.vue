@@ -102,8 +102,7 @@ else
 </script>
 
 <template>
-    <NuxtLayout>
-        <NuxtLayout name="admin">
+        <NuxtLayout name="logged">
             <div class="pl-4 pr-4 flex flex-col items-center">
                 <h2 class="text-primary">Users:</h2>
                 <div class="w-full flex justify-center mt-2 mb-2">
@@ -135,7 +134,4 @@ else
             </div>
             </div>
         </NuxtLayout>
-    </NuxtLayout>
-    
-
 </template>
