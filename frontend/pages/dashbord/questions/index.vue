@@ -1,7 +1,8 @@
 <script setup>
 import get_question from '~~/api/get_question_by_status'
 import my_fetch from '~~/utils/my_fetch';
-import {ADMIN_ROLE, QuestionsStatusDict} from '~~/api/options'
+import {ADMIN_ROLE, QuestionsStatusDict, LEVEL1_SPECIALIST, LEVEL2_SPECIALIST, 
+    clasified1_code, clasified2_code} from '~~/api/options'
 import ThreePointOptions from '~~/components/ThreePointOptions.vue';
 import take_question_req from '~~/api/take_question'
 
@@ -9,18 +10,22 @@ definePageMeta({
   middleware: ["index"]
 })
 
-const status_code = useRoute().params.status
-if(!status_code)
-    console.log("status not especified")
-
-if(!QuestionsStatusDict[status_code]){
-    console.log(`status code ${status_code} no reconocido`)
-    window.location.href="/"
-}
+let status_code = null
 
 const tokens = useCookie("tokens").value
 const user = useCookie("user").value
 const questions = ref([])
+
+switch(user.role.name){
+    case LEVEL1_SPECIALIST:
+        status_code = clasified1_code
+        break
+    case LEVEL2_SPECIALIST:
+        status_code = clasified2_code
+        break
+    default:
+        window.location.href = "/"
+}
 
 let response = await my_fetch(tokens, get_question, status_code)
 if(response.error)

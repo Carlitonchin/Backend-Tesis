@@ -7,6 +7,9 @@ export const LEVEL2_SPECIALIST = "Especialista Nivel 2"
 
 export const UNAUTH_STATUS = 401
 
+export const clasified1_code=2
+export const clasified2_code=3
+
 export const HEADERS = {
     'Content-Type': 'application/json'
   }
