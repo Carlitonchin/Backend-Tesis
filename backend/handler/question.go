@@ -298,3 +298,34 @@ func (h *Handler) getTakenQuestions(ctx *gin.Context) {
 		"questions": questions,
 	})
 }
+
+func (h *Handler) getTakenQuestionById(ctx *gin.Context) {
+
+	question_id := ctx.Param("id")
+	if question_id == "" {
+		type_error := apperrors.BadRequest
+		message := "Falto agregar el id"
+		err := apperrors.NewError(type_error, message)
+		handler_utils.SendErrorResponse(ctx, err)
+		return
+	}
+
+	question_id_uint, err := strconv.ParseUint(question_id, 0, 64)
+
+	user, err := handler_utils.GetUser(ctx)
+	if err != nil {
+		handler_utils.SendErrorResponse(ctx, err)
+		return
+	}
+
+	question, err := h.QuestionService.GetTakenQuestionById(ctx.Request.Context(), uint(question_id_uint), user.ID)
+
+	if err != nil {
+		handler_utils.SendErrorResponse(ctx, err)
+		return
+	}
+
+	ctx.JSON(http.StatusOK, gin.H{
+		"question": question,
+	})
+}
