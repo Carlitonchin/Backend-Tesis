@@ -1,7 +1,9 @@
 <script setup>
     import get_taken_questions from '~~/api/get_taken_questions'
     import my_fetch from '~~/utils/my_fetch'
+    import up_level_fetcher from '~~/api/up_level_2'
     import {LEVEL1_SPECIALIST, LEVEL2_SPECIALIST} from '~~/api/options'
+import consolaGlobalInstance from 'consola';
 
     definePageMeta({
   middleware: ["index"]
@@ -43,8 +45,14 @@ function response_question(question_id){
     window.location.href = `${question_id}/response`
 }
 
-function upLevel(question_id){
-    console.log("UpLevel", question_id)
+async function upLevel(question_id){
+    let response = await my_fetch(tokens, up_level_fetcher, {question_id})
+    if(response.error){
+        console.log(response.error)
+        return
+    }
+
+    questions.value = questions.value.filter(q => q.ID != question_id)
 }
 
 function upAdmin(question_id){
