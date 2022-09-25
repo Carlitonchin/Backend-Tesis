@@ -8,4 +8,5 @@ type MessageChat struct {
 	User     uint   `json:"-"`
 	Text     string `json:"text"`
 	Readed   bool   `json:"-"`
+	UserName string `gorm:"-" json:"user_name"`
 }
