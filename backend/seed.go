@@ -21,6 +21,7 @@ func seed(db *gorm.DB) {
 		seedUsers(db)
 		seedStatus(db)
 		seedQuestions(db)
+		seedChat(db)
 	}
 }
 
@@ -103,6 +104,10 @@ func seedQuestions(db *gorm.DB) {
 
 func seedAreas(db *gorm.DB) {
 	db.AutoMigrate(&model.Area{})
+}
+
+func seedChat(db *gorm.DB) {
+	db.AutoMigrate(&model.MessageChat{})
 }
 
 func atLeastOneError(errors ...error) bool {
