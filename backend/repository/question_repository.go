@@ -224,8 +224,10 @@ func (s *questionRepository) GetQuestionById(ctx context.Context, question_id ui
 	err := s.DB.First(&question, question_id).Error
 
 	if err != nil {
-		return nil, err
+		type_error := apperrors.NotFound
+		message := fmt.Sprintf("No existe ninguna pregunta con id = '%d'", question_id)
+		err = apperrors.NewError(type_error, message)
 	}
 
-	return &question, nil
+	return &question, err
 }
