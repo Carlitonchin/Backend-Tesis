@@ -69,4 +69,5 @@ func NewHandler(c *Config) {
 	signedIn.GET("/areas", middleware.OnlyRoles([]string{"ROLE_ADMIN", "ROLE_DEFAULT_WORKER"}), h.get_areas)
 	signedIn.POST("areas/add", middleware.OnlyRoles([]string{"ROLE_ADMIN"}), h.addArea)
 	signedIn.GET("/chat/:question_id", h.getMessagesChat)
+	signedIn.POST("/chat", h.sendMessage)
 }

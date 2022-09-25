@@ -64,3 +64,48 @@ func (h *Handler) getMessagesChat(ctx *gin.Context) {
 		"messages": messages_chat,
 	})
 }
+
+type addMessageReq struct {
+	Text     string `json:"text"`
+	Question uint   `json:"question_id"`
+}
+
+func (h *Handler) sendMessage(ctx *gin.Context) {
+	user, err := handler_utils.GetUser(ctx)
+	if err != nil {
+		handler_utils.SendErrorResponse(ctx, err)
+
+		return
+	}
+
+	var req addMessageReq
+	if ok := bindData(ctx, &req); !ok {
+		return
+	}
+
+	question, err := h.QuestionService.GetQuestionById(ctx.Request.Context(), req.Question)
+
+	if err != nil {
+		handler_utils.SendErrorResponse(ctx, err)
+		return
+	}
+
+	if question.UserRefer != user.ID &&
+		(question.UserResponsible == nil || *question.UserResponsible != user.ID) {
+		ctx.JSON(http.StatusUnauthorized, gin.H{
+			"error": fmt.Sprintf("No tiene permisos para acceder a este chat"),
+		})
+
+		return
+	}
+
+	err = h.ChatService.SendMessage(ctx.Request.Context(), req.Question, user.ID, req.Text)
+
+	if err != nil {
+		handler_utils.SendErrorResponse(ctx, err)
+		return
+	}
+
+	ctx.JSON(http.StatusCreated, gin.H{})
+
+}
