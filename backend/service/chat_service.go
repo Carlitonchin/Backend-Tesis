@@ -27,7 +27,9 @@ func (s *chatService) GetMessages(ctx context.Context, question_id uint, user_id
 		return nil, err
 	}
 
-	err = s.ChatRepository.ReadMessages(ctx, question_id, user_id)
+	if len(messages) > 0 {
+		err = s.ChatRepository.ReadMessages(ctx, question_id, user_id)
+	}
 
 	return messages, err
 }
