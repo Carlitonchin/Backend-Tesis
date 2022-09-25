@@ -93,5 +93,5 @@ type ChatService interface {
 type ChatRepository interface {
 	SendMessage(ctx context.Context, question_id uint, user_id uint, text string) error
 	GetMessages(ctx context.Context, question_id uint) ([]MessageChat, error)
-	ReadMessages(ctx context.Context, messages_ids []uint) error
+	ReadMessages(ctx context.Context, question_id uint, user_id uint) error
 }
