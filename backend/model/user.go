@@ -13,5 +13,5 @@ type User struct {
 	Area                *Area         `json:"area" gorm:"-"`
 	Questions           []Question    `json:"-" gorm:"foreignKey:UserRefer"`
 	QuestionsToResponse []Question    `json:"-" gorm:"foreignKey:UserResponsible"`
-	MessagesChat        []MessageChat `json:"-" gorm:"foreignKey:User"`
+	MessagesChat        []MessageChat `json:"-" gorm:"foreignKey:User_Id"`
 }

@@ -22,7 +22,7 @@ func NewChatRepository(db *gorm.DB) model.ChatRepository {
 func (s *chatRepository) SendMessage(ctx context.Context, question_id uint, user_id uint, text string) error {
 	message := &model.MessageChat{
 		Question: question_id,
-		User:     user_id,
+		User_Id:  user_id,
 		Text:     text,
 		Readed:   false,
 	}
@@ -42,7 +42,7 @@ func (s *chatRepository) GetMessages(ctx context.Context, question_id uint) ([]m
 
 	rows, err := s.DB.Table("message_chats").
 		Select("users.name, message_chats.text, message_chats.created_at").
-		Joins("left join users on message_chats.id = users.id").
+		Joins("left join users on message_chats.user_id = users.id").
 		Rows()
 
 	if err != nil {
@@ -77,10 +77,9 @@ func (s *chatRepository) GetMessages(ctx context.Context, question_id uint) ([]m
 
 func (s *chatRepository) ReadMessages(ctx context.Context, question_id uint, user_id uint) error {
 
-	err := s.DB.Model(model.MessageChat{}).
-		Where("question = ? and user <> ?", question_id, user_id).
-		Select("readed").
-		Updates(model.MessageChat{Readed: true}).
+	err := s.DB.Model(&model.MessageChat{}).
+		Where("question = ? and not user_id = ?", question_id, user_id).
+		Update("readed", true).
 		Error
 
 	if err != nil {
