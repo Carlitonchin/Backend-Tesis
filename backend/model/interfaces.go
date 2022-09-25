@@ -68,6 +68,7 @@ type QuestionService interface {
 	GetQuestionsByStatus(ctx context.Context, status uint, area_id *uint) ([]Question, error)
 	GetTakenQuestions(ctx context.Context, user_id uint) ([]Question, error)
 	GetTakenQuestionById(ctx context.Context, question_id uint, user_id uint) (*Question, error)
+	GetQuestionById(ctx context.Context, question_id uint) (*Question, error)
 }
 
 type QuestionRepository interface {
@@ -83,6 +84,7 @@ type QuestionRepository interface {
 	GetQuestionsByStatus(ctx context.Context, status uint, area_id *uint) ([]Question, error)
 	GetTakenQuestions(ctx context.Context, user_id uint) ([]Question, error)
 	GetTakenQuestionById(ctx context.Context, question_id uint, user_id uint) (*Question, error)
+	GetQuestionById(ctx context.Context, question_id uint) (*Question, error)
 }
 
 type ChatService interface {
