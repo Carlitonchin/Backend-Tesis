@@ -15,6 +15,7 @@ type Handler struct {
 	RoleService     model.RoleService
 	AreaService     model.AreaService
 	QuestionService model.QuestionService
+	ChatService     model.ChatService
 }
 
 type Config struct {
@@ -25,6 +26,7 @@ type Config struct {
 	AreaService     model.AreaService
 	TimeOut         time.Duration
 	QuestionService model.QuestionService
+	ChatService     model.ChatService
 }
 
 func NewHandler(c *Config) {
@@ -34,6 +36,7 @@ func NewHandler(c *Config) {
 		RoleService:     c.RoleService,
 		AreaService:     c.AreaService,
 		QuestionService: c.QuestionService,
+		ChatService:     c.ChatService,
 	}
 	timeouterror := apperrors.NewError(apperrors.TimeOut, "El request demoró mucho en procesarse")
 	c.R.Use(middleware.Timeout(c.TimeOut, timeouterror))
