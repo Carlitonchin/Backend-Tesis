@@ -217,3 +217,15 @@ func (s *questionRepository) GetTakenQuestionById(ctx context.Context, question_
 
 	return &question, err
 }
+
+func (s *questionRepository) GetQuestionById(ctx context.Context, question_id uint) (*model.Question, error) {
+	var question model.Question
+
+	err := s.DB.First(&question, question_id).Error
+
+	if err != nil {
+		return nil, err
+	}
+
+	return &question, nil
+}

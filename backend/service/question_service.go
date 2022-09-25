@@ -208,3 +208,7 @@ func (s *questionService) GetTakenQuestions(ctx context.Context, user_id uint) (
 func (s *questionService) GetTakenQuestionById(ctx context.Context, question_id uint, user_id uint) (*model.Question, error) {
 	return s.repo.GetTakenQuestionById(ctx, question_id, user_id)
 }
+
+func (s *questionService) GetQuestionById(ctx context.Context, question_id uint) (*model.Question, error) {
+	return s.repo.GetQuestionById(ctx, question_id)
+}
