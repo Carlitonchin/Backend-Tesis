@@ -84,3 +84,14 @@ type QuestionRepository interface {
 	GetTakenQuestions(ctx context.Context, user_id uint) ([]Question, error)
 	GetTakenQuestionById(ctx context.Context, question_id uint, user_id uint) (*Question, error)
 }
+
+type ChatService interface {
+	SendMessage(ctx context.Context, question_id uint, user_id uint, text string) error
+	GetMessages(ctx context.Context, question_id uint, user_id uint) ([]MessageChat, error)
+}
+
+type ChatRepository interface {
+	SendMessage(ctx context.Context, question_id uint, user_id uint, text string) error
+	GetMessages(ctx context.Context, question_id uint) ([]MessageChat, error)
+	ReadMessages(ctx context.Context, messages_ids []uint) error
+}
