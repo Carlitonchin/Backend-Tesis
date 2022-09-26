@@ -62,6 +62,7 @@ func (h *Handler) getMessagesChat(ctx *gin.Context) {
 
 	ctx.JSON(http.StatusOK, gin.H{
 		"messages": messages_chat,
+		"question": question,
 	})
 }
 
