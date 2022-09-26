@@ -16,7 +16,7 @@ func NewChatService(chat_repo model.ChatRepository) model.ChatService {
 	}
 }
 
-func (s *chatService) SendMessage(ctx context.Context, question_id uint, user_id uint, text string) error {
+func (s *chatService) SendMessage(ctx context.Context, question_id uint, user_id uint, text string) (*model.MessageChat, error) {
 	return s.ChatRepository.SendMessage(ctx, question_id, user_id, text)
 }
 

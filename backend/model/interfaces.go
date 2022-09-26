@@ -88,12 +88,12 @@ type QuestionRepository interface {
 }
 
 type ChatService interface {
-	SendMessage(ctx context.Context, question_id uint, user_id uint, text string) (MessageChat, error)
+	SendMessage(ctx context.Context, question_id uint, user_id uint, text string) (*MessageChat, error)
 	GetMessages(ctx context.Context, question_id uint, user_id uint) ([]MessageChat, error)
 }
 
 type ChatRepository interface {
-	SendMessage(ctx context.Context, question_id uint, user_id uint, text string) (MessageChat, error)
+	SendMessage(ctx context.Context, question_id uint, user_id uint, text string) (*MessageChat, error)
 	GetMessages(ctx context.Context, question_id uint) ([]MessageChat, error)
 	ReadMessages(ctx context.Context, question_id uint, user_id uint) error
 }

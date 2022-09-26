@@ -19,7 +19,7 @@ func NewChatRepository(db *gorm.DB) model.ChatRepository {
 	}
 }
 
-func (s *chatRepository) SendMessage(ctx context.Context, question_id uint, user_id uint, text string) error {
+func (s *chatRepository) SendMessage(ctx context.Context, question_id uint, user_id uint, text string) (*model.MessageChat, error) {
 	message := &model.MessageChat{
 		Question: question_id,
 		User_Id:  user_id,
@@ -35,7 +35,7 @@ func (s *chatRepository) SendMessage(ctx context.Context, question_id uint, user
 		err = apperrors.NewError(type_error, message)
 	}
 
-	return err
+	return message, err
 }
 func (s *chatRepository) GetMessages(ctx context.Context, question_id uint) ([]model.MessageChat, error) {
 	var messages []model.MessageChat
