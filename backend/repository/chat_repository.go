@@ -43,6 +43,7 @@ func (s *chatRepository) GetMessages(ctx context.Context, question_id uint) ([]m
 	rows, err := s.DB.Table("message_chats").
 		Select("users.name, message_chats.text, message_chats.created_at").
 		Joins("left join users on message_chats.user_id = users.id").
+		Where("message_chats.question = ?", question_id).
 		Rows()
 
 	if err != nil {
