@@ -39,11 +39,29 @@ else{
 }
 
 const messages_ordered = computed(()=>{
+    const color = ['b2', 'b3', 'b4']
+        const bubble_color = {}
+        bubble_color[user.name] = 'b1'
+        
     return messages.value.sort((a,b)=>{
         if(a.CreatedAt <= b.CreatedAt)
             return -1
         
         return 1
+    }).map(m=>{
+        if(color.length > 0 && !bubble_color[m.user_name]){
+            let c = color.pop()
+            bubble_color[m.user_name] = c
+            m.color = c
+        }
+        else if(!bubble_color[m.user_name]){
+            bubble_color[m.user_name] = 'bdefault'
+            m.color = 'bdefault'
+        }
+        else
+            m.color = bubble_color[m.user_name]
+        
+        return m
     })
 })
 
@@ -75,6 +93,22 @@ async function send_message(){
 
     text_input.value = ""
     messages.value.push(response.message)
+}
+
+function paint_bubble(new_message){
+    const color = ['b2', 'b3', 'b4']
+    const bubble_color = {}
+    bubble_color[user.name] = 'b1'
+    for(let i = 0; i < messages.length; i++){
+        let author = messages[i].user_name 
+
+        if(color.length > 0 && !bubble_color[author])
+            bubble_color[author] = color.pop()
+
+        else if(!bubble_color[author])
+            bubble_color[author] = 'bdefault'
+        
+    }
 }
 
 </script>
