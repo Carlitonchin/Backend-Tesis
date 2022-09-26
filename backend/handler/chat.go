@@ -107,6 +107,8 @@ func (h *Handler) sendMessage(ctx *gin.Context) {
 		return
 	}
 
+	message.UserName = user.Name
+
 	ctx.JSON(http.StatusCreated, gin.H{
 		"message": message,
 	})
