@@ -100,13 +100,15 @@ func (h *Handler) sendMessage(ctx *gin.Context) {
 		return
 	}
 
-	err = h.ChatService.SendMessage(ctx.Request.Context(), req.Question, user.ID, req.Text)
+	message, err := h.ChatService.SendMessage(ctx.Request.Context(), req.Question, user.ID, req.Text)
 
 	if err != nil {
 		handler_utils.SendErrorResponse(ctx, err)
 		return
 	}
 
-	ctx.JSON(http.StatusCreated, gin.H{})
+	ctx.JSON(http.StatusCreated, gin.H{
+		"message": message,
+	})
 
 }
