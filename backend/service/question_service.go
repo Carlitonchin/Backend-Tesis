@@ -204,7 +204,22 @@ func (s *questionService) GetQuestionsByStatus(ctx context.Context, status uint,
 }
 
 func (s *questionService) GetTakenQuestions(ctx context.Context, user_id uint) ([]model.Question, error) {
-	return s.repo.GetTakenQuestions(ctx, user_id)
+	questions, err := s.repo.GetTakenQuestions(ctx, user_id)
+
+	if err != nil {
+		return nil, err
+	}
+
+	for i := 0; i < len(questions); i++ {
+		cant, err := s.chat_repository.CantUnreadedMessage(ctx, questions[i].ID, user_id)
+		if err != nil {
+			return nil, err
+		}
+
+		questions[i].UnreadedChats = cant
+	}
+
+	return questions, nil
 }
 
 func (s *questionService) GetTakenQuestionById(ctx context.Context, question_id uint, user_id uint) (*model.Question, error) {
