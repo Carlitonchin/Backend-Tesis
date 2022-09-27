@@ -33,3 +33,7 @@ func (s *chatService) GetMessages(ctx context.Context, question_id uint, user_id
 
 	return messages, err
 }
+
+func (s *chatService) CantUnreadedMessage(ctx context.Context, question_id uint, user_id uint) (int64, error) {
+	return s.ChatRepository.CantUnreadedMessage(ctx, question_id, user_id)
+}
