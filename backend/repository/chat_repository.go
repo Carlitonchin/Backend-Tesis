@@ -91,3 +91,20 @@ func (s *chatRepository) ReadMessages(ctx context.Context, question_id uint, use
 
 	return err
 }
+
+func (s *chatRepository) CantUnreadedMessage(ctx context.Context, question_id uint, user_id uint) (int64, error) {
+	var count int64
+
+	err := s.DB.Model(&model.MessageChat{}).
+		Where("question = ? AND user_id <> ? AND readed = ?", question_id, user_id, false).
+		Count(&count).
+		Error
+
+	if err != nil {
+		type_error := apperrors.Internal
+		message := "Ocurrio un error inesperado mientras se recuperaban la cantidad de mensajes no leidos"
+		err = apperrors.NewError(type_error, message)
+	}
+
+	return count, err
+}
