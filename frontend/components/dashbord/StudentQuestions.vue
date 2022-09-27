@@ -27,8 +27,11 @@
         <div v-for="question,i in questions">
             <div class="flex space-x-4 items-center">
             <p class="leading-8"><span class="font-semibold text-red-500">{{(i+1) + ". "}}</span> {{question.text}}</p>
-            <a :href="'/dashbord/chat/' + question.ID">
-                <img class="h-8 w-6 hover:scale-125" src="/chat.svg" alt="chat icon" />
+            <a class="flex items-center relative hover:scale-125" :href="'/dashbord/chat/' + question.ID">
+                <img class="h-8 w-6" src="/chat.svg" alt="chat icon" />
+                <p v-if="question.unreaded_chats > 0" 
+                    class="bg-red-500 rounded-full w-6 h-6 text-center 
+                    m-0 z-10 absolute -top-2 -right-4">{{question.unreaded_chats}}</p>
             </a>
         </div>
             <div class="flex items-center">
