@@ -95,10 +95,11 @@ func inject(data_source *dataSource) (*gin.Engine, error) {
 	area_serv := service.NewAreaService(area_repo)
 
 	question_repo := repository.NewQuestionRepository(data_source.DB)
-	question_serv := service.NewQuestionService(question_repo)
 
 	chat_repo := repository.NewChatRepository(data_source.DB)
 	chat_serv := service.NewChatService(chat_repo)
+
+	question_serv := service.NewQuestionService(question_repo, chat_repo)
 
 	c := handler.Config{
 		R:               router,

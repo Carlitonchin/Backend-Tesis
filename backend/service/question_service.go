@@ -11,12 +11,14 @@ import (
 )
 
 type questionService struct {
-	repo model.QuestionRepository
+	repo            model.QuestionRepository
+	chat_repository model.ChatRepository
 }
 
-func NewQuestionService(question_repo model.QuestionRepository) model.QuestionService {
+func NewQuestionService(question_repo model.QuestionRepository, chat_repo model.ChatRepository) model.QuestionService {
 	return &questionService{
-		repo: question_repo,
+		repo:            question_repo,
+		chat_repository: chat_repo,
 	}
 }
 
