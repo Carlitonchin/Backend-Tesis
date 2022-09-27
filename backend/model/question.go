@@ -12,4 +12,5 @@ type Question struct {
 	UserResponsible *uint         `json:"user_responsible_id"`
 	Response        string        `json:"response"`
 	MessagesChat    []MessageChat `json:"-" gorm:"foreignKey:Question"`
+	UnreadedChats   int64         `json:"unreaded_chats" gorm:"-"`
 }
