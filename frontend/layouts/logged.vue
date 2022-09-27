@@ -7,11 +7,13 @@
     switch(user_role){
         case STUDENT_ROLE:
             options = [[
-            {text:"Mis dudas", href:"/dashbord/my-questions"}
+            {text:"Mis dudas", href:"/dashbord/my-questions"},
+            {text:"Escribir duda", href:"/dashbord"}
             ]]
             break
         case ADMIN_ROLE:
             options = [[
+                {text:"Inicio", href:"/dashbord"},
                 {text:"Usuarios", href:"/dashbord/users"},
                 {text:"Areas", href:"/dashbord/areas"},
                 {text:"Preguntas Clasificadas", href:"/dashbord/questions"},
@@ -20,6 +22,7 @@
             break
         default:
         options = [[
+            {text:"Inicio", href:"/dashbord"},
                 {text:"Preguntas Clasificadas", href:"/dashbord/questions"},
                 {text:"Mis Preguntas", href:"/dashbord/questions/taken"}
             ]]
