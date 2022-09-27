@@ -75,9 +75,12 @@ async function upAdmin(question_id){
             Tus preguntas
         </h1>
         <div v-if="questions.length" class="space-y-4">
-            <div class="flex" v-for="question in questions">
-                 <p>{{question.text}}</p>
+            <div class="flex space-x-1 items-center" v-for="question in questions">
+                 <p class="leading-8">{{question.text}}</p>
                  <ThreePointOptions :options="options" :handle_click="(func)=>handle_click(question.ID, func)"/>
+                 <a :href="'/dashbord/chat/' + question.ID">
+                    <img class="h-8 w-6 hover:scale-125" src="/chat.svg" alt="chat icon" />
+                 </a>   
             </div>
         </div>
         <p v-else>No tienes</p>
