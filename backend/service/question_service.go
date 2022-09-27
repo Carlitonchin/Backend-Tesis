@@ -192,7 +192,22 @@ func (s *questionService) UpToAdmin(ctx context.Context, user *model.User, quest
 }
 
 func (s *questionService) GetMyQuestions(ctx context.Context, user_id uint) ([]model.Question, error) {
-	return s.repo.GetMyQuestions(ctx, user_id)
+	questions, err := s.repo.GetMyQuestions(ctx, user_id)
+
+	if err != nil {
+		return nil, err
+	}
+
+	for i := 0; i < len(questions); i++ {
+		cant, err := s.chat_repository.CantUnreadedMessage(ctx, questions[i].ID, user_id)
+		if err != nil {
+			return nil, err
+		}
+
+		questions[i].UnreadedChats = cant
+	}
+
+	return questions, nil
 }
 
 func (s *questionService) GetUnClasifiedQuestions(ctx context.Context) ([]model.Question, error) {
